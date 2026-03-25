@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { getColumns, saveTableColumns } from "@/services/api";
 
 type Column = { displayName: string; field: string };
 
@@ -42,12 +43,8 @@ export default function ConfigureTablesComponent() {
 
   async function fetchColumns(tableType: string) {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/configuration/columns/${tableType}`
-      );
-      const data = await res.json();
-      if (!Array.isArray(data.columns)) throw new Error("Columns no array");
-      const cols: Column[] = data.columns.map((c: Column) => ({
+      const data = await getColumns(tableType);
+      const cols: Column[] = data.map((c) => ({
         displayName: c.displayName,
         field: c.field,
       }));
@@ -103,30 +100,18 @@ export default function ConfigureTablesComponent() {
 
     const payload = cols.map((c, i) => ({ ...c, order: i }));
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/configuration/updateColumns`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ tableType: table, columns: payload }),
-        }
-      );
-      const data = await res.json();
-      if (data.status === "success") {
-        if (table === "collaborador") {
-          setInitialCollaboratorColumns(collaboratorColumns);
-          setIsEditingCollaborator(false);
-        }
-        if (table === "proyecto") {
-          setInitialProjectColumns(projectColumns);
-          setIsEditingProject(false);
-        }
-        if (table === "vacante") {
-          setInitialVacanColumns(vacanColumns);
-          setIsEditingVacan(false);
-        }
-      } else {
-        console.error("Error guardando", data);
+      await saveTableColumns(table, payload);
+      if (table === "collaborador") {
+        setInitialCollaboratorColumns(collaboratorColumns);
+        setIsEditingCollaborator(false);
+      }
+      if (table === "proyecto") {
+        setInitialProjectColumns(projectColumns);
+        setIsEditingProject(false);
+      }
+      if (table === "vacante") {
+        setInitialVacanColumns(vacanColumns);
+        setIsEditingVacan(false);
       }
     } catch (err) {
       console.error("Error al guardar columnas", err);

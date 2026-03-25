@@ -72,6 +72,85 @@ function toErrorResponseLike<T>(err: AxiosError<T>): ResponseLike<T> {
 
 const jsonHeaders = { "Content-Type": "application/json" };
 
+type TableColumn = {
+  displayName: string;
+  field: string;
+  order: number;
+  isAction?: boolean;
+};
+
+const DEFAULT_TABLE_COLUMNS: Record<string, TableColumn[]> = {
+  collaborador: [
+    { displayName: "Nombre", field: "first_name", order: 0 },
+    { displayName: "Apellido", field: "last_name", order: 1 },
+    { displayName: "Roles", field: "roles", order: 2 },
+    { displayName: "Proyectos", field: "Proyectos", order: 3 },
+    { displayName: "Tecnologias", field: "tecnologias", order: 4 },
+    { displayName: "Modalidad", field: "jornadaId", order: 5 },
+    { displayName: "Fin de contrato", field: "fin_contrato", order: 6 },
+    { displayName: "Horas asignadas", field: "horasAsignadas", order: 7 },
+  ],
+  proyecto: [
+    { displayName: "Nombre", field: "name", order: 0 },
+    { displayName: "Cliente", field: "client", order: 1 },
+    { displayName: "Manager", field: "managerName", order: 2 },
+    { displayName: "Estado", field: "status", order: 3 },
+    { displayName: "Fecha de inicio", field: "startDate", order: 4 },
+    { displayName: "Fecha de fin", field: "endDate", order: 5 },
+    { displayName: "Categoria", field: "category", order: 6 },
+    { displayName: "Colaboradores", field: "assignedPersons", order: 7 },
+  ],
+  vacante: [
+    { displayName: "Nombre", field: "vacancieName", order: 0 },
+    { displayName: "Manager", field: "manager_name", order: 1 },
+    { displayName: "Horas", field: "time", order: 2 },
+    { displayName: "Proyecto", field: "projectId", order: 3 },
+    { displayName: "Seniority", field: "seniority", order: 4 },
+    { displayName: "Fecha de pedido", field: "orderDate", order: 5 },
+    { displayName: "Fecha de inicio", field: "startDate", order: 6 },
+    { displayName: "Estado", field: "status", order: 7 },
+    { displayName: "Descripcion", field: "description", order: 8 },
+  ],
+};
+
+function sortColumns<T extends { order: number }>(columns: T[]): T[] {
+  return [...columns].sort((a, b) => a.order - b.order);
+}
+
+function getDefaultColumns(entity: string): TableColumn[] | null {
+  const key = String(entity).trim().toLowerCase();
+  const defaults = DEFAULT_TABLE_COLUMNS[key];
+  if (!defaults) return null;
+  return defaults.map((column) => ({ ...column }));
+}
+
+function getColumnsFallback(
+  entity: string,
+  error: unknown
+): TableColumn[] | null {
+  const defaults = getDefaultColumns(entity);
+  if (!defaults) return null;
+
+  const axiosError = error as AxiosError<{ message?: string }>;
+  const status = axiosError.response?.status;
+
+  if (status === 401 || status === 403) {
+    return null;
+  }
+
+  const message =
+    axiosError.response?.data?.message ??
+    axiosError.message ??
+    "No se pudo obtener la configuracion de columnas.";
+
+  console.warn(
+    `Falling back to default columns for "${entity}" because the remote configuration is unavailable.`,
+    { status, message }
+  );
+
+  return defaults;
+}
+
 async function request<T>(config: AxiosRequestConfig): Promise<T> {
   try {
     const res = await api.request<T>(config);
@@ -340,31 +419,69 @@ export const fetchVacancie = async (id: string): Promise<Vacancie> => {
 };
 
 export async function getColumns(entity: string): Promise<ColumnConfig[]> {
-  const data = await request<{ columns: ColumnConfig[] }>({
-    url: `/api/configuration/columns/${entity}`,
-    method: "GET",
-  });
-  return data.columns.sort((a, b) => a.order - b.order);
+  try {
+    const data = await request<{ columns: ColumnConfig[] }>({
+      url: `/api/configuration/columns/${entity}`,
+      method: "GET",
+    });
+    return sortColumns(data.columns ?? []);
+  } catch (error) {
+    const fallback = getColumnsFallback(entity, error);
+    if (fallback) {
+      return sortColumns(fallback) as ColumnConfig[];
+    }
+    throw error;
+  }
 }
 
 /** Para pantalla de colaboradores necesita ColumnConfigColaborador[] (isAction obligatorio) */
 export const fetchTableColumns = async (
   entity: string
 ): Promise<ColumnConfigColaborador[]> => {
+  try {
+    const data = await request<{ columns: ColumnConfig[] }>({
+      url: `/api/configuration/columns/${entity}`,
+      method: "GET",
+    });
+
+    const cols = (data.columns || []).map((c) => ({
+      ...c,
+      isAction: Boolean((c as unknown as { isAction?: boolean }).isAction),
+    }));
+
+    return sortColumns(
+      cols
+    ) as unknown as ColumnConfigColaborador[];
+  } catch (error) {
+    const fallback = getColumnsFallback(entity, error);
+    if (fallback) {
+      return sortColumns(
+        fallback.map((column) => ({
+          ...column,
+          isAction: Boolean(column.isAction),
+        }))
+      ) as unknown as ColumnConfigColaborador[];
+    }
+    throw error;
+  }
+};
+
+export async function saveTableColumns(
+  entity: string,
+  columns: Array<Pick<TableColumn, "displayName" | "field" | "order">>
+): Promise<ColumnConfig[]> {
   const data = await request<{ columns: ColumnConfig[] }>({
-    url: `/api/configuration/columns/${entity}`,
-    method: "GET",
+    url: `/api/configuration/updateColumns`,
+    method: "PUT",
+    headers: jsonHeaders,
+    data: {
+      tableType: entity,
+      columns,
+    },
   });
 
-  const cols = (data.columns || []).map((c) => ({
-    ...c,
-    isAction: Boolean((c as unknown as { isAction?: boolean }).isAction),
-  }));
-
-  return cols.sort(
-    (a, b) => a.order - b.order
-  ) as unknown as ColumnConfigColaborador[];
-};
+  return sortColumns(data.columns ?? []);
+}
 
 export async function getUsers() {
   return request<User[]>({ url: `/api/user/prueba`, method: "GET" });
@@ -1740,4 +1857,3 @@ export async function exportAnalyticsReportClient(payload: unknown, filename?: s
     }
   }
 }
-
