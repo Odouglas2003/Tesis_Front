@@ -46,11 +46,11 @@ export default function CardsVacantes({
     const status = (statusRaw ?? "").trim().toLowerCase();
     switch (status) {
       case "abierta":
-        return { bg: "#23FFDC", color: "#002338", label: "Abierta" };
+        return { bg: "rgba(114,230,217,0.16)", color: colors?.primary || "#12304D", label: "Abierta" };
       case "en proceso":
-        return { bg: "#0087FF", color: "#002338", label: "En proceso" };
+        return { bg: "rgba(42,108,168,0.12)", color: colors?.primary || "#12304D", label: "En proceso" };
       case "finalizada":
-        return { bg: "#9E9E9E", color: "#002338", label: "Finalizada" };
+        return { bg: "rgba(18,48,77,0.10)", color: colors?.primary || "#12304D", label: "Finalizada" };
       default:
         return null;
     }
@@ -66,8 +66,6 @@ export default function CardsVacantes({
         >
           {filteredVacancies.map((vacante, idx) => {
             const managerNameRaw = String(vacante?.manager_name ?? "").trim();
-            const hasManager = managerNameRaw.length > 0;
-
             const managerKey = managerNameRaw.toLowerCase();
 
             const match = (collaboratorProp || []).find(
@@ -97,10 +95,11 @@ export default function CardsVacantes({
                   sx={{
                     width: "310px",
                     height: "336px",
-                    bgcolor: colors?.card || "#002338",
+                    bgcolor: colors?.card || "#FCFEFF",
                     borderRadius: "20px",
-                    color: "#fff",
-                    boxShadow: 6,
+                    color: colors?.primary || "#12304D",
+                    boxShadow: "0 18px 45px rgba(18,48,77,0.10)",
+                    border: "1px solid rgba(18,48,77,0.08)",
                     position: "relative",
                     overflow: 'hidden',
                     // use internal padding so children (like the button) don't overflow
@@ -145,7 +144,7 @@ export default function CardsVacantes({
                       sx={{
                         fontFamily: "Poppins",
                         fontWeight: 500,
-                        color: colors?.text || "#23FFDC",
+                        color: colors?.secondary || "#2A6CA8",
                         fontSize: "20px",
                         width: "100%",
                         lineHeight: "1.1",
@@ -173,7 +172,7 @@ export default function CardsVacantes({
                             height: "60px",
                             borderRadius: "50%",
                             objectFit: "cover",
-                            border: "2px solid #23FFDC",
+                            border: `2px solid ${colors?.accent || "#72E6D9"}`,
                           }}
                           loading="lazy"
                         />
@@ -187,6 +186,7 @@ export default function CardsVacantes({
                         fontWeight: 500,
                         fontSize: "18px",
                         width: "255px",
+                        color: colors?.primary || "#12304D",
                       }}
                     >
                       Proyecto: {vacante.projectId?.name || "No asignado"}
@@ -198,6 +198,7 @@ export default function CardsVacantes({
                         fontSize: "18px",
                         fontFamily: "Poppins",
                         fontWeight: 500,
+                        color: "rgba(18,48,77,0.78)",
                       }}
                     >
                       Horas requeridas: {vacante.time}
@@ -209,6 +210,7 @@ export default function CardsVacantes({
                         fontSize: "18px",
                         fontFamily: "Poppins",
                         fontWeight: 500,
+                        color: "rgba(18,48,77,0.78)",
                       }}
                     >
                       Seniority: {vacante.seniority}
@@ -221,17 +223,17 @@ export default function CardsVacantes({
                       <Button
                         variant="contained"
                         sx={{
-                          bgcolor: colors?.button || "#0087FF",
-                          borderRadius: "20px",
-                          color: "#000",
+                          bgcolor: colors?.button || "#123B66",
+                          borderRadius: "16px",
+                          color: colors?.text || "#7DEBDC",
                           width: "100%",
                           height: "50px",
                           textTransform: "none",
                           "&:hover": {
-                            bgcolor: "#23FFDC",
+                            bgcolor: colors?.primary || "#12304D",
                           },
                           "&:active": {
-                            bgcolor: "#23FFDC",
+                            bgcolor: colors?.primary || "#12304D",
                           },
                         }}
                         onClick={() => {
@@ -243,10 +245,10 @@ export default function CardsVacantes({
                         <Typography
                           textAlign="center"
                           sx={{
-                            fontSize: "20px",
-                            color: "#002338",
+                            fontSize: "18px",
+                            color: colors?.text || "#7DEBDC",
                             fontFamily: "Poppins",
-                            fontWeight: 500,
+                            fontWeight: 600,
                           }}
                         >
                           Ver más

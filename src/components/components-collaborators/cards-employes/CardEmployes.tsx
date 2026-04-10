@@ -97,12 +97,13 @@ export default function CardsEmployes({
             sx={{
               width: "247px",
               height: "318px",
-              bgcolor: colors?.card || "#ffffff",
+              bgcolor: colors?.card || "#FCFEFF",
               borderRadius: "29px",
               position: "relative",
               overflow: "hidden",
               cursor: "pointer",
-              boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.493)",
+              boxShadow: "0 18px 45px rgba(18,48,77,0.10)",
+              border: "1px solid rgba(18,48,77,0.08)",
 
               transition: "all 0.3s ease",
             }}
@@ -122,7 +123,7 @@ export default function CardsEmployes({
                       fontSize: "20px",
                       fontFamily: "Poppins",
                       fontWeight: 500,
-                      color: "#FFFFFF",
+                      color: colors?.primary || "#12304D",
                     }}
                   >
                     {`${empleado.last_name} ${empleado.first_name} `}
@@ -132,7 +133,7 @@ export default function CardsEmployes({
                       fontSize: "18px",
                       fontFamily: "Poppins",
                       fontWeight: 500,
-                      color: colors?.text || "#1CFFF9",
+                      color: colors?.secondary || "#2A6CA8",
                       textAlign: "center",
                     }}
                   >
@@ -145,7 +146,7 @@ export default function CardsEmployes({
                       fontSize: "16px",
                       fontFamily: "Poppins",
                       fontWeight: 500,
-                      color: "#FFFFFF",
+                      color: "rgba(18,48,77,0.76)",
                       textAlign: "center",
                       marginTop: "5px",
                     }}
@@ -171,7 +172,7 @@ export default function CardsEmployes({
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
                                 fontWeight: 500,
-                                color: "#FFFFFF",
+                                color: colors?.primary || "#12304D",
                                 textAlign: "center",
                               }}
                             >
@@ -185,7 +186,7 @@ export default function CardsEmployes({
                           fontSize: "16px",
                           fontFamily: "Poppins",
                           fontWeight: 500,
-                          color: "#FFFFFF",
+                          color: colors?.primary || "#12304D",
                           textAlign: "center",
                         }}
                       >
@@ -198,7 +199,7 @@ export default function CardsEmployes({
                       fontSize: "16px",
                       fontFamily: "Poppins",
                       fontWeight: 500,
-                      color: "#FFFFFF",
+                      color: "rgba(18,48,77,0.76)",
                       textAlign: "center",
                     }}
                   >
@@ -217,17 +218,17 @@ export default function CardsEmployes({
                   <Button
                     variant="contained"
                     sx={{
-                      bgcolor: colors?.button || "#0087FF",
-                      borderRadius: "20px",
+                      bgcolor: colors?.button || "#123B66",
+                      borderRadius: "16px",
                       marginTop: "20px",
                       width: "100%",
                       height: "40px",
                       textTransform: "none",
                       "&:hover": {
-                        bgcolor: "#23FFDC",
+                        bgcolor: colors?.primary || "#12304D",
                       },
                       "&:active": {
-                        bgcolor: "#23FFDC",
+                        bgcolor: colors?.primary || "#12304D",
                       },
                     }}
                     onClick={() =>
@@ -240,9 +241,9 @@ export default function CardsEmployes({
                       sx={{
                         fontSize: "18px",
                         fontFamily: "Poppins",
-                        fontWeight: 500,
+                        fontWeight: 600,
                         textAlign: "center",
-                        color: "#002338",
+                        color: colors?.text || "#7DEBDC",
                         lineHeight: "100%",
                       }}
                     >
@@ -268,7 +269,7 @@ export default function CardsEmployes({
                     bottom: 0,
                     width: "100%",
                     height: "68px",
-                    bgcolor: colors?.card || "#002338",
+                    bgcolor: "rgba(18,48,77,0.86)",
                     p: "5px 20px",
                     color: "white",
                     textAlign: "center",
@@ -308,7 +309,7 @@ export default function CardsEmployes({
                       >
                         <span
                           style={{
-                            background: "#0087FF",
+                            background: colors?.secondary || "#2A6CA8",
                             color: "#fff",
                             borderRadius: "50%",
                             padding: "6px",

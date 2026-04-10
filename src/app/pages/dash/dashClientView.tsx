@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
-import { Box } from "@mui/material";
-import Navbar from "@/components/navbar/pages";
 import Dash from "@/components/component-dash/Dashboard";
 import { DashboardData } from "@/types/interface";
+import AppShell from "@/components/layout/AppShell";
 export default function DashClientView({
   metrics,
 }: {
   metrics: DashboardData;
 }) {
   return (
-    <Box sx={{ width: '100%', minHeight: '100vh' }}>
-      <Navbar />
+    <AppShell
+      title="Panel ejecutivo"
+      description="Visibilidad centralizada sobre colaboradores, proyectos, vacantes y actividad operativa."
+    >
       <Dash metricsProp={metrics} />
-    </Box>
+    </AppShell>
   );
 }

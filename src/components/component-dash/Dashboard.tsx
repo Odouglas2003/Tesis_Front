@@ -1,11 +1,14 @@
 import { Grid, Box } from "@mui/material";
+import { People, Work, Language, Psychology } from "@mui/icons-material";
 import StatsCard from "./StatsCards";
 import LineChartSection from "./LineChartSection";
 import DonutChartCard from "./DonutChartCard";
 import BarChartCard from "./BarChartCard";
-import { People, Work, Language, Psychology } from "@mui/icons-material";
 import { DashboardData } from "@/types/interface";
+import { useAppTheme } from "@/app/ThemeProviderClient";
+
 export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
+  const { colors } = useAppTheme();
   const {
     metricasClave,
     contratacionesMensuales,
@@ -14,7 +17,8 @@ export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
     tecnologiasTop,
     personasPorProyecto,
   } = metricsProp;
-  const enCursoCount =(estadoDeProyectos?.porEstado?.["En curso"] as number) ??0;
+
+  const enCursoCount = (estadoDeProyectos?.porEstado?.["En curso"] as number) ?? 0;
 
   const statsData = [
     {
@@ -38,67 +42,69 @@ export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
       label: "Tecnologías registradas",
     },
   ];
+
   const lineData = contratacionesMensuales.datos.map((d) => ({
     name: d.mes,
     value: d.nuevasContrataciones,
   }));
+
   const projectStatus = Object.entries(estadoDeProyectos.porEstado).map(
     ([name, value]) => ({
       name,
       value,
       color:
         name === "En curso"
-          ? "#26A69A"
+          ? colors.accent
           : name === "Finalizado"
-            ? "#29B6F6"
-            : "#546E7A",
+            ? colors.secondary
+            : "rgba(18,48,77,0.42)",
     })
   );
-const collaboratorStatus = Object.entries(estadoDeAsignacion.porEstado).map(
-  ([name, value]) => ({
-    name,
-    value,
-    color:
-      name === "Sobreasignado"
-        ? "#C62828" 
-        : name === "Sin asignación"
-          ? "#9E9E9E" 
-          : name === "Asignado"
-            ? "#00796B" 
-            : name === "Subasignado"
-              ? "#0087FF" 
-              : "#9E9E9E", 
-  })
-);
 
+  const collaboratorStatus = Object.entries(estadoDeAsignacion.porEstado).map(
+    ([name, value]) => ({
+      name,
+      value,
+      color:
+        name === "Sobreasignado"
+          ? "#C06161"
+          : name === "Sin asignación"
+            ? "rgba(18,48,77,0.34)"
+            : name === "Asignado"
+              ? colors.accent
+              : name === "Subasignado"
+                ? colors.secondary
+                : "rgba(18,48,77,0.34)",
+    })
+  );
 
   const techData = tecnologiasTop.map((t) => ({
     name: t.nombre,
     series1: t.cantidad,
     series2: 0,
   }));
+
   const peoplePerProjectData = personasPorProyecto.map((p) => ({
     name: p.nombre,
     series1: p.cantidad,
     series2: 0,
   }));
+
   return (
     <Box
       sx={{
-        width: '100%',
-        maxWidth: '100%',
-        px: '55px',
-        overflow: 'hidden',
-        boxSizing: 'border-box',
+        width: "100%",
+        maxWidth: "100%",
+        overflow: "hidden",
+        boxSizing: "border-box",
       }}
     >
-      {/* Sección de estadísticas principales */}
       <Grid
         container
         spacing={{ xs: 1.5, sm: 2, md: 3 }}
         sx={{
           mb: { xs: 2, sm: 3 },
-          width: '100%',
+          width: "100%",
           mx: 0,
         }}
       >
@@ -111,21 +117,21 @@ const collaboratorStatus = Object.entries(estadoDeAsignacion.porEstado).map(
             md={6}
             lg={3}
             sx={{
-              display: 'flex',
-              '& > *': { width: '100%' }
+              display: "flex",
+              "& > *": { width: "100%" },
             }}
           >
             <StatsCard {...stat} />
           </Grid>
         ))}
       </Grid>
-      {/* Sección de gráficos principales */}
+
       <Grid
         container
         spacing={{ xs: 1.5, sm: 2, md: 3 }}
         sx={{
           mb: { xs: 3, sm: 4 },
-          width: '100%',
+          width: "100%",
           mx: 0,
         }}
       >
@@ -150,12 +156,12 @@ const collaboratorStatus = Object.entries(estadoDeAsignacion.porEstado).map(
           />
         </Grid>
       </Grid>
-      {/* Sección de gráficos de barras */}
+
       <Grid
         container
         spacing={{ xs: 1.5, sm: 2, md: 3 }}
         sx={{
-          width: '100%',
+          width: "100%",
           mx: 0,
         }}
       >

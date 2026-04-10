@@ -31,7 +31,7 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
   setSearchTerm,
   currentSection,
   onAddSuccess,
-  onAssignmentFilterChange,
+  onAssignmentFilterChange: _onAssignmentFilterChange,
 }) => {
   const { colors } = useAppTheme();
   const { projectData, reset } = useProjectSuggestion();
@@ -90,7 +90,17 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        width: "100%",
+        p: { xs: 1.25, md: 1.5 },
+        borderRadius: "22px",
+        backgroundColor: "rgba(252,254,255,0.82)",
+        border: "1px solid rgba(18,48,77,0.08)",
+        boxShadow: "0 16px 36px rgba(18,48,77,0.08)",
+        backdropFilter: "blur(8px)",
+      }}
+    >
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} md>
           <Shearch onSearch={setSearchTerm} />
@@ -111,17 +121,17 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
                 )
               }
               sx={{
-                borderRadius: "20px",
-                backgroundColor: colors.button || "#05223c",
-                color: "#fff",
+                borderRadius: "16px",
+                backgroundColor: colors.button || "#123B66",
+                color: colors.text || "#7DEBDC",
                 textTransform: "none",
-                fontSize: "18px",
-                fontWeight: 500,
+                fontSize: "16px",
+                fontWeight: 600,
                 height: "50px",
                 px: 3,
                 boxShadow: "none",
                 width: "100%",
-                "&:hover": { backgroundColor: "#16324c", boxShadow: "none" },
+                "&:hover": { backgroundColor: colors.primary || "#12304D", boxShadow: "none" },
 
               }}
             >
@@ -139,18 +149,18 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
               startIcon={<AddIcon sx={{ fontSize: "24px" }} />}
               onClick={handleOpenModal}
               sx={{
-                borderRadius: "20px",
-                backgroundColor: "#23FFDC",
-                color: "#002338",
-                fontSize: "20px",
-                fontWeight: 500,
+                borderRadius: "16px",
+                backgroundColor: colors.secondary || "#2A6CA8",
+                color: "#F7FBFF",
+                fontSize: "16px",
+                fontWeight: 600,
                 textTransform: "none",
                 height: "50px",
                 fontFamily: "Poppins, sans-serif",
                 px: 3,
                 boxShadow: "none",
                 width: "100%",
-                "&:hover": { backgroundColor: "#1be0e0", boxShadow: "none" },
+                "&:hover": { backgroundColor: colors.primary || "#12304D", boxShadow: "none" },
               }}
             >
               Agregar
@@ -167,10 +177,10 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "1042px",
-            backgroundColor: "white",
-            border: "2px solid #4F82FF",
+            backgroundColor: "#FCFEFF",
+            border: "1px solid rgba(18,48,77,0.10)",
             boxShadow: 24,
-            borderRadius: "12px",
+            borderRadius: "24px",
             p: 2,
             textAlign: "center",
           }}

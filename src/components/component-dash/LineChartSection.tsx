@@ -19,7 +19,7 @@ export default function LineChartSection({ title, data }: LineChartSectionProps)
       width: "100%", 
       maxWidth: "100%",
       boxSizing: "border-box",
-      backgroundColor:  colors?.background || '#ffffff'
+      backgroundColor:  colors?.card || '#FCFEFF'
     }}>
       <CardContent sx={{
         p: { xs: 2, sm: 3 },
@@ -42,7 +42,7 @@ export default function LineChartSection({ title, data }: LineChartSectionProps)
               fontWeight: 500,
               fontSize: { xs: "14px", sm: "16px" },
               fontFamily: "Poppins, sans-serif",
-              color: "#002338"
+              color: colors?.primary || "#12304D"
             }}
           >
             {title}
@@ -66,21 +66,21 @@ export default function LineChartSection({ title, data }: LineChartSectionProps)
               fontFamily: "Poppins, sans-serif"
             }}
           >
-            10
+            {data.reduce((sum, item) => sum + item.value, 0)}
           </Typography>
           <Chip
             icon={<TrendingUp sx={{ fontSize: { xs: 14, sm: 16 } }} />}
-            label="16.8%"
+            label="Actividad"
             size="small"
             sx={{
-              bgcolor: "#05c1692d",
-              color: "#14CA74",
+              bgcolor: "rgba(114,230,217,0.14)",
+              color: colors?.secondary || "#2A6CA8",
               fontWeight: "bold",
-              borderRadius: "2px",
+              borderRadius: "999px",
               fontSize: { xs: "11px", sm: "13px" },
               height: { xs: 24, sm: 32 },
               "& .MuiChip-icon": {
-                color: "#14CA74",
+                color: colors?.secondary || "#2A6CA8",
               },
               "& .MuiChip-label": {
                 fontSize: { xs: "11px", sm: "13px" },
@@ -111,13 +111,13 @@ export default function LineChartSection({ title, data }: LineChartSectionProps)
                   <stop offset="95%" stopColor={lineColor} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(18,48,77,0.10)" />
               <YAxis
                 axisLine={false}
                 tickLine={false}
                 tick={{
                   fontSize: 12,
-                  fill: "#666"
+                  fill: "rgba(18,48,77,0.60)"
                 }}
               />
               <Area

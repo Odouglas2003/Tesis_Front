@@ -1628,7 +1628,24 @@ export async function deleteJourney(id: string) {
 
 export async function getBrandConfig(): Promise<BrandConfig | null> {
   try {
-    return await request<BrandConfig>({ url: `/api/brand-config`, method: "GET" });
+    const response = await request<
+      | BrandConfig
+      | { status?: string; brand?: BrandConfig | null; brands?: BrandConfig[] }
+    >({ url: `/api/brand-config`, method: "GET" });
+
+    if (!response) return null;
+
+    if ("brand" in response && response.brand) {
+      return response.brand;
+    }
+
+    if ("brands" in response && Array.isArray(response.brands)) {
+      const orderedBrands = [...response.brands];
+      const activeBrand = orderedBrands.reverse().find((item) => item.status === "active");
+      return activeBrand || response.brands[response.brands.length - 1] || null;
+    }
+
+    return response as BrandConfig;
   } catch {
     return null;
   }
@@ -1640,26 +1657,30 @@ export async function createBrandConfig(payload: Partial<BrandConfig>): Promise<
     delete (body as { slug?: string }).slug;
   }
 
-  const res = await api.request<BrandConfig>({
+  const res = await api.request<{ status?: string; brand?: BrandConfig } | BrandConfig>({
     url: `/api/brand-config`,
     method: "POST",
     headers: jsonHeaders,
     data: body,
   });
   if (!is2xx(res.status)) throw new Error(`Error ${res.status}`);
-  return res.data;
+  return "brand" in res.data && res.data.brand ? res.data.brand : (res.data as BrandConfig);
 }
 
 export async function updateBrandConfig(payload: Partial<BrandConfig>): Promise<BrandConfig> {
   const body: Partial<BrandConfig> & Record<string, unknown> = { ...payload };
+  const brandId = String((body as { id?: string }).id ?? "").trim();
   delete (body as { id?: string }).id;
   if (typeof body.slug === "string" && body.slug.trim() === "") {
     delete (body as { slug?: string }).slug;
   }
+  if (!brandId) {
+    throw new Error("No se encontró el id de la configuración para actualizar.");
+  }
   try {
     console.debug('[brand-config][update] body', body);
-    const res = await api.request<BrandConfig>({
-      url: `/api/brand-config`,
+    const res = await api.request<{ status?: string; brand?: BrandConfig } | BrandConfig>({
+      url: `/api/brand-config/${brandId}`,
       method: "PUT",
       headers: jsonHeaders,
       data: body,
@@ -1669,7 +1690,7 @@ export async function updateBrandConfig(payload: Partial<BrandConfig>): Promise<
       throw new Error(`Error ${res.status}`);
     }
     console.debug('[brand-config][update] success', res.data);
-    return res.data;
+    return "brand" in res.data && res.data.brand ? res.data.brand : (res.data as BrandConfig);
   } catch (err: unknown) {
     const e = err as { message?: string; response?: { status?: number; data?: unknown } };
     console.error('[brand-config][update] error', e?.message, e?.response?.status, e?.response?.data);

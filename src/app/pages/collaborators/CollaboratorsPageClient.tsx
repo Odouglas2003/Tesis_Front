@@ -1,6 +1,5 @@
   "use client";
   import React, { useState } from "react";
-  import Navbar from "@/components/navbar/pages";
   import EmployeeTable from "@/components/components-collaborators/TableEmployes/TableEmployes";
   import CardsEmployes from "@/components/components-collaborators/cards-employes/CardEmployes";
   import SearchCardToggle from "@/components/SearchCard/SearchActionsBar";
@@ -8,6 +7,7 @@
   import { Box } from "@mui/material";
   import { fetchCollaborators } from "@/services/api";
   import { Employee, ColumnConfigColaborador } from "@/types/interface";
+  import AppShell from "@/components/layout/AppShell";
 
   interface CollaboratorsPageClientProps {
     collaboratorsProp: Employee[];
@@ -36,40 +36,36 @@
     const displayedCollaborators = aiFilteredCollaborators !== null ? aiFilteredCollaborators : collaborators;
 
     return (
-      <>
+      <AppShell
+        title="Colaboradores"
+        description="Consulta disponibilidad, roles y asignaciones para armar equipos de forma más precisa."
+      >
+        <Box sx={{ mb: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
+            <SearchCardToggle
+              viewMode={viewMode}
+              setViewMode={setViewMode}
+              setSearchTerm={setSearchTerm}
+              currentSection="colaboradores"
+              onAddSuccess={handleAddSuccess}
+              onAddClick={() => { }}
+              onAssignmentFilterChange={handleAssignmentFilterChange}
+            />
+            <SmartSearchFilter
+              items={collaborators}
+              storageKey="smartSearch_colaboradores"
+              onFilterChange={(filtered) => setAiFilteredCollaborators(filtered as Employee[] | null)}
+            />
+          </Box>
+        </Box>
+
         <Box>
-          <Navbar />
+          {viewMode === "cards" ? (
+            <CardsEmployes collaboratorProp={displayedCollaborators} searchTerm={searchTerm} />
+          ) : (
+            <EmployeeTable collaboratorProp={displayedCollaborators} searchTerm={searchTerm} columnsprop={columnsProp} />
+          )}
         </Box>
-        <Box sx={{ marginLeft: "60px", marginRight: "60px" }}>
-          <Box sx={{ mb: 2, fontSize: "1.25rem", color: "#000" }}>Colaboradores</Box>
-
-          <Box sx={{ mb: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
-              <SearchCardToggle
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-                setSearchTerm={setSearchTerm}
-                currentSection="colaboradores"
-                onAddSuccess={handleAddSuccess}
-                onAddClick={() => { }}
-                onAssignmentFilterChange={handleAssignmentFilterChange}
-              />
-              <SmartSearchFilter
-                items={collaborators}
-                storageKey="smartSearch_colaboradores"
-                onFilterChange={(filtered) => setAiFilteredCollaborators(filtered as Employee[] | null)}
-              />
-            </Box>
-          </Box>
-
-          <Box>
-            {viewMode === "cards" ? (
-              <CardsEmployes collaboratorProp={displayedCollaborators} searchTerm={searchTerm} />
-            ) : (
-              <EmployeeTable collaboratorProp={displayedCollaborators} searchTerm={searchTerm} columnsprop={columnsProp} />
-            )}
-          </Box>
-        </Box>
-      </>
+      </AppShell>
     );
   }

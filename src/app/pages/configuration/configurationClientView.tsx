@@ -1,10 +1,11 @@
 "use client";
+
 import React, { useEffect, useMemo } from "react";
-import Navbar from "@/components/navbar/pages";
+import { Box, Typography } from "@mui/material";
 import SettingsPanel from "@/components/configuration/SettingsPanel/SettingsPanel";
-import { Box } from "@mui/material";
 import { useAuthRole } from "@/app/hooks/useAuthRole";
 import { useRouter } from "next/navigation";
+import AppShell from "@/components/layout/AppShell";
 
 export default function ConfigurationClientView() {
   const router = useRouter();
@@ -13,44 +14,31 @@ export default function ConfigurationClientView() {
     () => isManager === undefined || isAdmin === undefined,
     [isManager, isAdmin]
   );
+
   useEffect(() => {
     if (isManager) {
       router.replace("/pages/dash");
     }
   }, [isManager, router]);
 
-  if (loading) {
-    return null;
-  }
-
-  if (isManager) {
+  if (loading || isManager) {
     return null;
   }
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center">
-        <p>No tenés permisos para ver esta página.</p>
-      </div>
+      <Box className="min-h-screen w-full flex items-center justify-center">
+        <Typography>No tenes permisos para ver esta pagina.</Typography>
+      </Box>
     );
   }
+
   return (
-    <div className="min-h-screen w-full" style={{ marginBottom: "220px" }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          position: "relative",
-          top: 0,
-          left: 0,
-          width: "100%",
-          zIndex: 100,
-        }}
-      >
-        <Navbar />
-      </Box>
+    <AppShell
+      title="Configuración"
+      description="Administra branding, catálogos, permisos y estructura operativa de la plataforma."
+    >
       <SettingsPanel />
-    </div>
+    </AppShell>
   );
 }

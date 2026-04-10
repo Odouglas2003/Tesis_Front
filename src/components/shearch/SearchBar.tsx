@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { TextField, InputAdornment } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
+import { useAppTheme } from "@/app/ThemeProviderClient";
+
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
 }
+
 export default function Search({ onSearch }: SearchProps) {
+  const { colors } = useAppTheme();
   const [, setSearchTerm] = useState<string>("");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,36 +19,39 @@ export default function Search({ onSearch }: SearchProps) {
 
   return (
     <TextField
-      placeholder="Buscar"
+      placeholder="Buscar por nombre, estado o referencia"
       variant="outlined"
       onChange={handleSearchChange}
       fullWidth
       InputProps={{
-        sx: { height: "50px", paddingLeft: "10px", color: "#002338" },
+        sx: {
+          minHeight: "50px",
+          pl: 1,
+          color: colors.primary,
+          backgroundColor: "rgba(244,248,251,0.92)",
+          borderRadius: "18px",
+        },
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: "#002338", fontSize: "24px" }} />
+            <SearchIcon sx={{ color: "rgba(18,48,77,0.58)", fontSize: "1.25rem" }} />
           </InputAdornment>
         ),
       }}
       sx={{
-        fontFamily: "Poppins, sans-serif",
-        fontSize: "20px",
-        color: "#002338",
-        maxWidth: "778px",
-        "& .MuiOutlinedInput-root": {
-          borderRadius: "20px",
-          height: "50px",
-          backgroundColor: "#fff",
-          "& fieldset": {
-            borderColor: "#002338",
-          },
+        maxWidth: "820px",
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "rgba(18,48,77,0.12)",
+        },
+        "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "rgba(42,108,168,0.22)",
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: colors.secondary,
         },
         "& input::placeholder": {
-          color: "#002338",
+          color: "rgba(18,48,77,0.52)",
           opacity: 1,
-          fontSize: "20px",
-          fontFamily: "poppins, sans-serif",
+          fontSize: "0.96rem",
         },
       }}
     />

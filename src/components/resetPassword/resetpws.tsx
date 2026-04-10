@@ -1,27 +1,29 @@
 "use client";
-import React from "react";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Box,
-  Grid2,
-  Paper,
   Typography,
   TextField,
   InputAdornment,
   Button,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import LoadingAnimation from "../LoadingAnimation/page";
-import Image from "next/image";
-import { resetPassword } from "@/services/api";
 import ModalComponent from "@/components/message/MessageModal";
-import { useAppTheme } from "@/app/ThemeProviderClient";
+import AuthSplitLayout, {
+  authFieldSx,
+  authPrimaryButtonSx,
+} from "@/components/auth/AuthSplitLayout";
+import { resetPassword } from "@/services/api";
+import { AUTH_PALETTE } from "@/theme/appPalette";
 
 const ResetPasswordForm = () => {
-  const { colors } = useAppTheme();
   const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -54,6 +56,18 @@ const ResetPasswordForm = () => {
     }
   }, []);
 
+  const validateForm = () => {
+    if (!password) {
+      setError("La contraseña es requerida");
+      return false;
+    }
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -72,22 +86,11 @@ const ResetPasswordForm = () => {
         localStorage.removeItem("recpws");
         router.push("/");
       }, 2500);
-    } catch (error) {
+    } catch {
       showDialog("error", "Error al actualizar la contraseña");
     } finally {
       setLoading(false);
     }
-  };
-  const validateForm = () => {
-    if (!password) {
-      setError("La contraseña es requerida");
-      return false;
-    }
-    if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
-      return false;
-    }
-    return true;
   };
 
   if (loading) {
@@ -96,7 +99,7 @@ const ResetPasswordForm = () => {
         sx={{
           position: "fixed",
           inset: 0,
-          bgcolor: "rgba(249,249,249,.9)",
+          bgcolor: AUTH_PALETTE.overlayBg,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -109,194 +112,129 @@ const ResetPasswordForm = () => {
   }
 
   return (
-    <Grid2
-      container
-      component="main"
-      sx={{ height: "100vh", bgcolor: "#f9f9f9" }}
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Paper
-        elevation={6}
-        sx={{
-          width: 1113,
-          height: 663,
-          borderRadius: 2,
-          overflow: "hidden",
-          display: "flex",
-        }}
+    <>
+      <AuthSplitLayout
+        title="Restablecer acceso"
+        subtitle="Definí una nueva contraseña para volver a ingresar con tu perfil de trabajo."
+        headerAction={
+          <Button
+            variant="outlined"
+            startIcon={<KeyboardArrowLeftIcon />}
+            onClick={() => router.push("/")}
+            sx={{
+              alignSelf: "flex-start",
+              px: 1.25,
+              minHeight: "40px",
+              borderRadius: "14px",
+              textTransform: "none",
+              color: AUTH_PALETTE.title,
+              borderColor: "rgba(18,48,77,0.12)",
+              fontWeight: 600,
+            }}
+          >
+            Volver
+          </Button>
+        }
+        heroTitle={
+          <>
+            Seguridad simple
+            <Box component="span" sx={{ display: "block", color: AUTH_PALETTE.textAccent }}>
+              para volver a operar rápido.
+            </Box>
+          </>
+        }
+        heroDescription="El acceso conserva la misma experiencia sobria y corporativa del resto de la plataforma, sin fricción innecesaria."
       >
-        {/* IZQUIERDA --------------------------------------------------- */}
-        <Box
-          sx={{
-            width: "40%",
-            bgcolor: colors.navbar || "#0087FF",
-            color: "#fff",
-            pl: 4,
-            pr: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Image
-            src={colors.logo || "/logo.svg"}
-            alt="Logo Rubik"
-            width={180}
-            height={180}
-            style={{ marginTop: "86px" }}
-          />
-          <Box textAlign="center" mt={"3rem"}>
-            <Typography
-              textAlign={"left"}
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 700,
-                fontSize: "52.92px",
-                color: "#FFFFFF",
-              }}
-            >
-              SIMPLIFICA TU EQUIPO,
-            </Typography>
-            <Typography
-              textAlign={"left"}
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 700,
-                fontSize: "52.92px",
-                color: "#23FFDC",
-                marginTop: "2rem",
-              }}
-            >
-              OPTIMIZA TU PLANTILLA
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* DERECHA ----------------------------------------------------- */}
         <Box
           component="form"
           onSubmit={handleSubmit}
           sx={{
-            width: "60%",
-            pl: 4,
-            pr: 4,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            gap: 3,
-            bgcolor: "#ffffffff",
+            gap: 2.25,
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              fontWeight: 600,
-              fontSize: "24px",
-              color: "#002338",
-              mt: "86px",
-            }}
-          >
-            Recuperar Contraseña
-          </Typography>
-
-          {/* Password */}
           <TextField
             fullWidth
-            placeholder="Contraseña"
+            disabled
+            value={email}
+            placeholder="Email"
+            sx={authFieldSx}
+          />
+
+          <TextField
+            fullWidth
+            placeholder="Nueva contraseña"
             required
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+              endAdornment: (
+                <InputAdornment position="end">
                   {showPassword ? (
                     <VisibilityIcon
-                      sx={{ cursor: "pointer", color: "black" }}
-                      onClick={() => setShowPassword((s) => !s)}
+                      sx={{ cursor: "pointer", color: AUTH_PALETTE.inputText }}
+                      onClick={() => setShowPassword((current) => !current)}
                     />
                   ) : (
                     <VisibilityOffIcon
-                      sx={{ cursor: "pointer", color: "black" }}
-                      onClick={() => setShowPassword((s) => !s)}
+                      sx={{ cursor: "pointer", color: AUTH_PALETTE.inputText }}
+                      onClick={() => setShowPassword((current) => !current)}
                     />
                   )}
                 </InputAdornment>
               ),
             }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 5,
-                bgcolor: "#F8F8F8",
-                color: "black"
-              },
-            }}
+            sx={authFieldSx}
           />
 
-          {/* Repetir Contraseña */}
           <TextField
             fullWidth
-            placeholder="Repetir Contraseña"
+            placeholder="Repetir contraseña"
             required
             type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+              endAdornment: (
+                <InputAdornment position="end">
                   {showConfirmPassword ? (
                     <VisibilityIcon
-                      sx={{ cursor: "pointer", color: "black" }}
-                      onClick={() => setShowConfirmPassword((s) => !s)}
+                      sx={{ cursor: "pointer", color: AUTH_PALETTE.inputText }}
+                      onClick={() => setShowConfirmPassword((current) => !current)}
                     />
                   ) : (
                     <VisibilityOffIcon
-                      sx={{ cursor: "pointer", color: "black" }}
-                      onClick={() => setShowConfirmPassword((s) => !s)}
+                      sx={{ cursor: "pointer", color: AUTH_PALETTE.inputText }}
+                      onClick={() => setShowConfirmPassword((current) => !current)}
                     />
                   )}
                 </InputAdornment>
               ),
             }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 5,
-                bgcolor: "#F8F8F8",
-                color: "black"
-              },
-            }}
+            sx={authFieldSx}
           />
 
-          {/* Error */}
           {error && (
-            <Typography color="error" fontSize={14} textAlign="center">
+            <Typography
+              sx={{
+                color: "#C04646",
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                textAlign: "center",
+              }}
+            >
               {error}
             </Typography>
           )}
 
-          {/* Botón Registrarme */}
-          <Button
-            variant="contained"
-            type="submit"
-            onClick={handleSubmit}
-            disabled={loading}
-            sx={{
-              bgcolor: "#002338",
-              color: "#23FFDC",
-              borderRadius: "20px",
-              py: 1.2,
-              textTransform: "none",
-              fontFamily: "Poppins",
-              fontWeight: 500,
-              fontSize: "20px",
-            }}
-          >
-            {loading ? "Procesando..." : "Cambiar Contraseña"}
+          <Button variant="contained" type="submit" sx={authPrimaryButtonSx}>
+            Guardar nueva contraseña
           </Button>
         </Box>
-      </Paper>
+      </AuthSplitLayout>
+
       <ModalComponent
         open={dialog.open}
         variant={dialog.variant}
@@ -304,7 +242,7 @@ const ResetPasswordForm = () => {
         onClose={closeDialog}
         onConfirm={dialog.onConfirm}
       />
-    </Grid2>
+    </>
   );
 };
 

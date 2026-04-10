@@ -24,7 +24,7 @@ export default function DonutChartCard({ title, data, total }: DonutChartCardPro
                 width: "100%", 
                 maxWidth: "100%",
                 boxSizing: "border-box",
-                backgroundColor: colors?.background || '#ffffff'
+                backgroundColor: colors?.card || '#FCFEFF'
             }}
         >
             <CardContent sx={{ 
@@ -38,8 +38,8 @@ export default function DonutChartCard({ title, data, total }: DonutChartCardPro
                     component="div" 
                     sx={{ 
                         fontFamily: "Poppins", 
-                        fontWeight: 500, 
-                        color: "#002338",
+                        fontWeight: 600, 
+                        color: colors?.primary || "#12304D",
                         fontSize: { xs: "14px", sm: "16px" },
                         mb: { xs: 1, sm: 2 }
                     }}
@@ -85,19 +85,19 @@ export default function DonutChartCard({ title, data, total }: DonutChartCardPro
                             sx={{ 
                                 fontSize: { xs: "12px", sm: "14px" }, 
                                 fontWeight: 500, 
-                                color: "#949596", 
+                                color: "rgba(18,48,77,0.58)", 
                                 fontFamily: "Poppins" 
                             }}
                         >
                             Total
                         </Typography>
                         <Typography 
-                            variant="h4" 
+                                variant="h4" 
                             component="div" 
                             sx={{ 
                                 fontWeight: 600, 
                                 fontSize: { xs: "24px", sm: "28px", md: "32px" }, 
-                                color: "#000", 
+                                color: colors?.primary || "#12304D", 
                                 fontFamily: "Poppins",
                                 lineHeight: 1
                             }}
@@ -142,7 +142,7 @@ export default function DonutChartCard({ title, data, total }: DonutChartCardPro
                                 sx={{
                                     fontSize: { xs: "11px", sm: "13px" }, 
                                     fontWeight: 500,
-                                    color: "#585757",
+                                    color: "rgba(18,48,77,0.72)",
                                     fontFamily: "Poppins",
                                     whiteSpace: "nowrap",
                                     overflow: "visible" 

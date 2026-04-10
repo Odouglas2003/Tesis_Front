@@ -40,10 +40,9 @@ export default function BarChartCard({ title, data }: BarChartCardProps) {
       height: { xs: "400px", sm: "500px", md: "600px", lg: "649px" },
       width: "100%",
       maxWidth: "100%",
-      boxShadow: 3,
       borderRadius: { xs: "20px", sm: "30px", md: "38.38px" },
       boxSizing: "border-box",
-      backgroundColor:  colors?.background || '#ffffff'
+      backgroundColor: colors?.card || '#FCFEFF'
     }}>
       <CardContent sx={{
         p: { xs: 2, sm: 3 },
@@ -55,8 +54,8 @@ export default function BarChartCard({ title, data }: BarChartCardProps) {
           mb: { xs: 1, sm: 2 },
           fontFamily: "Poppins, sans-serif",
           fontSize: { xs: "14px", sm: "16px" },
-          fontWeight: 500,
-          color: "#002338"
+          fontWeight: 600,
+          color: colors?.primary || "#12304D"
         }}>
           {title}
         </Typography>
@@ -80,14 +79,14 @@ export default function BarChartCard({ title, data }: BarChartCardProps) {
                   left: 40
                 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(18,48,77,0.10)" />
                 <XAxis
                   type="number"
                   axisLine={false}
                   tickLine={false}
                   tick={{
                     fontSize: 12,
-                    fill: "#666"
+                    fill: "rgba(18,48,77,0.58)"
                   }}
                 />
                 <YAxis
@@ -97,7 +96,7 @@ export default function BarChartCard({ title, data }: BarChartCardProps) {
                   tickLine={false}
                   tick={{
                     fontSize: 12,
-                    fill: "#000",
+                    fill: colors?.primary || "#12304D",
                     fontFamily: "Poppins, sans-serif"
                   }}
                   interval={0}
@@ -129,13 +128,13 @@ export default function BarChartCard({ title, data }: BarChartCardProps) {
                 top: -32,
                 left: 0,
                 fontSize: { xs: '13px', sm: '15px' },
-                color: '#222',
+                color: colors?.primary || '#12304D',
                 fontWeight: 700,
                 fontFamily: 'Poppins, sans-serif',
                 textAlign: 'left',
                 letterSpacing: 0.2,
                 userSelect: 'none',
-                background: '#fff',
+                background: colors?.card || '#FCFEFF',
                 px: 0.5,
               }}
             >

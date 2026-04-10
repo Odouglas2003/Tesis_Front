@@ -10,6 +10,7 @@ import { exportAnalyticsReportClient } from "@/services/api";
 import MessageModal from "@/components/message/MessageModal";
 import SmartSearch, { AnalyticsResponsePayload } from "@/components/SmartSearch/SmartSearch";
 import { Employee } from "@/types/interface";
+import { useAppTheme } from "@/app/ThemeProviderClient";
 
 interface SmartSearchFilterProps {
   items: unknown[];
@@ -39,6 +40,7 @@ export default function SmartSearchFilter({
   localSearchFallback,
   itemLabelPlural,
 }: SmartSearchFilterProps) {
+  const { colors } = useAppTheme();
   const [openSearch, setOpenSearch] = useState(false);
   const [aiFilteredItems, setAiFilteredItems] = useState<unknown[] | null>(null);
   const [aiInterpretation, setAiInterpretation] = useState<string>("");
@@ -84,7 +86,7 @@ export default function SmartSearchFilter({
         setAiInterpretation(interpretation);
         onFilterChange?.(restored as unknown[], interpretation);
       }
-    } catch (e) {
+    } catch {
     }
   }, [items, storageKey]);
 
@@ -261,7 +263,7 @@ export default function SmartSearchFilter({
           if ((displayMode || 'inline') === 'snackbar') setShowSnackbar(true);
           return;
         }
-      } catch (e) {
+      } catch {
         // ignore parsing errors here
       }
 
@@ -304,7 +306,7 @@ export default function SmartSearchFilter({
               if (exportCollection === 'vacancy') saved.aiFilteredVacancyIds = idsFromFuzzy;
               if (exportCollection === 'project') saved.aiFilteredProjectIds = idsFromFuzzy;
               localStorage.setItem(storageKey, JSON.stringify(saved));
-            } catch (e) {
+            } catch {
             }
             return;
           }
@@ -321,7 +323,7 @@ export default function SmartSearchFilter({
           if (exportCollection === 'vacancy') saved.aiFilteredVacancyIds = [];
           if (exportCollection === 'project') saved.aiFilteredProjectIds = [];
           localStorage.setItem(storageKey, JSON.stringify(saved));
-        } catch (e) { }
+        } catch { }
         return;
       }
 
@@ -343,7 +345,7 @@ export default function SmartSearchFilter({
         if (exportCollection === 'vacancy') saved.aiFilteredVacancyIds = ids;
         if (exportCollection === 'project') saved.aiFilteredProjectIds = ids;
         localStorage.setItem(storageKey, JSON.stringify(saved));
-      } catch (e) {
+      } catch {
       }
     } catch (err) {
       console.error("Error procesando resultados de IA:", err);
@@ -397,32 +399,35 @@ export default function SmartSearchFilter({
     setAiInterpretation("");
     setAiError("");
     setIsSearching(false);
-    try { localStorage.removeItem(storageKey); } catch (e) { }
+    try { localStorage.removeItem(storageKey); } catch { }
     onFilterChange?.(null, "");
     setShowSnackbar(false);
   };
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
         <Button
           variant="outlined"
           disabled={isSearching}
           sx={{
-            bgcolor: aiFilteredItems !== null ? "#002338" : "#002338",
-            borderRadius: "20px",
+            bgcolor: aiFilteredItems !== null ? colors.button : colors.navbar,
+            borderRadius: "18px",
             textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 500,
+            fontSize: "15px",
+            fontWeight: 600,
             height: "50px",
             width: "fit-content",
             minWidth: "unset",
             px: 2,
             fontFamily: "Poppins, sans-serif",
-            color: "#fff",
-            border: "none",
+            color: aiFilteredItems !== null ? colors.text : "#F7FBFF",
+            border: "1px solid transparent",
             transition: "all 0.3s ease",
-            "&:hover": { bgcolor: aiFilteredItems !== null ? "#002338" : "#003a52", border: "none" },
+            "&:hover": {
+              bgcolor: colors.primary,
+              border: "1px solid transparent",
+            },
             "&:disabled": { bgcolor: "#cccccc", color: "#666" }
           }}
           startIcon={isSearching ? <CircularProgress size={20} sx={{ color: "#666" }} /> : aiFilteredItems !== null ? <FilterListOffIcon fontSize="medium" /> : <AutoAwesomeIcon fontSize="medium" />}
@@ -437,12 +442,19 @@ export default function SmartSearchFilter({
             disabled={isExporting}
             startIcon={isExporting ? <CircularProgress size={16} sx={{ color: "#666" }} /> : <GetAppIcon />}
             sx={{
-              borderRadius: "20px",
+              borderRadius: "18px",
               textTransform: "none",
               fontSize: "14px",
               height: "50px",
               px: 2,
               fontFamily: "Poppins, sans-serif",
+              color: colors.primary,
+              borderColor: "rgba(18,48,77,0.14)",
+              backgroundColor: "rgba(252,254,255,0.84)",
+              "&:hover": {
+                borderColor: "rgba(42,108,168,0.22)",
+                backgroundColor: "rgba(244,248,251,0.9)",
+              },
             }}
             onClick={handleExport}
           >
@@ -452,19 +464,65 @@ export default function SmartSearchFilter({
       </Box>
 
       {aiFilteredItems !== null && (displayMode || 'inline') === 'inline' && (
-        <Paper elevation={0} sx={{ mb: 2, mt: 1, p: '6px 8px', borderRadius: 2, display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center', bgcolor: '#f6f8fa', border: '1px solid #e6eef2' }}>
+        <Paper
+          elevation={0}
+          sx={{
+            mb: 2,
+            mt: 1,
+            p: "8px 10px",
+            borderRadius: "16px",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1,
+            alignItems: "center",
+            bgcolor: "rgba(252,254,255,0.84)",
+            border: "1px solid rgba(18,48,77,0.08)",
+          }}
+        >
           <Chip
             size="small"
             icon={<CheckCircleIcon />}
             label={`Mostrando ${aiFilteredItems.length} de ${items.length} ${pluralLabel}`}
             aria-label="mostrando-resultados"
-            sx={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, bgcolor: "#002338", color: "#fff", pl: 1, pr: 1 }}
+            sx={{
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 600,
+              bgcolor: colors.button,
+              color: colors.text,
+              pl: 1,
+              pr: 1,
+            }}
           />
         </Paper>
       )}
 
-      <Dialog open={openSearch} onClose={() => { if (!isSearching) setOpenSearch(false); }} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 3, boxShadow: '0 8px 32px rgba(0, 35, 56, 0.12)', maxHeight: '80vh' } }}>
-        <DialogTitle sx={{ fontFamily: "Poppins, sans-serif", color: "#002338", bgcolor: "#ffffff", fontSize: "1.5rem", fontWeight: 600, pb: 2, borderBottom: "1px solid #f0f0f0" }}>Buscar con IA</DialogTitle>
+      <Dialog
+        open={openSearch}
+        onClose={() => { if (!isSearching) setOpenSearch(false); }}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            borderRadius: "24px",
+            boxShadow: "0 24px 70px rgba(18,48,77,0.16)",
+            maxHeight: "80vh",
+            border: "1px solid rgba(18,48,77,0.08)",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            fontFamily: "Poppins, sans-serif",
+            color: colors.primary,
+            bgcolor: "#ffffff",
+            fontSize: "1.4rem",
+            fontWeight: 700,
+            pb: 2,
+            borderBottom: "1px solid rgba(18,48,77,0.08)",
+          }}
+        >
+          Buscar con IA
+        </DialogTitle>
         <DialogContent sx={{ bgcolor: "#ffffff", pt: 3, pb: 3, minHeight: '400px', maxHeight: 'calc(80vh - 100px)', overflowY: 'auto' }}>
           <SmartSearch
             placeholder={placeholder || "Ej: colaboradores sin proyectos, desarrolladores senior..."}
@@ -494,9 +552,38 @@ export default function SmartSearchFilter({
             {aiError}
           </Alert>
         ) : (
-          <Paper elevation={4} sx={{ p: 1, display: 'flex', gap: 1, alignItems: 'center', minWidth: 280 }}>
-            <Chip size="small" icon={<CheckCircleIcon />} label={`Mostrando ${aiFilteredItems?.length ?? 0} de ${items.length}`} sx={{ bgcolor: '#002338', color: '#fff' }} />
-            {aiInterpretation && <Box component="span" sx={{ ml: 1, maxWidth: 420, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{aiInterpretation}</Box>}
+          <Paper
+            elevation={4}
+            sx={{
+              p: 1,
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+              minWidth: 280,
+              borderRadius: "18px",
+            }}
+          >
+            <Chip
+              size="small"
+              icon={<CheckCircleIcon />}
+              label={`Mostrando ${aiFilteredItems?.length ?? 0} de ${items.length}`}
+              sx={{ bgcolor: colors.button, color: colors.text }}
+            />
+            {aiInterpretation && (
+              <Box
+                component="span"
+                sx={{
+                  ml: 1,
+                  maxWidth: 420,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  color: colors.primary,
+                }}
+              >
+                {aiInterpretation}
+              </Box>
+            )}
           </Paper>
         )}
       </Snackbar>

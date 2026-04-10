@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { Box,  } from "@mui/material";
 import SmartSearchFilter from '@/components/SmartSearch/SmartSearchFilter';
-import Navbar from "@/components/navbar/pages";
 import VacanciesTable from "@/components/component-vacancies/VacanciesTable/VacanciesTable";
 import VacanciesCards from "@/components/component-vacancies/CardVacancie/CardVacancie";
 import SearchCardToggle from "@/components/SearchCard/SearchActionsBar";
 import { fetchVacancies } from "@/services/api";
 import { Vacancie, Employee } from "@/types/interface";
+import AppShell from "@/components/layout/AppShell";
 
 // Clave para localStorage
 const STORAGE_KEY = 'vacancy_ai_filter_state';
@@ -32,7 +32,6 @@ export default function VacanciesPageClient({
   const [vacancies, setVacancies] = useState(vacanciesProp);
   const [aiFilteredVacancies, setAiFilteredVacancies] = useState<Vacancie[] | null>(null);
   const [aiInterpretation, setAiInterpretation] = useState<string>("");
-  const [aiError, setAiError] = useState<string>("");
 
   // Cargar el filtro guardado al montar el componente
   useEffect(() => {
@@ -197,71 +196,55 @@ export default function VacanciesPageClient({
 
   
 
-  const handleClearAIFilter = () => {
-    setAiFilteredVacancies(null);
-    setAiInterpretation("");
-    setAiError("");
-    localStorage.removeItem(STORAGE_KEY);
-  };
-
   const displayedVacancies = aiFilteredVacancies !== null ? aiFilteredVacancies : vacancies;
 
   return (
-    <>
+    <AppShell
+      title="Vacantes"
+      description="Centraliza necesidades de talento, prioridades y estados de cobertura para cada proyecto."
+    >
+      <Box sx={{ mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
+          <SearchCardToggle
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+            setSearchTerm={setSearchTerm}
+            currentSection="vacante"
+            onAddClick={() => {}}
+            onAddSuccess={handleAddSuccess}
+          />
+          <SmartSearchFilter
+            items={vacancies}
+            storageKey={STORAGE_KEY}
+            placeholder="Ej: vacantes abiertas, vacantes senior..."
+            initialSuggestions={[
+              "vacantes abiertas",
+              "vacantes senior",
+              "vacantes en proceso",
+              "vacantes recientes",
+              "desarrolladores junior"
+            ]}
+            exportCollection="vacancy"
+            localSearchFallback={(q, _items) => smartLocalSearch(q)}
+            onFilterChange={(filtered, interpretation) => {
+              setAiFilteredVacancies(filtered as Vacancie[] | null);
+              setAiInterpretation(interpretation || "");
+            }}
+          />
+        </Box>
+      </Box>
+
       <Box>
-        <Navbar />
+        {viewMode === "cards" ? (
+          <VacanciesCards
+            vacanciesProp={displayedVacancies}
+            searchTerm={searchTerm}
+            collaboratorProp={collaboratorProp}
+          />
+        ) : (
+          <VacanciesTable vacanciesProp={displayedVacancies} searchTerm={searchTerm} />
+        )}
       </Box>
-      <Box
-        sx={{
-          marginLeft: "60px",
-          marginRight: "60px",
-        }}
-      >
-        <Box sx={{ mb: 2, fontSize: "1.25rem", color: "#000" }}>Vacantes</Box>
-
-        <Box sx={{ mb: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
-            <SearchCardToggle
-              viewMode={viewMode}
-              setViewMode={setViewMode}
-              setSearchTerm={setSearchTerm}
-              currentSection="vacante"
-              onAddClick={() => {}}
-              onAddSuccess={handleAddSuccess}
-            />
-            <SmartSearchFilter
-              items={vacancies}
-              storageKey={STORAGE_KEY}
-              placeholder="Ej: vacantes abiertas, vacantes senior..."
-              initialSuggestions={[
-                "vacantes abiertas",
-                "vacantes senior",
-                "vacantes en proceso",
-                "vacantes recientes",
-                "desarrolladores junior"
-              ]}
-              exportCollection="vacancy"
-              localSearchFallback={(q, _items) => smartLocalSearch(q)}
-              onFilterChange={(filtered, interpretation) => {
-                setAiFilteredVacancies(filtered as Vacancie[] | null);
-                setAiInterpretation(interpretation || "");
-              }}
-            />
-          </Box>
-        </Box>
-
-        <Box>
-          {viewMode === "cards" ? (
-            <VacanciesCards
-              vacanciesProp={displayedVacancies}
-              searchTerm={searchTerm}
-              collaboratorProp={collaboratorProp}
-            />
-          ) : (
-            <VacanciesTable vacanciesProp={displayedVacancies} searchTerm={searchTerm} />
-          )}
-        </Box>
-      </Box>
-    </>
+    </AppShell>
   );
 }

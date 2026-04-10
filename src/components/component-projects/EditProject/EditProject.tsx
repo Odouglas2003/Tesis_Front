@@ -116,7 +116,7 @@ export default function EditProject({
         showDialog("success", "Proyecto actualizado correctamente");
         router.push("/pages/detail/project_detail/" + editedProject.id);
       }
-    } catch (error) {
+    } catch {
       showDialog("error", "Error al actualizar el proyecto");
     }
   };
@@ -274,7 +274,7 @@ export default function EditProject({
                     }}
                   >
                     <img
-                      src={tempImageUrl ? tempImageUrl : "/logo.svg"}
+                      src={tempImageUrl ? tempImageUrl : "/image-login.png"}
                       alt="Logo"
                       style={{
                         maxWidth: "80%",

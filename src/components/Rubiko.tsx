@@ -86,7 +86,10 @@ export default function Rubiko() {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.detail || "Ocurrió un error en el servidor de IA."
+          errorData.detail ||
+            errorData.error ||
+            errorData.message ||
+            "Ocurrió un error en el servidor de IA."
         );
       }
 

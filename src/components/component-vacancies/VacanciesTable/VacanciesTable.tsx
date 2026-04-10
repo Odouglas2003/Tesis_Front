@@ -22,6 +22,7 @@ import { useAuthRole } from "@/app/hooks/useAuthRole";
 import { useColumns } from "@/app/hooks/useColumns";
 import { deleteVacancy } from "@/services/api";
 import ModalComponent from "@/components/message/MessageModal";
+import { useAppTheme } from "@/app/ThemeProviderClient";
 
 interface Props {
   searchTerm: string;
@@ -30,6 +31,7 @@ interface Props {
 
 export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
   const { isAdmin, currentUser } = useAuthRole();
+  const { colors } = useAppTheme();
   const {
     columns,
     loading: loadingColumns,
@@ -96,26 +98,21 @@ export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
     setPage(0);
   };
 
-  const paginated = vacancies.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
-
   return (
     <Paper
       sx={{
         overflow: "hidden",
-        marginLeft: "60px",
-        marginRight: "60px",
-        borderRadius: "20px",
-        backgroundColor: "#ffffff", 
+        borderRadius: "24px",
+        backgroundColor: colors.card,
+        border: "1px solid rgba(18,48,77,0.08)",
+        boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
       }}
     >
       <TableContainer
         sx={{
           maxHeight: 700,
-          borderRadius: "20px",
-          backgroundColor: "#ffffff", 
+          borderRadius: "24px",
+          backgroundColor: colors.card, 
         }}
       >
         <Table stickyHeader aria-label="sticky table">
@@ -140,12 +137,12 @@ export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
                       key={column.field}
                       align="center"
                       style={{
-                        backgroundColor: "#BDE0FF",
+                        backgroundColor: "rgba(42,108,168,0.10)",
                         textAlign: "center",
-                        fontWeight: "500",
+                        fontWeight: "600",
                         fontFamily: "Poppins",
-                        fontSize: "16.16px",
-                          color: "#000000",
+                        fontSize: "15px",
+                        color: colors.primary,
                       }}
                     >
                       {column.displayName}
@@ -155,12 +152,12 @@ export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
                     <TableCell
                       align="left"
                       sx={{
-                        backgroundColor: "#BDE0FF",
+                        backgroundColor: "rgba(42,108,168,0.10)",
                         textAlign: "center",
-                        fontWeight: "500",
+                        fontWeight: "600",
                         fontFamily: "Poppins",
-                        fontSize: "16.16px",
-                          color: "#000000",
+                        fontSize: "15px",
+                        color: colors.primary,
                       }}
                     >
                       Acciones
@@ -172,13 +169,13 @@ export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
           </TableHead>
           <TableBody
             sx={{
-              '& .MuiTableCell-root': { color: '#000000' },
-              '& td, & td *:not(svg):not(path)': { color: '#000000' },
+              '& .MuiTableCell-root': { color: colors.primary },
+              '& td, & td *:not(svg):not(path)': { color: colors.primary },
             }}
           >
             {vacancies
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((vacancies, index) => (
+              .map((vacancies) => (
                 <TableRow
                   hover
                   role="checkbox"
@@ -255,7 +252,7 @@ export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
                           <Tooltip title="Eliminar vacante">
                             <span>
                               <IconButton
-                                sx={{ color: "#ff0000ff" }}
+                                color="error"
                                 onClick={() => handleDelete(vacancies.id)}
                               >
                                 <Delete />
@@ -285,35 +282,35 @@ export default function VacanciesTable({ searchTerm, vacanciesProp }: Props) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         sx={{
-          '& .MuiTablePagination-toolbar': { color: '#000000' },
-          '& .MuiTablePagination-selectLabel': { color: '#000000' },
-          '& .MuiTablePagination-displayedRows': { color: '#000000' },
-          '& .MuiTablePagination-actions .MuiIconButton-root': { color: '#000000' },
-          '& .MuiIconButton-root': { color: '#000000' },
-          '& .MuiSvgIcon-root': { color: '#000000' },
-          '& .MuiInputBase-root .MuiSelect-select': { color: '#000000', backgroundColor: '#ffffff' },
-          '& .MuiSelect-icon': { color: '#000000' },
+          '& .MuiTablePagination-toolbar': { color: colors.primary },
+          '& .MuiTablePagination-selectLabel': { color: colors.primary },
+          '& .MuiTablePagination-displayedRows': { color: colors.primary },
+          '& .MuiTablePagination-actions .MuiIconButton-root': { color: colors.primary },
+          '& .MuiIconButton-root': { color: colors.primary },
+          '& .MuiSvgIcon-root': { color: colors.primary },
+          '& .MuiInputBase-root .MuiSelect-select': { color: colors.primary, backgroundColor: colors.card },
+          '& .MuiSelect-icon': { color: colors.primary },
         }}
         SelectProps={{
           MenuProps: {
             PaperProps: {
               sx: {
-                backgroundColor: '#ffffff',
-                color: '#000000',
+                backgroundColor: colors.card,
+                color: colors.primary,
               },
             },
             MenuListProps: {
               sx: {
-                backgroundColor: '#ffffff',
-                color: '#000000',
+                backgroundColor: colors.card,
+                color: colors.primary,
                 '& .MuiMenuItem-root': {
-                  color: '#000000',
+                  color: colors.primary,
                   '&.Mui-selected': {
-                    backgroundColor: '#f0f0f0',
-                    color: '#000000',
+                    backgroundColor: 'rgba(42,108,168,0.08)',
+                    color: colors.primary,
                   },
                   '&:hover': {
-                    backgroundColor: '#f5f5f5',
+                    backgroundColor: 'rgba(42,108,168,0.06)',
                   },
                 },
               },

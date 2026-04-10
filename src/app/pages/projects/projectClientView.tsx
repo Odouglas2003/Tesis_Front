@@ -6,8 +6,8 @@ import { ProjectTable } from "@/components/component-projects/TableProjects/Tabl
 import CardsProjets from "@/components/component-projects/CardProject/CardProject";
 import SearchCardToggle from "@/components/SearchCard/SearchActionsBar";
 import { fetchProjects } from "@/services/api";
-import Navbar from "@/components/navbar/pages";
 import { Employee, User, Project } from "@/types/interface";
+import AppShell from "@/components/layout/AppShell";
 
 // Clave para localStorage
 const STORAGE_KEY = 'project_ai_filter_state';
@@ -32,7 +32,6 @@ export default function ProjectClientView({
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [aiFilteredProjects, setAiFilteredProjects] = useState<Project[] | null>(null);
   const [aiInterpretation, setAiInterpretation] = useState<string>("");
-  const [aiError, setAiError] = useState<string>("");
 
   // Cargar el filtro guardado al montar el componente
   useEffect(() => {
@@ -157,66 +156,56 @@ export default function ProjectClientView({
   const displayedProjects = aiFilteredProjects !== null ? aiFilteredProjects : projects;
 
   return (
-    <>
+    <AppShell
+      title="Proyectos"
+      description="Supervisa el avance, estado y composición de cada iniciativa activa de la organización."
+    >
+      <Box sx={{ mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
+          <SearchCardToggle
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+            setSearchTerm={setSearchTerm}
+            currentSection="proyecto"
+            onAddClick={() => { }}
+            onAddSuccess={handleAddSuccess}
+          />
+          <SmartSearchFilter
+            items={projects}
+            storageKey={STORAGE_KEY}
+            placeholder="Ej: proyectos en curso, proyectos finalizados..."
+            initialSuggestions={[
+              "proyectos en curso",
+              "proyectos finalizados",
+              "proyectos a iniciar",
+              "proyectos que vencen pronto",
+              "proyectos vencidos"
+            ]}
+            exportCollection="project"
+            localSearchFallback={(q, _items) => smartLocalSearch(q)}
+            onFilterChange={(filtered, interpretation) => {
+              setAiFilteredProjects(filtered as Project[] | null);
+              setAiInterpretation(interpretation || "");
+            }}
+          />
+        </Box>
+      </Box>
+
       <Box>
-        <Navbar />
+        {viewMode === "cards" ? (
+          <CardsProjets
+            projectsProp={displayedProjects}
+            searchTerm={searchTerm}
+          />
+        ) : (
+          <ProjectTable
+            projectsProp={displayedProjects}
+            collaboratorProp={collaboratorsProp}
+            searchTerm={searchTerm}
+            usersProps={usersProp}
+          />
+        )}
       </Box>
-      <Box
-        sx={{
-          marginLeft: "60px",
-          marginRight: "60px",
-        }}
-      >
-        <Box sx={{ mb: 2, fontSize: "1.25rem", color: "#000" }}>Proyectos</Box>
-
-        <Box sx={{ mb: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
-            <SearchCardToggle
-              viewMode={viewMode}
-              setViewMode={setViewMode}
-              setSearchTerm={setSearchTerm}
-              currentSection="proyecto"
-              onAddClick={() => { }}
-              onAddSuccess={handleAddSuccess}
-            />
-            <SmartSearchFilter
-              items={projects}
-              storageKey={STORAGE_KEY}
-              placeholder="Ej: proyectos en curso, proyectos finalizados..."
-              initialSuggestions={[
-                "proyectos en curso",
-                "proyectos finalizados",
-                "proyectos a iniciar",
-                "proyectos que vencen pronto",
-                "proyectos vencidos"
-              ]}
-              exportCollection="project"
-              localSearchFallback={(q, _items) => smartLocalSearch(q)}
-              onFilterChange={(filtered, interpretation) => {
-                setAiFilteredProjects(filtered as Project[] | null);
-                setAiInterpretation(interpretation || "");
-              }}
-            />
-          </Box>
-
-        </Box>
-
-        <Box>
-          {viewMode === "cards" ? (
-            <CardsProjets
-              projectsProp={displayedProjects}
-              searchTerm={searchTerm}
-            />
-          ) : (
-            <ProjectTable
-              projectsProp={displayedProjects}
-              collaboratorProp={collaboratorsProp}
-              searchTerm={searchTerm}
-              usersProps={usersProp}
-            />
-          )}
-        </Box>
-      </Box>
-    </>
+    </AppShell>
   );
 }

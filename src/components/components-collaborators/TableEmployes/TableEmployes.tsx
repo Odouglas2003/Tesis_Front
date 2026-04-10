@@ -35,6 +35,7 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import { useAuthRole, isEmployeeUnderManager } from "@/app/hooks/useAuthRole";
 import BizneoDetailModal from "@/components/components-collaborators/EmployeeDetailModal/EmployeeDetailModal";
+import { useAppTheme } from "@/app/ThemeProviderClient";
 interface Props {
   searchTerm: string;
   collaboratorProp: Employee[];
@@ -44,6 +45,7 @@ const EmployeeTable: React.FC<
   Props & { columnsprop: ColumnConfigColaborador[] }
 > = ({ searchTerm, collaboratorProp, columnsprop }) => {
   const router = useRouter();
+  const { colors } = useAppTheme();
 
   const { isAdmin, isManager, currentUserName } = useAuthRole();
 
@@ -236,7 +238,7 @@ const EmployeeTable: React.FC<
       try {
         const p = await fetchProjects();
         setProjects(Array.isArray(p) ? p : []);
-      } catch (e) {
+      } catch {
         setProjects([]);
       }
     })();
@@ -279,7 +281,7 @@ const EmployeeTable: React.FC<
         if (projId) {
           try {
             await removeAssignedPerson(projId, collaboratorId);
-          } catch (err) {
+          } catch {
             showDialog("error", `No se pudo quitar del proyecto ${projId}`);
             return;
           }
@@ -298,7 +300,7 @@ const EmployeeTable: React.FC<
       }
       showDialog("success", "Colaborador eliminado correctamente");
       setEmployees((prev) => prev.filter((e) => e.id !== collaboratorId));
-    } catch (err) {
+    } catch {
       showDialog("error", "Ocurrió un error inesperado al eliminar");
     }
   };
@@ -357,10 +359,10 @@ const EmployeeTable: React.FC<
       <Paper
         sx={{
           overflow: "hidden",
-          marginLeft: "60px",
-          marginRight: "60px",
-          borderRadius: "20px",
-          backgroundColor: "#ffffff",
+          borderRadius: "24px",
+          backgroundColor: colors.card,
+          border: "1px solid rgba(18,48,77,0.08)",
+          boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
         }}
       >
         <TableContainer
@@ -372,8 +374,8 @@ const EmployeeTable: React.FC<
           onMouseLeave={handleMouseLeave}
           sx={{
             maxHeight: 700,
-            borderRadius: "20px",
-            backgroundColor: "#ffffff",
+            borderRadius: "24px",
+            backgroundColor: colors.card,
           }}
         >
           <Table stickyHeader aria-label="sticky table">
@@ -402,12 +404,12 @@ const EmployeeTable: React.FC<
                         key={column.field}
                         align="center"
                         sx={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
-                          fontWeight: "500",
+                          fontWeight: "600",
                           fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000DE",
+                          fontSize: "15px",
+                          color: colors.primary,
                         }}
                       >
                         {column.displayName}
@@ -417,12 +419,12 @@ const EmployeeTable: React.FC<
                       <TableCell
                         align="left"
                         sx={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
-                          fontWeight: "500",
+                          fontWeight: "600",
                           fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000DE",
+                          fontSize: "15px",
+                          color: colors.primary,
                         }}
                       >
                         Acciones
@@ -445,7 +447,7 @@ const EmployeeTable: React.FC<
                       key={key}
                       sx={
                         !canManage && isManager
-                          ? { backgroundColor: "#f5f7fa", opacity: 0.7 }
+                          ? { backgroundColor: "rgba(18,48,77,0.04)", opacity: 0.7 }
                           : undefined
                       }
                     >
@@ -460,7 +462,7 @@ const EmployeeTable: React.FC<
                             sx={{
                               fontFamily: "Roboto",
                               fontWeight: 400,
-                              color: "#000000DE",
+                              color: colors.primary,
                               textAlign: "center",
                             }}
                           >
@@ -509,7 +511,7 @@ const EmployeeTable: React.FC<
                           sx={{
                             fontFamily: "Roboto",
                             fontWeight: 400,
-                            color: "#000000DE",
+                            color: colors.primary,
                             textAlign: "center",
                           }}
                         >
@@ -551,7 +553,7 @@ const EmployeeTable: React.FC<
                                 sx={{
                                   fontFamily: "Roboto",
                                   fontWeight: 400,
-                                  color: "#000000DE",
+                                  color: colors.primary,
                                   textAlign: "center",
                                 }}
                               >
@@ -584,7 +586,7 @@ const EmployeeTable: React.FC<
                                   sx={{
                                     fontFamily: "Roboto",
                                     fontWeight: 400,
-                                    color: "#000000DE",
+                                    color: colors.primary,
                                     textAlign: "center",
                                   }}
                                 >
@@ -618,7 +620,7 @@ const EmployeeTable: React.FC<
                                 sx={{
                                   fontFamily: "Roboto",
                                   fontWeight: 400,
-                                  color: "#000000DE",
+                                  color: colors.primary,
                                   textAlign: "center",
                                 }}
                               >
@@ -661,7 +663,7 @@ const EmployeeTable: React.FC<
                                     sx={{
                                       fontFamily: "Roboto",
                                       fontWeight: 400,
-                                      color: "#000000DE",
+                                      color: colors.primary,
                                       textAlign: "center",
                                     }}
                                   >
@@ -693,7 +695,7 @@ const EmployeeTable: React.FC<
                                 sx={{
                                   fontFamily: "Roboto",
                                   fontWeight: 400,
-                                  color: "#000000DE",
+                                  color: colors.primary,
                                   textAlign: "center",
                                 }}
                               >
@@ -735,7 +737,7 @@ const EmployeeTable: React.FC<
                           sx={{
                             fontFamily: "Roboto",
                             fontWeight: 400,
-                            color: "#000000DE",
+                            color: colors.primary,
                             textAlign: "center",
                           }}
                         >
@@ -749,7 +751,7 @@ const EmployeeTable: React.FC<
                           sx={{
                             fontFamily: "Roboto",
                             fontWeight: 400,
-                            color: "#000000DE",
+                            color: colors.primary,
                             textAlign: "center",
                           }}
                         >
@@ -765,7 +767,7 @@ const EmployeeTable: React.FC<
                           sx={{
                             fontFamily: "Roboto",
                             fontWeight: 400,
-                            color: "#000000DE",
+                            color: colors.primary,
                             textAlign: "center",
                           }}
                         >
@@ -781,7 +783,7 @@ const EmployeeTable: React.FC<
                           sx={{
                             fontFamily: "Roboto",
                             fontWeight: 400,
-                            color: "#000000DE",
+                            color: colors.primary,
                             textAlign: "center",
                           }}
                         >
@@ -859,19 +861,19 @@ const EmployeeTable: React.FC<
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{
-            '& .MuiTablePagination-toolbar': { color: '#002338' },
-            '& .MuiTablePagination-selectLabel': { color: '#002338' },
-            '& .MuiTablePagination-displayedRows': { color: '#002338' },
-            '& .MuiTablePagination-actions .MuiIconButton-root': { color: '#002338' },
+            '& .MuiTablePagination-toolbar': { color: colors.primary },
+            '& .MuiTablePagination-selectLabel': { color: colors.primary },
+            '& .MuiTablePagination-displayedRows': { color: colors.primary },
+            '& .MuiTablePagination-actions .MuiIconButton-root': { color: colors.primary },
           }}
           SelectProps={{
             sx: {
-              color: '#002338',
-              '& .MuiSvgIcon-root': { color: '#002338' },
+              color: colors.primary,
+              '& .MuiSvgIcon-root': { color: colors.primary },
             },
             MenuProps: {
-              PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
-              MenuListProps: { sx: { bgcolor: '#FFFFFF' } },
+              PaperProps: { sx: { bgcolor: colors.card, color: colors.primary } },
+              MenuListProps: { sx: { bgcolor: colors.card } },
             },
           }}
         />

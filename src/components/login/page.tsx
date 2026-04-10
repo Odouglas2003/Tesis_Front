@@ -1,17 +1,10 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { useUser } from "@/app/UserContext";
-
 import { jwtDecode } from "jwt-decode";
-
-type JwtPayload = { exp?: number };
-
 import {
   Box,
-  Grid2,
-  Paper,
   Typography,
   TextField,
   InputAdornment,
@@ -22,19 +15,28 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import ModalComponent from "@/components/message/MessageModal";
 import EmailIcon from "@mui/icons-material/Email";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useUser } from "@/app/UserContext";
+import ModalComponent from "@/components/message/MessageModal";
 import LoadingAnimation from "../LoadingAnimation/page";
+import AuthSplitLayout, {
+  authFieldSx,
+  authPrimaryButtonSx,
+  authSecondaryButtonSx,
+} from "@/components/auth/AuthSplitLayout";
 import { recoverPassword, loginUser } from "@/services/api";
-import { useAppTheme } from "@/app/ThemeProviderClient";
+import { AUTH_PALETTE } from "@/theme/appPalette";
+
+type JwtPayload = { exp?: number };
 
 const NINE_HOURS_S = 9 * 60 * 60;
 
 export default function Login({ version }: { version: string }) {
-  const { colors } = useAppTheme();
   const { setSession } = useUser();
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -60,12 +62,10 @@ export default function Login({ version }: { version: string }) {
     onConfirm?: () => void
   ) => setDialog({ open: true, variant, message, onConfirm });
 
-  const router = useRouter();
-
-  /* ---------- handlers ----------- */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const response = await loginUser(email, password);
 
@@ -76,26 +76,26 @@ export default function Login({ version }: { version: string }) {
       }
 
       let ttlSec = NINE_HOURS_S;
-
       const { exp } = jwtDecode<JwtPayload>(response.token);
+
       if (exp) {
         const nowSec = Math.floor(Date.now() / 1000);
         ttlSec = Math.max(0, exp - nowSec);
       }
 
       localStorage.setItem("token", response.token);
-
       document.cookie = `token=${response.token};path=/;max-age=${ttlSec};SameSite=Lax`;
       document.cookie = `u=${encodeURIComponent(
         JSON.stringify(response.user)
       )};path=/;max-age=${ttlSec};SameSite=Lax`;
 
       setSession({ user: response.user, token: response.token });
-
       router.replace("/pages/dash");
-    } catch (error: unknown) {
+    } catch (submitError: unknown) {
       setError(
-        error instanceof Error ? error.message : "No se pudo iniciar sesión"
+        submitError instanceof Error
+          ? submitError.message
+          : "No se pudo iniciar sesión"
       );
       setLoading(false);
     }
@@ -123,19 +123,18 @@ export default function Login({ version }: { version: string }) {
         setShowConfirmation(false);
         setRecoverEmail("");
       }, 3000);
-    } catch (error) {
+    } catch {
       showDialog("error", "No se pudo enviar el email. Intenta nuevamente.");
     }
   };
 
-  /* -------- loading overlay ------- */
   if (loading) {
     return (
       <Box
         sx={{
           position: "fixed",
           inset: 0,
-          bgcolor: "rgba(249,249,249,.9)",
+          bgcolor: AUTH_PALETTE.overlayBg,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -148,103 +147,38 @@ export default function Login({ version }: { version: string }) {
   }
 
   return (
-    <Grid2
-      container
-      component="main"
-      sx={{ height: "100vh", bgcolor: "#f9f9f9" }}
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Paper
-        elevation={6}
-        sx={{
-          width: 1113,
-          height: 663,
-          borderRadius: 2,
-          overflow: "hidden",
-          display: "flex",
-        }}
+    <>
+      <AuthSplitLayout
+        title="Iniciar sesión"
+        subtitle="Accedé al panel para gestionar talento, monitorear proyectos y tomar decisiones de staffing con una vista clara del equipo."
+        version={version}
+        heroTitle={
+          <>
+            Equipos mejor
+            <Box
+              component="span"
+              sx={{
+                display: "block",
+                color: AUTH_PALETTE.textAccent,
+              }}
+            >
+              asignados desde el inicio.
+            </Box>
+          </>
+        }
       >
-        {/* IZQUIERDA --------------------------------------------------- */}
-        <Box
-          sx={{
-            width: "40%",
-            bgcolor: colors.navbar || "#0087FF",
-            color: "#fff",
-            pl: 4,
-            pr: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Image
-            src={colors.logo || "/logo.svg"}
-            alt="Logo Rubik"
-            width={180}
-            height={180}
-            style={{ marginTop: "86px" }}
-          />
-
-          <Box textAlign="center" mt={"3rem"}>
-            <Typography
-              textAlign={"left"}
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 700,
-                fontSize: "52.92px",
-                color: "#FFFFFF",
-              }}
-            >
-              SIMPLIFICA TU EQUIPO,
-            </Typography>
-            <Typography
-              textAlign={"left"}
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 700,
-                fontSize: "52.92px",
-                color: "#23FFDC",
-                marginTop: "2rem",
-              }}
-            >
-              OPTIMIZA TU PLANTILLA
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* DERECHA ----------------------------------------------------- */}
         <Box
           component="form"
           onSubmit={handleSubmit}
           sx={{
-            width: "60%",
-            pl: 4,
-            pr: 4,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start",
-            gap: 3,
-            bgcolor: "#ffffffff",
+            gap: 2.25,
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              fontWeight: 600,
-              fontSize: "24px",
-              color: "#002338",
-              mt: "86px",
-            }}
-          >
-            Iniciar sesión
-          </Typography>
-
-          {/* Email */}
           <TextField
             fullWidth
-            placeholder="Email"
+            placeholder="Email corporativo"
             type="email"
             required
             value={email}
@@ -252,20 +186,13 @@ export default function Login({ version }: { version: string }) {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon sx={{ color: "black" }} />
+                  <EmailIcon sx={{ color: AUTH_PALETTE.inputText }} />
                 </InputAdornment>
               ),
             }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 5,
-                bgcolor: "#F8F8F8",
-                color: "black",
-              },
-            }}
+            sx={authFieldSx}
           />
 
-          {/* Password */}
           <TextField
             fullWidth
             placeholder="Contraseña"
@@ -274,157 +201,97 @@ export default function Login({ version }: { version: string }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+              endAdornment: (
+                <InputAdornment position="end">
                   {showPassword ? (
                     <VisibilityIcon
-                      sx={{ cursor: "pointer", color: "black" }}
-                      onClick={() => setShowPassword((s) => !s)}
+                      sx={{ cursor: "pointer", color: AUTH_PALETTE.inputText }}
+                      onClick={() => setShowPassword((current) => !current)}
                     />
                   ) : (
                     <VisibilityOffIcon
-                      sx={{ cursor: "pointer", color: "black" }}
-                      onClick={() => setShowPassword((s) => !s)}
+                      sx={{ cursor: "pointer", color: AUTH_PALETTE.inputText }}
+                      onClick={() => setShowPassword((current) => !current)}
                     />
                   )}
                 </InputAdornment>
               ),
             }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 5,
-                bgcolor: "#F8F8F8",
-                color: "black",
-              },
-            }}
+            sx={authFieldSx}
           />
 
-          {/* Error */}
           {error && (
-            <Typography color="error" fontSize={14} textAlign="center">
+            <Typography
+              sx={{
+                color: "#C04646",
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                textAlign: "center",
+              }}
+            >
               {error}
             </Typography>
           )}
 
-          {/* Forgot link */}
           <Typography
             variant="body2"
             sx={{
-              textAlign: "center",
-              textDecoration: "underline",
+              textAlign: "right",
               cursor: "pointer",
-              color: "#007BFF",
-              mt: -1,
+              color: AUTH_PALETTE.link,
+              fontWeight: 600,
+              mt: -0.5,
             }}
             onClick={() => setForgotOpen(true)}
           >
             ¿Olvidaste tu contraseña?
           </Typography>
 
-          {/* Buttons */}
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              bgcolor: "#002338",
-              color: "#23FFDC",
-              borderRadius: "20px",
-              py: 1.2,
-              textTransform: "none",
-              fontWeight: 700,
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 500,
-                fontSize: "20px",
-                color: "#23FFDC",
-              }}
-            >
-              Ingresar
-            </Typography>
+          <Button type="submit" variant="contained" sx={authPrimaryButtonSx}>
+            Ingresar
           </Button>
 
-          <Divider>
-            <Typography variant="body2" color="#002338">
-              O
+          <Divider sx={{ borderColor: AUTH_PALETTE.divider, my: 0.5 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "rgba(18,48,77,0.6)",
+                fontWeight: 500,
+              }}
+            >
+              o
             </Typography>
           </Divider>
 
           <Button
             variant="contained"
             onClick={() => router.push("/pages/register")}
-            sx={{
-              bgcolor: "#23FFDC",
-              borderRadius: "20px",
-              py: 1.2,
-              textTransform: "none",
-              fontWeight: 700,
-              boxShadow: 'none',
-              '&:hover': {
-                bgcolor: '#23FFDC',
-                boxShadow: 'none',
-                filter: 'none',
-              },
-              '&:active': {
-                bgcolor: '#23FFDC',
-                boxShadow: 'none',
-              },
-              '&:focus-visible': {
-                outline: '2px solid #002338',
-                outlineOffset: '2px',
-              },
-            }}
+            sx={authSecondaryButtonSx}
             disableElevation
-            disableRipple
           >
-            <Typography
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 500,
-                fontSize: "20px",
-                color: "#002338",
-
-              }}
-            >
-              Registrarse
-            </Typography>
+            Crear cuenta
           </Button>
-
-          {/* Versión */}
-          <Box mt={2} textAlign="right">
-            <Typography variant="caption" color="text.secondary">
-              Versión: {version}
-            </Typography>
-          </Box>
         </Box>
-      </Paper>
+      </AuthSplitLayout>
 
-      {/* Dialog Recuperar contraseña --------------------------------- */}
       <Dialog open={forgotOpen} onClose={() => setForgotOpen(false)}>
         <DialogTitle>Recuperar contraseña</DialogTitle>
         <DialogContent sx={{ pt: 2 }}>
           {showConfirmation ? (
             <Typography color="success.main" fontWeight={700}>
-              Se ha enviado un email a su cuenta
+              Se ha enviado un email a tu cuenta
             </Typography>
           ) : (
             <>
               <Typography mb={2}>
-                Ingrese un email para recuperar su contraseña
+                Ingresá un email para recuperar tu contraseña
               </Typography>
               <TextField
                 fullWidth
                 label="Email"
                 value={recoverEmail}
                 onChange={(e) => setRecoverEmail(e.target.value)}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: 5,
-                    bgcolor: "#f9f9f9",
-                  },
-                }}
+                sx={authFieldSx}
               />
             </>
           )}
@@ -436,13 +303,20 @@ export default function Login({ version }: { version: string }) {
             <Button
               variant="contained"
               onClick={handleRecoverPassword}
-              sx={{ bgcolor: colors.button || "#002338", color: colors.text || "#23FFDC" }}
+              sx={{
+                bgcolor: AUTH_PALETTE.primaryButton,
+                color: AUTH_PALETTE.primaryButtonText,
+                "&:hover": {
+                  bgcolor: AUTH_PALETTE.primaryButtonHover,
+                },
+              }}
             >
               Enviar
             </Button>
           </DialogActions>
         )}
       </Dialog>
+
       <ModalComponent
         open={dialog.open}
         variant={dialog.variant}
@@ -450,6 +324,6 @@ export default function Login({ version }: { version: string }) {
         onClose={closeDialog}
         onConfirm={dialog.onConfirm}
       />
-    </Grid2>
+    </>
   );
 }

@@ -219,7 +219,7 @@ export default function CardsProjects({
                     }}
                   >
                     <img
-                      src={proyecto.image || "/logo.svg"}
+                      src={proyecto.image || "/image-login.png"}
                       alt={proyecto.name || ""}
                     // layout="fill"
                     // objectFit="scale-down"

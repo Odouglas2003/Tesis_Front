@@ -26,6 +26,7 @@ import {
 } from "@/services/api";
 import { useRouter } from "next/navigation";
 import ModalComponent from "@/components/message/MessageModal";
+import { useAppTheme } from "@/app/ThemeProviderClient";
 
 export function ProjectTable({
   searchTerm,
@@ -39,6 +40,7 @@ export function ProjectTable({
   collaboratorProp: Employee[];
 }) {
   const router = useRouter();
+  const { colors } = useAppTheme();
   const [projects, setProjects] = useState<Project[]>([]);
   const [page, setPage] = useState(0);
   const {
@@ -216,13 +218,13 @@ export function ProjectTable({
       <Paper
         sx={{
           overflow: "hidden",
-          marginLeft: "60px",
-            marginRight: "60px",
-          borderRadius: "20px",
-          backgroundColor: '#ffffff',
+          borderRadius: "24px",
+          backgroundColor: colors.card,
+          border: "1px solid rgba(18,48,77,0.08)",
+          boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
         }}
       >
-        <TableContainer sx={{ maxHeight: 700, borderRadius: "20px", backgroundColor: '#ffffff' }}>
+        <TableContainer sx={{ maxHeight: 700, borderRadius: "24px", backgroundColor: colors.card }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -249,12 +251,12 @@ export function ProjectTable({
                         key={column.field}
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
-                          fontWeight: "500",
+                          fontWeight: "600",
                           fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontSize: "15px",
+                          color: colors.primary,
                         }}
                       >
                         {column.displayName}
@@ -265,12 +267,12 @@ export function ProjectTable({
                       <TableCell
                         align="left"
                         sx={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
-                          fontWeight: "500",
+                          fontWeight: "600",
                           fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000DE",
+                          fontSize: "15px",
+                          color: colors.primary,
                         }}
                       >
                         Acciones
@@ -283,16 +285,16 @@ export function ProjectTable({
             <TableBody>
               {projects
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((project, index) => (
+                .map((project) => (
                   <TableRow
                     hover
                     role="checkbox"
                     tabIndex={-1}
                     key={project.id}
                   >
-                    <TableCell align="center" sx={{ color: "#000000" }}>{project.name}</TableCell>
+                    <TableCell align="center" sx={{ color: colors.primary }}>{project.name}</TableCell>
 
-                    <TableCell align="center" sx={{ color: "#000000" }}>
+                    <TableCell align="center" sx={{ color: colors.primary }}>
                       <Box
                         display="flex"
                         alignItems="center"
@@ -337,27 +339,27 @@ export function ProjectTable({
                       </Box>
                     </TableCell>
 
-                    <TableCell align="center" sx={{ color: "#000000" }}>{project.managerName}</TableCell>
+                    <TableCell align="center" sx={{ color: colors.primary }}>{project.managerName}</TableCell>
 
-                    <TableCell align="center" sx={{ color: "#000000" }}>{project.status}</TableCell>
+                    <TableCell align="center" sx={{ color: colors.primary }}>{project.status}</TableCell>
 
-                    <TableCell align="center" sx={{ color: "#000000" }}>
+                    <TableCell align="center" sx={{ color: colors.primary }}>
                       {formatDateUTC(project.startDate)}
                     </TableCell>
 
-                    <TableCell align="center" sx={{ color: "#000000" }}>
+                    <TableCell align="center" sx={{ color: colors.primary }}>
                      {formatDateUTC(project.endDate)}
                     </TableCell>
                       
-                    <TableCell align="center" sx={{ color: "#000000" }}>{project.category}</TableCell>
+                    <TableCell align="center" sx={{ color: colors.primary }}>{project.category}</TableCell>
 
 
-                    <TableCell align="center" sx={{ color: "#000000" }}>
+                    <TableCell align="center" sx={{ color: colors.primary }}>
                       {project.assignedPersons
                         ? project.assignedPersons.length
                         : 0}
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "#000000" }}>
+                    <TableCell align="center" sx={{ color: colors.primary }}>
                       <Box display="flex" justifyContent="center">
                         {isAdmin || project.managerName === currentUser ? (
                           <>
@@ -380,7 +382,6 @@ export function ProjectTable({
                                 <IconButton
                                   color="error"
                                   onClick={() => {
-                                    const nombreProyecto = project.name || "";
                                     const colaboradoresDelProyecto =
                                       project.assignedPersons || [];
                                     setDialog({
@@ -426,18 +427,18 @@ export function ProjectTable({
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{
-            color: '#000000',
-            bgcolor: '#ffffff',
+            color: colors.primary,
+            bgcolor: "rgba(252,254,255,0.82)",
             // ensure displayed rows and label use black text
             '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
-              color: '#000000',
+              color: colors.primary,
             },
           }}
           SelectProps={{
-            sx: { color: '#000000' },
+            sx: { color: colors.primary },
             MenuProps: {
               PaperProps: {
-                sx: { bgcolor: '#ffffff', color: '#000000' },
+                sx: { bgcolor: colors.card, color: colors.primary },
               },
             },
           }}

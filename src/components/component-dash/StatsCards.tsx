@@ -35,16 +35,19 @@ export default function StatsCard({ icon: Icon, value, label }: StatsCardProps) 
             sx={{
                 width: '100%',
                 height: { xs: 90, sm: 110, md: 120 },
-                background: colors?.miniCard ? colors.miniCard : 'linear-gradient(135deg, #23FFDC17 0%, #BDE0FF 100%)',
-                border: `1px solid ${colors?.navbar || '#0087FF'}`,
+                background: colors?.miniCard,
+                border: '1px solid rgba(18,48,77,0.08)',
                 borderRadius: { xs: '12px', sm: '16px', md: '20px' },
                 overflow: 'hidden',
                 boxSizing: 'border-box',
                 minWidth: 0,
-                transition: 'background .25s ease, border-color .25s ease',
+                boxShadow: '0 16px 36px rgba(18,48,77,0.08)',
+                transition: 'background .25s ease, border-color .25s ease, transform .2s ease, box-shadow .2s ease',
                 cursor: targetPath ? 'pointer' : 'default',
                 '&:hover': targetPath
                     ? {
+                          transform: 'translateY(-2px)',
+                          boxShadow: '0 22px 44px rgba(18,48,77,0.12)',
                           '& .stat-value': {
                               fontSize: { xs: '19px', sm: '25px', md: '29px', lg: '33px' },
                           },
@@ -80,11 +83,12 @@ export default function StatsCard({ icon: Icon, value, label }: StatsCardProps) 
                     <Avatar
                         className="stat-avatar"
                         sx={{
-                            bgcolor:  'white',
-                            color: '#002338',
+                            bgcolor: colors?.card || '#FCFEFF',
+                            color: colors?.primary || '#12304D',
                             width: { xs: 40, sm: 50, md: 60 },
                             height: { xs: 40, sm: 50, md: 60 },
                             flexShrink: 0,
+                            boxShadow: '0 10px 25px rgba(18,48,77,0.10)',
                             transition: 'background .25s ease, color .25s ease, transform .12s ease',
                         }}
                     >
@@ -93,7 +97,7 @@ export default function StatsCard({ icon: Icon, value, label }: StatsCardProps) 
                             fontSize="small"
                             sx={{
                                 fontSize: { xs: 20, sm: 28, md: 36 },
-                                color: '#002338',
+                                color: colors?.primary || '#12304D',
                                 transition: 'font-size .12s ease, transform .12s ease',
                             }}
                         />
@@ -105,7 +109,7 @@ export default function StatsCard({ icon: Icon, value, label }: StatsCardProps) 
                             component="div"
                             sx={{
                                 fontWeight: 'semi-bold',
-                                color:  '#002338',
+                                color: colors?.primary || '#12304D',
                                 fontSize: { xs: '18px', sm: '24px', md: '28px', lg: '32px' },
                                 transition: 'font-size .12s ease',
                                 fontFamily: 'Poppins, sans-serif',
@@ -121,7 +125,7 @@ export default function StatsCard({ icon: Icon, value, label }: StatsCardProps) 
                         <Typography
                             variant="body2"
                             sx={{
-                                color: '#002338',
+                                color: 'rgba(18,48,77,0.76)',
                                 fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '16px' },
                                 fontFamily: 'Poppins, sans-serif',
                                 lineHeight: 1.2,

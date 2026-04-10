@@ -67,13 +67,15 @@ const ModalComponent = ({
       maxWidth={false}
       PaperProps={{
         sx: {
-          width: "1042px",
-          height: "380px",
-          px: 4,
-          pt: 5,
+          width: "min(720px, calc(100vw - 32px))",
+          minHeight: "320px",
+          px: { xs: 2.5, md: 4 },
+          pt: { xs: 4, md: 5 },
           pb: 4,
           textAlign: "center",
-          borderRadius: 3,
+          borderRadius: "28px",
+          border: "1px solid rgba(18,48,77,0.08)",
+          boxShadow: "0 24px 80px rgba(18,48,77,0.16)",
         },
       }}
     >
@@ -82,10 +84,10 @@ const ModalComponent = ({
           sx={{
             m: "0 auto",
             mb: 1,
-            width: 150,
-            height: 150,
+            width: { xs: 110, md: 132 },
+            height: { xs: 110, md: 132 },
             borderRadius: "50%",
-            bgcolor: theme.palette.grey[200],
+            bgcolor: "rgba(42,108,168,0.08)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -94,8 +96,8 @@ const ModalComponent = ({
           <Image
             src={configuration.src}
             alt={variant + " icon"}
-            width={100}
-            height={100}
+            width={84}
+            height={84}
           />
         </Box>
         <Typography
@@ -103,8 +105,9 @@ const ModalComponent = ({
           sx={{
             mb: 4,
             fontFamily: "Poppins",
-            fontSize: "20px",
+            fontSize: { xs: "18px", md: "20px" },
             fontWeight: 500,
+            color: theme.palette.text.primary,
           }}
         >
           {displayMsg}
@@ -118,20 +121,16 @@ const ModalComponent = ({
               sx={{
                 textTransform: "none",
                 width: "200px",
-                height: "50px",
+                height: "48px",
                 fontFamily: "Poppins",
-                fontSize: "20px",
-                color: colors.button || "#0087FF",
-                fontWeight: 500,
-                lineHeight: "30px",
-                letterSpacing: "0%",
+                fontSize: "16px",
+                color: colors.button || "#123B66",
+                fontWeight: 600,
                 boxShadow: "none",
                 backgroundColor: "rgb(255, 255, 255)",
-                borderRadius: "20px",
+                borderRadius: "16px",
                 borderWidth: "1px",
-                gap: "10px",
-                marginRight: "16px",
-                border: `2px solid ${colors.button || "#0087ff"}`,
+                border: `1px solid ${colors.button || "#123B66"}`,
               }}
             >
               {configuration.secondaryTxt}
@@ -144,14 +143,17 @@ const ModalComponent = ({
               }}
               sx={{
                 width: "200px",
-                height: "50px",
-                borderRadius: "20px",
+                height: "48px",
+                borderRadius: "16px",
                 textTransform: "none",
-                color: "#23FFDC",
-                fontWeight: 500,
+                color: colors.text || "#7DEBDC",
+                fontWeight: 600,
                 fontFamily: "Poppins",
-                fontSize: "20px",
-                backgroundColor: colors.button || "#002338",
+                fontSize: "16px",
+                backgroundColor: colors.button || "#123B66",
+                "&:hover": {
+                  backgroundColor: colors.primary || "#12304D",
+                },
               }}
             >
               {configuration.buttontex}
@@ -164,14 +166,17 @@ const ModalComponent = ({
               onClick={onClose}
               sx={{
                 width: "200px",
-                height: "50px",
-                borderRadius: "20px",
+                height: "48px",
+                borderRadius: "16px",
                 textTransform: "none",
-                color: "#23FFDC",
-                fontWeight: 500,
+                color: colors.text || "#7DEBDC",
+                fontWeight: 600,
                 fontFamily: "Poppins",
-                fontSize: "20px",
-                backgroundColor: colors.button ||"#002338",
+                fontSize: "16px",
+                backgroundColor: colors.button ||"#123B66",
+                "&:hover": {
+                  backgroundColor: colors.primary || "#12304D",
+                },
               }}
             >
               {configuration.buttontex}

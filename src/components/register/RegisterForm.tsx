@@ -1,12 +1,10 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { SelectChangeEvent } from "@mui/material/Select";
-
 import {
   Box,
-  Paper,
   Typography,
   TextField,
   Select,
@@ -15,15 +13,17 @@ import {
   IconButton,
   Button,
   CircularProgress,
-  Grid2,
 } from "@mui/material";
-
 import EmailIcon from "@mui/icons-material/Email";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useAppTheme } from "@/app/ThemeProviderClient";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { fetchAuthorization, registerUserService } from "@/services/api";
+import AuthSplitLayout, {
+  authFieldSx,
+  authPrimaryButtonSx,
+} from "@/components/auth/AuthSplitLayout";
+import { AUTH_PALETTE } from "@/theme/appPalette";
 
 interface FormData {
   name: string;
@@ -32,18 +32,38 @@ interface FormData {
   confirmPassword: string;
   rol: string;
 }
-interface FormData {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  rol: string;
-}
 
-const RegisterForm: React.FC = () => {
+const selectSx = {
+  borderRadius: "18px",
+  bgcolor: AUTH_PALETTE.inputBg,
+  minHeight: "56px",
+  color: AUTH_PALETTE.inputText,
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: AUTH_PALETTE.inputBorder,
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: AUTH_PALETTE.inputBorderHover,
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: AUTH_PALETTE.focus,
+  },
+} as const;
+
+const backButtonSx = {
+  alignSelf: "flex-start",
+  px: 1.25,
+  minHeight: "40px",
+  borderRadius: "14px",
+  textTransform: "none",
+  color: AUTH_PALETTE.title,
+  borderColor: "rgba(18,48,77,0.12)",
+  fontWeight: 600,
+} as const;
+
+const RegisterForm = () => {
   const router = useRouter();
-  const { colors } = useAppTheme();
   const searchParams = useSearchParams();
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -67,16 +87,6 @@ const RegisterForm: React.FC = () => {
   }, [searchParams]);
 
   const handleAuthorization = async (token: string, action: string) => {
-    /*try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/authorize/${token}/${action}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );*/
     try {
       const response = await fetchAuthorization(token, action);
 
@@ -152,17 +162,6 @@ const RegisterForm: React.FC = () => {
     try {
       const response = await registerUserService(registerData);
 
-      /*fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(registerData),
-        }
-      );*/
-
       if (response.user) {
         setEmailSent(true);
       } else {
@@ -179,290 +178,210 @@ const RegisterForm: React.FC = () => {
     }
   };
 
-  // Si el email fue enviado, mostrar mensaje de verificación
   if (emailSent) {
-    return (
-      <Grid2
-        container
-        justifyContent="center"
-        alignItems="center"
-        sx={{ height: "100vh" }}
-      >
-        <Grid2 size={{ xs: 11, sm: 8, md: 6, lg: 4 }}>
-          <Paper sx={{ p: 4, textAlign: "center", borderRadius: 2 }}>
-            <Typography variant="h5" fontWeight={700} gutterBottom>
-              ¡Solicitud procesada!
-            </Typography>
-            <Typography>{error}</Typography>
+    const successMessage =
+      error === "Error"
+        ? "Revisá tu correo para continuar con la activación del usuario."
+        : error || "Te enviamos un correo para completar el registro.";
 
-            <Button
-              onClick={() => router.push("/")}
-              variant="contained"
-              sx={{ mt: 3, bgcolor: "#002338", color: "#23FFDC" }}
-            >
-              Volver al inicio
-            </Button>
-          </Paper>
-        </Grid2>
-      </Grid2>
+    return (
+      <AuthSplitLayout
+        title="Solicitud procesada"
+        subtitle="La activación del usuario queda asociada al flujo de seguridad de la plataforma."
+      >
+        <Box
+          sx={{
+            borderRadius: "24px",
+            border: "1px solid rgba(18,48,77,0.08)",
+            backgroundColor: "rgba(244,248,251,0.78)",
+            p: { xs: 2.5, md: 3 },
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "1.15rem",
+              fontWeight: 700,
+              color: AUTH_PALETTE.title,
+              mb: 1,
+            }}
+          >
+            Alta registrada correctamente
+          </Typography>
+          <Typography
+            sx={{
+              color: "rgba(18,48,77,0.72)",
+              lineHeight: 1.65,
+              mb: 3,
+            }}
+          >
+            {successMessage}
+          </Typography>
+
+          <Button
+            onClick={() => router.push("/")}
+            variant="contained"
+            sx={authPrimaryButtonSx}
+          >
+            Volver al inicio
+          </Button>
+        </Box>
+      </AuthSplitLayout>
     );
   }
 
-  /* 2. Formulario de registro */
   return (
-    <Grid2
-      container
-      component="main"
-      sx={{ height: "100vh", bgcolor: "#f9f9f9" }}
-      alignItems="center"
-      justifyContent="center"
+    <AuthSplitLayout
+      title="Crear cuenta"
+      subtitle="Registrá un nuevo usuario y definí su rol operativo dentro de la organización."
+      headerAction={
+        <Button
+          variant="outlined"
+          startIcon={<KeyboardArrowLeftIcon />}
+          onClick={() => router.push("/")}
+          sx={backButtonSx}
+        >
+          Volver
+        </Button>
+      }
+      heroTitle={
+        <>
+          Sumá nuevos perfiles
+          <Box component="span" sx={{ display: "block", color: AUTH_PALETTE.textAccent }}>
+            sin perder orden operativo.
+          </Box>
+        </>
+      }
+      heroDescription="Administrá accesos, roles y responsables desde una misma base visual enfocada en control, trazabilidad y eficiencia."
     >
-      <Paper
-        elevation={6}
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
-          width: 1113,
-          height: 663,
-          borderRadius: 2,
-          overflow: "hidden",
           display: "flex",
+          flexDirection: "column",
+          gap: 2,
         }}
       >
-        {/* Lado izquierdo (branding) */}
-        <Box
-          sx={{
-            width: "40%",
-            bgcolor: colors.navbar || "#0087FF",
-            color: "#fff",
-            pl: 4,
-            pr: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
+        <TextField
+          fullWidth
+          name="name"
+          placeholder="Nombre completo"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          sx={authFieldSx}
+        />
+
+        <TextField
+          fullWidth
+          name="email"
+          placeholder="Email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon sx={{ color: AUTH_PALETTE.inputText }} />
+              </InputAdornment>
+            ),
           }}
-        >
-          <Image
-            src={colors.logo || "/logo.svg"}
-            alt="Logo Rubik"
-            width={180}
-            height={180}
-            style={{ marginTop: "86px" }}
-          />
+          sx={authFieldSx}
+        />
 
-          <Box textAlign="center" mt={"3rem"}>
-            <Typography
-              textAlign={"left"}
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 700,
-                fontSize: "52.92px",
-                color: "#FFFFFF",
-              }}
-            >
-              SIMPLIFICA TU EQUIPO,
-            </Typography>
-            <Typography
-              textAlign={"left"}
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 700,
-                fontSize: "52.92px",
-                color: "#23FFDC",
-                marginTop: "2rem",
-              }}
-            >
-              OPTIMIZA TU PLANTILLA
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* Lado derecho (form) */}
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{
-            width: "60%",
-            pl: 4,
-            pr: 4,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            gap: 2.5,
-            bgcolor: "#ffffffff",
+        <TextField
+          fullWidth
+          name="password"
+          placeholder="Contraseña"
+          type={showPassword ? "text" : "password"}
+          value={formData.password}
+          onChange={handleChange}
+          required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? (
+                    <VisibilityIcon sx={{ color: AUTH_PALETTE.inputText }} />
+                  ) : (
+                    <VisibilityOffIcon sx={{ color: AUTH_PALETTE.inputText }} />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
+          sx={authFieldSx}
+        />
+
+        <TextField
+          fullWidth
+          name="confirmPassword"
+          placeholder="Repetir contraseña"
+          type={showConfirmPassword ? "text" : "password"}
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <VisibilityIcon sx={{ color: AUTH_PALETTE.inputText }} />
+                  ) : (
+                    <VisibilityOffIcon sx={{ color: AUTH_PALETTE.inputText }} />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={authFieldSx}
+        />
+
+        <Select
+          name="rol"
+          value={formData.rol}
+          onChange={handleChange}
+          displayEmpty
+          required
+          fullWidth
+          sx={selectSx}
         >
-          <Grid2 container sx={{ mt: "86px", alignItems: "center" }}>
-            <Grid2 onClick={() => router.push("/")} sx={{ cursor: "pointer" }}>
-              <KeyboardArrowLeftIcon
-                fontSize="large"
-                sx={{ color: "#002338" }}
-              />
-            </Grid2>
-            <Grid2>
-              <Typography
-                sx={{
-                  fontFamily: "Poppins",
-                  fontWeight: 600,
-                  fontSize: "24px",
-                  color: "#002338",
-                  // mt: "86px",
-                }}
-              >
-                Nuevo registro
-              </Typography>
-            </Grid2>
-          </Grid2>
+          <MenuItem value="" disabled>
+            Seleccioná un rol
+          </MenuItem>
+          <MenuItem value="administrador">Administrador</MenuItem>
+          <MenuItem value="manager">Manager</MenuItem>
+          <MenuItem value="visitante">Visitante</MenuItem>
+        </Select>
 
-          <TextField
-            fullWidth
-            name="name"
-            placeholder="Nombre"
-            value={formData.name}
-            onChange={handleChange}
-            required
+        {error && (
+          <Typography
             sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
-                bgcolor: "#F8F8F8",
-                height: "50px",
-                color: "black"
-              },
+              color: "#C04646",
+              fontSize: "0.9rem",
+              fontWeight: 500,
+              textAlign: "center",
             }}
-          />
-
-          <TextField
-            fullWidth
-            name="email"
-            placeholder="Email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <EmailIcon />
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
-                bgcolor: "#F8F8F8",
-                height: "50px",
-                color: "black"
-              },
-            }}
-          />
-
-          <TextField
-            fullWidth
-            name="password"
-            placeholder="Contraseña"
-            type={showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
-                bgcolor: "#F8F8F8",
-                height: "50px",
-                color: "black"
-              },
-            }}
-          />
-
-          <TextField
-            fullWidth
-            name="confirmPassword"
-            placeholder="Repetir Contraseña"
-            type={showConfirmPassword ? "text" : "password"}
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <VisibilityIcon />
-                    ) : (
-                      <VisibilityOffIcon />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
-                bgcolor: "#F8F8F8",
-                height: "50px",
-                color: "black"
-              },
-            }}
-          />
-
-          {/* Rol */}
-          <Select
-            name="rol"
-            value={formData.rol}
-            onChange={handleChange}
-            displayEmpty
-            required
-            fullWidth
-            sx={{ borderRadius: "20px", bgcolor: "#F8F8F8", height: "50px", color: "black" }}
           >
-            <MenuItem value="" disabled>
-              Selecciona tu rol
-            </MenuItem>
-            <MenuItem value="administrador">Administrador</MenuItem>
-            <MenuItem value="manager">Manager</MenuItem>
-            <MenuItem value="visitante">Visitante</MenuItem>
-          </Select>
+            {error}
+          </Typography>
+        )}
 
-          {/* Error */}
-          {error && (
-            <Typography color="error" fontSize={14} textAlign="center">
-              {error}
-            </Typography>
-          )}
-
-          {/* Botón */}
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={loading}
-            sx={{
-              bgcolor: "#002338",
-              color: "#23FFDC",
-              borderRadius: "20px",
-              py: 1.2,
-              fontWeight: 700,
-              textTransform: "none",
-              height: "50px",
-            }}
-            startIcon={
-              loading && <CircularProgress size={20} color="inherit" />
-            }
-          >
-            {loading ? "Procesando…" : "Registrarme"}
-          </Button>
-        </Box>
-      </Paper>
-    </Grid2>
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={loading}
+          sx={authPrimaryButtonSx}
+          startIcon={loading ? <CircularProgress size={18} color="inherit" /> : null}
+        >
+          {loading ? "Procesando..." : "Registrar usuario"}
+        </Button>
+      </Box>
+    </AuthSplitLayout>
   );
 };
+
 export default RegisterForm;
