@@ -1,5 +1,4 @@
-// components/Rubiko.tsx (VERSIÓN COMPLETA RESTAURADA)
-// src/components/Rubiko.tsx (VERSIÓN FINAL CON HTTP FETCH)
+// Asistente virtual de Software Team Builder
 
 "use client";
 
@@ -28,16 +27,16 @@ import {
 
 // Interfaz para la estructura de un mensaje en el chat
 interface Message {
-  autor: "user" | "rubiko";
+  autor: "user" | "assistant";
   texto: string;
 }
 
 const welcomeMessage: Message = {
-  autor: "rubiko",
-  texto: "¡Hola! Soy Rubiko, tu asistente virtual. ¿En qué te puedo ayudar?",
+  autor: "assistant",
+  texto: "¡Hola! Soy el asistente virtual de Software Team Builder. ¿En qué te puedo ayudar?",
 };
 
-export default function Rubiko() {
+export default function Assistant() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState("");
@@ -94,12 +93,12 @@ export default function Rubiko() {
       }
 
       const data = await response.json();
-      const rubikoMessage: Message = { autor: "rubiko", texto: data.answer };
-      setMessages((prev) => [...prev, rubikoMessage]);
+      const assistantMessage: Message = { autor: "assistant", texto: data.answer };
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Error al enviar mensaje:", error);
       const errorMessage: Message = {
-        autor: "rubiko",
+        autor: "assistant",
         texto: `Lo siento, ocurrió un error`,
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -137,7 +136,7 @@ export default function Rubiko() {
           <Avatar sx={{ bgcolor: "secondary.main" }}>
             <SmartToy />
           </Avatar>{" "}
-          {"Asistente Rubiko"}
+          {"Asistente virtual"}
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={handleToggle} sx={{ color: "white" }}>
             <Close />
@@ -168,7 +167,7 @@ export default function Rubiko() {
               <Box
                 key={index}
                 sx={{
-                  alignSelf: msg.autor === "rubiko" ? "flex-start" : "flex-end",
+                  alignSelf: msg.autor === "assistant" ? "flex-start" : "flex-end",
                   maxWidth: "85%",
                 }}
               >
@@ -177,12 +176,12 @@ export default function Rubiko() {
                   sx={{
                     p: 1.5,
                     borderRadius:
-                      msg.autor === "rubiko"
+                      msg.autor === "assistant"
                         ? "20px 20px 20px 5px"
                         : "20px 20px 5px 20px",
                     bgcolor:
-                      msg.autor === "rubiko" ? "grey.200" : "primary.light",
-                    color: msg.autor === "rubiko" ? "text.primary" : "white",
+                      msg.autor === "assistant" ? "grey.200" : "primary.light",
+                    color: msg.autor === "assistant" ? "text.primary" : "white",
                   }}
                 >
                   <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>

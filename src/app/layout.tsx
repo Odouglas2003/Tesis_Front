@@ -4,7 +4,7 @@ import "./globals.css";
 import ThemeProviderClient from "./ThemeProviderClient";
 import { UserProvider } from "./UserContext";
 import { ProjectSuggestionProvider } from "@/context/ProjectSuggestionContext";
-import RubikoAssistant from "../components/Rubiko";
+import Assistant from "../components/Assistant";
 
 export const metadata: Metadata = {
   title: "Rubik",
@@ -25,7 +25,7 @@ export default function RootLayout({
             <ThemeProviderClient>{children}</ThemeProviderClient>
           </ProjectSuggestionProvider>
         </UserProvider>
-        <RubikoAssistant />
+        <Assistant />
       </body>
     </html>
   );

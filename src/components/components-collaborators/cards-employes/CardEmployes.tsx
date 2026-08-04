@@ -10,6 +10,24 @@ interface Props {
   searchTerm: string;
   collaboratorProp: Employee[];
 }
+
+const getContractAlert = (endDate: Employee["fin_contrato"]) => {
+  if (!endDate) return null;
+  const contractEnd = new Date(endDate);
+  if (Number.isNaN(contractEnd.getTime())) return null;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  contractEnd.setHours(23, 59, 59, 999);
+  const daysLeft = Math.ceil(
+    (contractEnd.getTime() - today.getTime()) / 86400000
+  );
+
+  if (daysLeft < 0) return { color: "#E5484D", label: "Contrato vencido" };
+  if (daysLeft <= 30) return { color: "#FFD600", label: "Contrato por vencer" };
+  return null;
+};
+
 export default function CardsEmployes({
   searchTerm,
   collaboratorProp,
@@ -88,7 +106,9 @@ export default function CardsEmployes({
   return (
     <Box display="flex" justifyContent="center" mt={1}>
       <Grid2 container spacing={3} justifyContent="space-between" >
-        {filteredEmployee.map((empleado, index) => (
+        {filteredEmployee.map((empleado, index) => {
+          const contractAlert = getContractAlert(empleado.fin_contrato);
+          return (
           <Grid2
             key={index}
             justifyContent="center"
@@ -108,6 +128,24 @@ export default function CardsEmployes({
               transition: "all 0.3s ease",
             }}
           >
+            {contractAlert && (
+              <Tooltip title={contractAlert.label} arrow placement="left">
+                <Box
+                  aria-label={contractAlert.label}
+                  sx={{
+                    position: "absolute",
+                    zIndex: 4,
+                    top: "13px",
+                    right: "-24px",
+                    width: "88px",
+                    height: "18px",
+                    bgcolor: contractAlert.color,
+                    transform: "rotate(45deg)",
+                    boxShadow: `0 3px 10px ${contractAlert.color}66`,
+                  }}
+                />
+              </Tooltip>
+            )}
             {hoveredButton === index ? (
               <Grid2
                 sx={{
@@ -328,7 +366,8 @@ export default function CardsEmployes({
               </>
             )}
           </Grid2>
-        ))}
+          );
+        })}
       </Grid2>
     </Box>
   );
