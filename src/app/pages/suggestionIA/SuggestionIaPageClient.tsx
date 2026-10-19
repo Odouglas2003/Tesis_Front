@@ -187,27 +187,27 @@ export default function SuggestionIaPageClient() {
     }
   };
 
-  function getPositionTime(roleRequested: string): string | undefined {
-    const vacancy = projectData?.vacancies.find(
-      (v) => v.role === roleRequested
-    );
-
-    if (!vacancy?.startDate) return undefined;
-
-    return vacancy.startDate.slice(0, 10);
+  // Las fechas del staff pueden llegar como Date (valor inicial del formulario) o como texto.
+  function toDateString(value: unknown): string | undefined {
+    if (!value) return undefined;
+    if (value instanceof Date) {
+      return isNaN(value.getTime()) ? undefined : value.toISOString().slice(0, 10);
+    }
+    const text = String(value);
+    return text ? text.slice(0, 10) : undefined;
   }
-  function getPositionStartDate(roleRequested: string): string | undefined {
-    const vacancy = projectData?.vacancies.find(
-      (v) => v.role === roleRequested
-    );
-
+  function findVacancy(roleRequested: string) {
+    return projectData?.vacancies?.find((v) => v.role === roleRequested);
+  }
+  function getPositionTime(roleRequested: string): string | undefined {
+    const vacancy = findVacancy(roleRequested);
     return vacancy?.time ? String(vacancy.time) : undefined;
   }
+  function getPositionStartDate(roleRequested: string): string | undefined {
+    return toDateString(findVacancy(roleRequested)?.startDate);
+  }
   function getPositionRequestDate(roleRequested: string): string | undefined {
-    const vacancy = projectData?.vacancies.find(
-      (v) => v.role === roleRequested
-    );
-    return vacancy?.requestDate?.slice(0, 10);
+    return toDateString(findVacancy(roleRequested)?.requestDate);
   }
   function arrayToObjectArray(arr: string[]): { name: string }[] {
     return arr.map((item) => ({ name: item }));
