@@ -159,7 +159,7 @@ async function request<T>(config: AxiosRequestConfig): Promise<T> {
     const err = e as AxiosError;
     if (typeof window === "undefined" && err?.response?.status === 401) {
       const { redirect } = await import("next/navigation");
-      redirect("/"); // corta el render del server y manda al login
+      redirect("/api/auth/logout");
     }
     throw e;
   }
@@ -1362,7 +1362,11 @@ export const getActiveSkills = async () => {
   });
 };
 
-export async function createSkill(payload: Skill) {
+export async function createSkill(payload: {
+  name: string;
+  description?: string;
+  status: boolean;
+}) {
   const res = await api.request<ApiBase & { skill?: Skill; data?: unknown }>({
     url: `/api/skills/`,
     method: "POST",

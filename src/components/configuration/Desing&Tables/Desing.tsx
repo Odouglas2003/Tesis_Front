@@ -63,7 +63,7 @@ const DEFAULT_VISUAL_THEME = {
 const buildMiniCardGradient = (accent: string, secondary: string) =>
   `linear-gradient(135deg, ${accent}2E 0%, ${secondary}26 100%)`;
 
-type ThemeFormState = typeof DEFAULT_VISUAL_THEME;
+type ThemeFormState = Record<keyof typeof DEFAULT_VISUAL_THEME, string>;
 
 const THEME_FIELDS: Array<{
   key: keyof ThemeFormState;

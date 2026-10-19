@@ -5,6 +5,7 @@ import ThemeProviderClient from "./ThemeProviderClient";
 import { UserProvider } from "./UserContext";
 import { ProjectSuggestionProvider } from "@/context/ProjectSuggestionContext";
 import Assistant from "../components/Assistant";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 export const metadata: Metadata = {
   title: "Rubik",
@@ -20,12 +21,14 @@ export default function RootLayout({
     <html lang="en">
       <head></head>
       <body>
-        <UserProvider>
-          <ProjectSuggestionProvider>
-            <ThemeProviderClient>{children}</ThemeProviderClient>
-          </ProjectSuggestionProvider>
-        </UserProvider>
-        <Assistant />
+        <AppRouterCacheProvider>
+          <UserProvider>
+            <ProjectSuggestionProvider>
+              <ThemeProviderClient>{children}</ThemeProviderClient>
+            </ProjectSuggestionProvider>
+          </UserProvider>
+          <Assistant />
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

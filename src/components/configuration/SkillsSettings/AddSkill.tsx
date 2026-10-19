@@ -17,6 +17,7 @@ import {
 import { createSkill } from "@/services/api";
 import ModalComponent from "@/components/message/MessageModal";
 import { useAppTheme } from "@/app/ThemeProviderClient";
+import type { AxiosError } from "axios";
 
 type AddSkillProps = {
   onCreated?: () => void;
@@ -35,8 +36,11 @@ export default function AddSkill({ onCreated }: AddSkillProps) {
     "success" | "error" | "warning"
   >("success");
   const [modalMessage, setModalMessage] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [saving, setSaving] = useState(false);
   const handleInputChange =
-    (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    (field: string) =>
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormData({ ...formData, [field]: event.target.value });
     };
 
@@ -46,31 +50,38 @@ export default function AddSkill({ onCreated }: AddSkillProps) {
   };
 
   const handleSave = async () => {
+    const name = formData.name.trim();
+    if (!name) {
+      setNameError("El nombre es obligatorio");
+      return;
+    }
+
+    setNameError("");
     const payload = {
-      id: formData.id,
-      name: formData.name,
-      description: formData.description,
-      status: formData.status ? true : false,
+      name,
+      description: formData.description.trim(),
+      status: formData.status,
     };
 
     try {
-      const response = await createSkill(payload);
+      setSaving(true);
+      await createSkill(payload);
 
-      if (response.skill || response.data || response.success || response) {
-        setModalVariant("success");
-        setModalMessage("Habilidad creada con éxito.");
-        setOpenModalConfirm(true);
-        setFormData({ id: "", name: "", description: "", status: true });
-        onCreated?.();
-      } else {
-        throw new Error("Error al crear la habilidad.");
-      }
-    } catch (error) {
+      setModalVariant("success");
+      setModalMessage("Habilidad creada con éxito.");
+      setOpenModalConfirm(true);
+      setFormData({ id: "", name: "", description: "", status: true });
+      await onCreated?.();
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError<{ message?: string }>;
       setModalVariant("error");
       setModalMessage(
-        "Hubo un error al crear la habilidad. Inténtalo de nuevo."
+        axiosError.response?.data?.message ||
+          "No se pudo crear la habilidad. Intentalo nuevamente."
       );
       setOpenModalConfirm(true);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -151,7 +162,12 @@ export default function AddSkill({ onCreated }: AddSkillProps) {
                   variant="outlined"
                   label="Nombre completo"
                   value={formData.name}
-                  onChange={handleInputChange("name")}
+                  onChange={(event) => {
+                    handleInputChange("name")(event);
+                    if (nameError) setNameError("");
+                  }}
+                  error={Boolean(nameError)}
+                  helperText={nameError}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       height: "40px",
@@ -231,6 +247,7 @@ export default function AddSkill({ onCreated }: AddSkillProps) {
               <Button
                 variant="contained"
                 onClick={handleSave}
+                disabled={saving}
                 sx={{
                   backgroundColor: colors.button || "#002338",
                   color: "#23FFDC",
@@ -241,7 +258,7 @@ export default function AddSkill({ onCreated }: AddSkillProps) {
                   borderRadius: "20px",
                 }}
               >
-                Añadir
+                {saving ? "Guardando..." : "Añadir"}
               </Button>
             </Box>
           </CardContent>
