@@ -8,8 +8,11 @@ import Assistant from "../components/Assistant";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 export const metadata: Metadata = {
-  title: "Rubik",
-  description: "rubik",
+  title: "Tesis",
+  description: "Sistema de gestión inteligente de equipos",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 export const dynamic = "force-dynamic";
 export default function RootLayout({
