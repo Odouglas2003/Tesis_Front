@@ -106,7 +106,8 @@ export default function Assistant() {
     if (engineWaitRef.current) return engineWaitRef.current;
     setEngineState("starting");
     const run = async () => {
-      const deadline = Date.now() + 180_000;
+      const deadline = Date.now() + 240_000;
+      let lastWake = 0;
       while (Date.now() < deadline) {
         try {
           const response = await api.get("/api/ia/status", { timeout: 15_000 });
@@ -114,6 +115,12 @@ export default function Assistant() {
             engineReadyRef.current = true;
             setEngineState("ready");
             return true;
+          }
+          // Render solo despierta el motor gratuito con visitas desde un navegador.
+          const wakeUrl = response.data?.wakeUrl;
+          if (wakeUrl && Date.now() - lastWake > 20_000) {
+            lastWake = Date.now();
+            void fetch(wakeUrl, { mode: "no-cors", cache: "no-store" }).catch(() => undefined);
           }
         } catch {
           /* el backend también puede estar despertando: reintentamos */
