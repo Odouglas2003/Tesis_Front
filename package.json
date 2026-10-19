@@ -16,7 +16,7 @@
     "build": "cross-env NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production next build"
   },
   "engines": {
-    "node": ">=20 <21"
+    "node": "24.x"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
