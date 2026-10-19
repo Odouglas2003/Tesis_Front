@@ -1838,7 +1838,7 @@ export async function exportAnalyticsReportClient(payload: unknown, filename?: s
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
-    const downloadName = filename || `reporte_rubik_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const downloadName = filename || `reporte_teammatch_${new Date().toISOString().slice(0, 10)}.xlsx`;
     if (typeof window !== "undefined") {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");

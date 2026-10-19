@@ -76,7 +76,7 @@ const Navbar = () => {
   };
 
   const logoSrc = brandConfig?.logo || AUTH_LOGO_SRC;
-  const brandName = brandConfig?.companyName?.trim() || "Team Builder";
+  const brandName = brandConfig?.companyName?.trim() || "TeamMatch";
 
   return (
     <Box

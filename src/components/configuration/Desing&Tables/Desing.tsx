@@ -201,7 +201,7 @@ export default function ConfigureComponent() {
   }, [logoFile]);
 
   const previewLogo = localLogoUrl || logoUrl;
-  const previewBrandName = companyName.trim() || "Team Builder";
+  const previewBrandName = companyName.trim() || "TeamMatch";
   const previewMiniCard = useMemo(
     () => buildMiniCardGradient(themeForm.accent, themeForm.secondary),
     [themeForm.accent, themeForm.secondary]

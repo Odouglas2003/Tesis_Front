@@ -8,7 +8,7 @@ import Assistant from "../components/Assistant";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 export const metadata: Metadata = {
-  title: "Tesis",
+  title: "TeamMatch",
   description: "Sistema de gestión inteligente de equipos",
   icons: {
     icon: "/icon.svg",
