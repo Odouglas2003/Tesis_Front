@@ -89,12 +89,48 @@ export default function Assistant() {
   const [showActionHistory, setShowActionHistory] = useState(false);
   const [actionHistory, setActionHistory] = useState<ActionHistoryItem[]>([]);
   const [conversationId, setConversationId] = useState("");
+  const [engineState, setEngineState] = useState<"unknown" | "starting" | "ready">("unknown");
+  const engineReadyRef = useRef(false);
+  const engineWaitRef = useRef<Promise<boolean> | null>(null);
   const chatRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<Recognition | null>(null);
   const heardSpeechRef = useRef(false);
   const conversationRef = useRef(false);
   const sendRef = useRef<(text: string) => void>(() => undefined);
   const { speak, speaking, cancel, supported: voiceSupported } = useSpeechSynthesis({ lang: "es-AR" });
+
+  // El motor de IA corre en el plan gratuito de Render y se apaga sin uso.
+  // Lo despertamos y esperamos a que responda antes de enviar mensajes.
+  const waitForEngine = (): Promise<boolean> => {
+    if (engineReadyRef.current) return Promise.resolve(true);
+    if (engineWaitRef.current) return engineWaitRef.current;
+    setEngineState("starting");
+    const run = async () => {
+      const deadline = Date.now() + 180_000;
+      while (Date.now() < deadline) {
+        try {
+          const response = await api.get("/api/ia/status", { timeout: 15_000 });
+          if (response.data?.ready) {
+            engineReadyRef.current = true;
+            setEngineState("ready");
+            return true;
+          }
+        } catch {
+          /* el backend también puede estar despertando: reintentamos */
+        }
+        await new Promise((resolve) => setTimeout(resolve, 4_000));
+      }
+      setEngineState("unknown");
+      return false;
+    };
+    engineWaitRef.current = run().finally(() => { engineWaitRef.current = null; });
+    return engineWaitRef.current;
+  };
+
+  const markEngineAsleep = () => {
+    engineReadyRef.current = false;
+    setEngineState("unknown");
+  };
 
   const setConversation = (active: boolean) => {
     conversationRef.current = active;
@@ -158,6 +194,11 @@ export default function Assistant() {
   }, []);
 
   useEffect(() => {
+    if (open) void waitForEngine();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  useEffect(() => {
     if (!open || !conversationId) return;
     void Promise.all([
       api.get("/api/ia/chat/history", { params: { conversationId } }),
@@ -181,8 +222,23 @@ export default function Assistant() {
     setPendingAction(null);
     setIsLoading(true);
 
+    const postChat = () => api.post("/api/ia/chat", { message: text, history, conversationId });
+
     try {
-      const response = await api.post("/api/ia/chat", { message: text, history, conversationId });
+      if (!(await waitForEngine())) {
+        throw new Error("El motor de IA no respondió a tiempo.");
+      }
+      let response;
+      try {
+        response = await postChat();
+      } catch (error) {
+        const statusCode = (error as { response?: { status?: number } }).response?.status;
+        const engineAsleep = !statusCode || statusCode === 502 || statusCode === 503 || statusCode === 504;
+        if (!engineAsleep) throw error;
+        markEngineAsleep();
+        if (!(await waitForEngine())) throw error;
+        response = await postChat();
+      }
       const data = response.data;
       const answer = data.answer || "No pude generar una respuesta.";
       setMessages((current) => [...current, { autor: "assistant", texto: answer }]);
@@ -279,8 +335,9 @@ export default function Assistant() {
     }
   };
 
-  const status = isListening ? "Escuchando" : isLoading ? "Pensando" : speaking ? "Hablando" : conversationMode ? "Listo para continuar" : "Asistente inteligente";
-  const active = isListening || isLoading || speaking;
+  const engineStarting = engineState === "starting";
+  const status = engineStarting ? "Iniciando asistente…" : isListening ? "Escuchando" : isLoading ? "Pensando" : speaking ? "Hablando" : conversationMode ? "Listo para continuar" : "Asistente inteligente";
+  const active = isListening || isLoading || speaking || engineStarting;
 
   const lastMessages = messages.slice(-2);
 
@@ -305,7 +362,7 @@ export default function Assistant() {
       <Box sx={{ position: "relative", zIndex: 1, flex: 1, minHeight: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", px: 2, pb: 11 }}>
         <JarvisOrb active={active || conversationMode} listening={isListening} speaking={speaking} onClick={toggleConversation} />
         <Typography sx={{ mt: 2, color: isListening ? "#bdfcff" : "#70dced", letterSpacing: ".28em", fontSize: ".75rem", textTransform: "uppercase" }}>{status}</Typography>
-        <Typography variant="caption" sx={{ mt: 1, color: "rgba(188,239,248,.48)" }}>{conversationMode ? "Tocá la esfera para finalizar" : "Tocá la esfera para comenzar a hablar"}</Typography>
+        <Typography variant="caption" sx={{ mt: 1, color: "rgba(188,239,248,.48)" }}>{engineStarting ? "Despertando el motor de IA. Puede tardar hasta un minuto; podés escribir igual y te respondo apenas esté listo." : conversationMode ? "Tocá la esfera para finalizar" : "Tocá la esfera para comenzar a hablar"}</Typography>
 
         <Box ref={chatRef} sx={{ mt: 3, width: "min(760px, 92vw)", maxHeight: 135, overflowY: "auto", textAlign: "center" }}>
           {lastMessages.map((message, index) => <Typography key={index} sx={{ mb: 1, color: message.autor === "assistant" ? "#d8faff" : "rgba(178,222,235,.62)", fontSize: message.autor === "assistant" ? "1rem" : ".82rem", lineHeight: 1.55 }}>{message.texto}</Typography>)}
