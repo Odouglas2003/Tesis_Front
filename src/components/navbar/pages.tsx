@@ -171,7 +171,16 @@ const Navbar = () => {
                     maxWidth: { sm: 170, md: 220 },
                   }}
                 >
-                  {brandName}
+                  {brandName === "TeamMatch" ? (
+                    <>
+                      Team
+                      <Box component="span" sx={{ color: "#20B9A5" }}>
+                        Match
+                      </Box>
+                    </>
+                  ) : (
+                    brandName
+                  )}
                 </Typography>
                 <Typography
                   sx={{
