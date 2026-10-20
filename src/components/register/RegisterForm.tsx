@@ -172,7 +172,8 @@ const RegisterForm = () => {
       }
     } catch (err) {
       console.error("Error completo:", err);
-      setError("Error de conexión con el servidor");
+      const detail = err instanceof Error ? err.message.replace(/^Error \d+:\s*/, "") : "";
+      setError(detail || "Error de conexión con el servidor");
     } finally {
       setLoading(false);
     }
@@ -180,14 +181,12 @@ const RegisterForm = () => {
 
   if (emailSent) {
     const successMessage =
-      error === "Error"
-        ? "Revisá tu correo para continuar con la activación del usuario."
-        : error || "Te enviamos un correo para completar el registro.";
+      "Tu cuenta quedó creada y está pendiente de aprobación. Un administrador la habilita desde Configuración → Credenciales; cuando esté activa vas a poder iniciar sesión.";
 
     return (
       <AuthSplitLayout
-        title="Solicitud procesada"
-        subtitle="La activación del usuario queda asociada al flujo de seguridad de la plataforma."
+        title="Cuenta creada"
+        subtitle="Queda pendiente de aprobación por un administrador."
       >
         <Box
           sx={{

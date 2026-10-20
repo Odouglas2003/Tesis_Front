@@ -175,6 +175,7 @@ const Credentials: React.FC = () => {
       case "pending":
         return "Pendiente";
       case "denied":
+      case "rejected":
         return "Denegado";
       default:
         return status;
@@ -480,7 +481,7 @@ const Credentials: React.FC = () => {
                               {[
                                 { value: "active", label: "Activo" },
                                 { value: "pending", label: "Pendiente" },
-                                { value: "denied", label: "Denegado" },
+                                { value: "rejected", label: "Denegado" },
                               ].map((status) => (
                                 <MenuItem
                                   key={status.value}
