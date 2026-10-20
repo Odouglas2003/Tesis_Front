@@ -650,7 +650,7 @@ const EmployeeTable: React.FC<
                               }
                               unmountOnExit
                             >
-                              {employee.Proyectos.filter(
+                              {employee.Proyectos.slice(1).filter(
                                 (p) =>
                                   p.projectId && typeof p.projectId !== "string"
                               ).map((p) => {
