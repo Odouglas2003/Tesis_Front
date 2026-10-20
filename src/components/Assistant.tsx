@@ -14,7 +14,8 @@ import api from "@/services/http";
 interface Message { autor: "user" | "assistant"; texto: string; }
 interface JarvisAction {
   type: "create_vacancy" | "create_project" | "assign_collaborator" |
-    "remove_assignment" | "close_vacancy" | "update_project" | "create_notification";
+    "remove_assignment" | "close_vacancy" | "update_project" | "create_notification" |
+    "create_collaborator";
   title: string;
   payload: Record<string, unknown>;
 }
@@ -47,7 +48,9 @@ const actionLabels: Record<string, string> = {
   category: "Categoría", budget: "Presupuesto", rol: "Rol",
   horasAsignadas: "Horas asignadas", tecnologias: "Tecnologías",
   changes: "Cambios", recipients: "Destinatarios", alertLevel: "Nivel",
-  message: "Mensaje",
+  message: "Mensaje", first_name: "Nombre", last_name: "Apellido",
+  email: "Email", dni: "DNI", jornada: "Jornada",
+  start_contrato: "Inicio de contrato", fin_contrato: "Fin de contrato",
 };
 
 const visibleActionFields = (payload: Record<string, unknown>) =>
