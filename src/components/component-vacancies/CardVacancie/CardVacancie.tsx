@@ -55,6 +55,15 @@ export default function CardsVacantes({
         return null;
     }
   };
+  if ((searchTerm ?? "").trim() && filteredVacancies.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Typography sx={{ fontFamily: "Poppins", color: "#5b6b7a" }}>
+          No se encontraron resultados para &quot;{searchTerm.trim()}&quot;.
+        </Typography>
+      </Box>
+    );
+  }
   return (
     <>
       <Box display="flex" justifyContent="center" mt={2}>

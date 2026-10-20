@@ -18,7 +18,9 @@ export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
     personasPorProyecto,
   } = metricsProp;
 
-  const enCursoCount = (estadoDeProyectos?.porEstado?.["En curso"] as number) ?? 0;
+  const enCursoCount =
+    Number(estadoDeProyectos?.porEstado?.["Activo"] ?? 0) +
+    Number(estadoDeProyectos?.porEstado?.["En curso"] ?? 0);
 
   const statsData = [
     {

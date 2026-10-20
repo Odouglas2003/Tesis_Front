@@ -10,7 +10,8 @@ interface Props {
   position: Position;
   onSelect: (position_id: string, candidate: Candidate) => void;
   onCreateVacancy: (position: Position) => void;
-  time: string; // Horas requeridas para la vacante
+  time: string; // Horas semanales requeridas para la vacante
+  seniorityLabel?: string; // Seniority tal como se eligió en el formulario
 }
 
 export default function RoleSection({
@@ -18,6 +19,7 @@ export default function RoleSection({
   onSelect,
   onCreateVacancy,
   time,
+  seniorityLabel,
 }: Props) {
   /* sugerido primero por si el back no lo devuelve en orden */
   const candidates = [...position.candidates].sort((a, b) => {
@@ -62,12 +64,12 @@ export default function RoleSection({
       >
         {position.role_requested +
           " - " +
-          position.seniority_requested +
+          (seniorityLabel || position.seniority_requested) +
           " - " +
           position.technologies_requested.join(", ") +
           " - " +
           time +
-          " Horas requeridas"}
+          " h/semana requeridas"}
       </Typography>
       <Typography
         sx={{

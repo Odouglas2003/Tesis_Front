@@ -250,7 +250,14 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                 <Grid2 size={{ xs: 12, md: 4 }}>
                   <InfoRow label="Project Manager" value={project.managerName} />
                   <InfoRow label="Categoria" value={project.category} />
-                  <InfoRow label="Presupuesto" value={project.budget} />
+                  <InfoRow
+                    label="Presupuesto"
+                    value={
+                      project.budget !== null && project.budget !== undefined && String(project.budget) !== ""
+                        ? `$ ${Number(project.budget).toLocaleString("es-AR")}`
+                        : "-"
+                    }
+                  />
                 </Grid2>
                 <Grid2 size={{ xs: 12, md: 4 }}>
                   <InfoRow label="Cliente" value={project.client} />

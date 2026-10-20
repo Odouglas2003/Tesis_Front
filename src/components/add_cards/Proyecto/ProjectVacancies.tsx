@@ -339,7 +339,7 @@ export default function ProjectVacancies({
             <TextField
               name="time"
               type="number"
-              label="Horas asignadas"
+              label="Horas semanales"
               value={vacante.time}
               onChange={(e) => handleVacanteChange(index, e)}
               fullWidth

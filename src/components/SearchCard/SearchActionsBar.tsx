@@ -169,14 +169,23 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
         )}
       </Grid>
 
-      <Modal open={openModal} onClose={handleCloseModal}>
+      <Modal
+        open={openModal}
+        onClose={(_event, reason) => {
+          // Evita perder lo cargado por un Escape o un clic fuera del formulario.
+          if (reason === "escapeKeyDown" || reason === "backdropClick") return;
+          handleCloseModal();
+        }}
+      >
         <Box
           sx={{
             position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "1042px",
+            width: { xs: "95vw", md: "1042px" },
+            maxHeight: "95vh",
+            overflowY: "auto",
             backgroundColor: "#FCFEFF",
             border: "1px solid rgba(18,48,77,0.10)",
             boxShadow: 24,

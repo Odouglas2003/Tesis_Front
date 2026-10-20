@@ -46,6 +46,15 @@ export default function CardsProjects({
     setHoveredButton(null);
   };
 
+  if ((searchTerm ?? "").trim() && filteredProjects.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Typography sx={{ fontFamily: "Poppins", color: "#5b6b7a" }}>
+          No se encontraron resultados para &quot;{searchTerm.trim()}&quot;.
+        </Typography>
+      </Box>
+    );
+  }
   return (
     <Box display="flex" justifyContent="center" mt={2}>
       <Grid2 container spacing={3} justifyContent="space-between">

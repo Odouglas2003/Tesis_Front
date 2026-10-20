@@ -432,7 +432,11 @@ export default function CollaboratorDetail({
                   />
                   <InfoRow
                     label="Tiempo asignado"
-                    value={colabProp.horasAsignadas ?? ""}
+                    value={
+                      colabProp.horasAsignadas !== undefined && colabProp.horasAsignadas !== null
+                        ? `${colabProp.horasAsignadas} h/semana`
+                        : ""
+                    }
                   />
                   <InfoRow
                     label="Desempeño"

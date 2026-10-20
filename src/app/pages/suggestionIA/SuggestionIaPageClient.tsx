@@ -80,7 +80,7 @@ export default function SuggestionIaPageClient() {
       startDate:
         getPositionStartDate(position.role_requested) ||
         new Date().toISOString().slice(0, 10),
-      seniority: position.seniority_requested,
+      seniority: getPositionSeniority(position),
       skills: arrayToObjectArray(position.technologies_requested),
     };
     setVacancies((prev) => [...prev, dataVacancie]);
@@ -110,7 +110,7 @@ export default function SuggestionIaPageClient() {
           id: cand.id,
           name: cand.name,
           rol: position.role_requested,
-          seniority: position.seniority_requested,
+          seniority: getPositionSeniority(position),
           projectHours: Number(getPositionTime(position.role_requested)) || 0,
           prevProjectHours: 0,
           assignToProject: true,
@@ -150,6 +150,7 @@ export default function SuggestionIaPageClient() {
         category: cat || "Sin categoría",
         budget: projectData.budget !== "" ? Number(projectData.budget) : null,
         managerVisibleInOrgChart: true,
+        ia_generated: true,
         assignedPersons: collaborators.map((c) => ({
           id: c.id,
           name: c.name,
@@ -199,6 +200,10 @@ export default function SuggestionIaPageClient() {
   function findVacancy(roleRequested: string) {
     return projectData?.vacancies?.find((v) => v.role === roleRequested);
   }
+  // El motor IA recibe la seniority abreviada (JR/SSR/SR); para guardar y mostrar usamos la elegida en el formulario.
+  function getPositionSeniority(position: Position): string {
+    return findVacancy(position.role_requested)?.seniority || position.seniority_requested;
+  }
   function getPositionTime(roleRequested: string): string | undefined {
     const vacancy = findVacancy(roleRequested);
     return vacancy?.time ? String(vacancy.time) : undefined;
@@ -215,7 +220,10 @@ export default function SuggestionIaPageClient() {
   const handleBack = () => router.push("/pages/projects");
 
   return (
-    <div className="min-h-screen w-full" style={{ backgroundColor: "#F8F8F8" }}>
+    <div
+      className="min-h-screen w-full"
+      style={{ backgroundColor: "#F8F8F8", paddingBottom: "120px" }}
+    >
       <Box sx={{ mb: 3 }}>
         <Navbar />
       </Box>
@@ -269,6 +277,7 @@ export default function SuggestionIaPageClient() {
             onSelect={selectCandidate}
             onCreateVacancy={createVacancy}
             time={getPositionTime(position.role_requested) || "0"}
+            seniorityLabel={getPositionSeniority(position)}
           />
         ))}
 

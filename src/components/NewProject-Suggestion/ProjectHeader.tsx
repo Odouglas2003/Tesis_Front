@@ -29,7 +29,7 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
         <Info label="Cliente" value={project.client} />
         <Info
           label="Manager"
-          value={project.manager_name || "No Manager Assigned"}
+          value={project.managerName || project.manager_name || "No Manager Assigned"}
         />
       </Stack>
       <Stack direction={{ xs: "column", sm: "row" }} gap={4} flexWrap="wrap">
