@@ -53,6 +53,19 @@ const actionLabels: Record<string, string> = {
   start_contrato: "Inicio de contrato", fin_contrato: "Fin de contrato",
 };
 
+// Limpia markdown que pueda devolver el modelo (negritas, títulos, imágenes, links) para mostrarlo y leerlo en voz alta.
+const toPlainText = (text: string) =>
+  text
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/^#{1,6}\s*/gm, "")
+    .replace(/^\s*[*]\s+/gm, "- ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
 const visibleActionFields = (payload: Record<string, unknown>) =>
   Object.entries(payload).filter(([key, value]) =>
     actionLabels[key] && value !== "" && value !== null && value !== undefined
@@ -250,7 +263,7 @@ export default function Assistant() {
         response = await postChat();
       }
       const data = response.data;
-      const answer = data.answer || "No pude generar una respuesta.";
+      const answer = toPlainText(data.answer || "No pude generar una respuesta.");
       setMessages((current) => [...current, { autor: "assistant", texto: answer }]);
       setPendingAction(data.action || null);
 
@@ -375,7 +388,7 @@ export default function Assistant() {
         <Typography variant="caption" sx={{ mt: 1, color: "rgba(188,239,248,.48)" }}>{engineStarting ? "Despertando el motor de IA. Puede tardar hasta un minuto; podés escribir igual y te respondo apenas esté listo." : conversationMode ? "Tocá la esfera para finalizar" : "Tocá la esfera para comenzar a hablar"}</Typography>
 
         <Box ref={chatRef} sx={{ mt: 3, width: "min(760px, 92vw)", maxHeight: 135, overflowY: "auto", textAlign: "center" }}>
-          {lastMessages.map((message, index) => <Typography key={index} sx={{ mb: 1, color: message.autor === "assistant" ? "#d8faff" : "rgba(178,222,235,.62)", fontSize: message.autor === "assistant" ? "1rem" : ".82rem", lineHeight: 1.55 }}>{message.texto}</Typography>)}
+          {lastMessages.map((message, index) => <Typography key={index} sx={{ mb: 1, color: message.autor === "assistant" ? "#d8faff" : "rgba(178,222,235,.62)", fontSize: message.autor === "assistant" ? "1rem" : ".82rem", lineHeight: 1.55, whiteSpace: "pre-line", textAlign: "left" }}>{message.autor === "assistant" ? toPlainText(message.texto) : message.texto}</Typography>)}
         </Box>
 
         {pendingAction && <Alert severity="info" sx={{ mt: 2, width: "min(620px, 92vw)", bgcolor: "rgba(5,32,49,.88)", color: "#dcfaff", border: "1px solid rgba(83,220,255,.35)", "& .MuiAlert-icon": { color: "#70e6ff" } }}>
