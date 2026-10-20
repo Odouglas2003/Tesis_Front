@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Project } from "@/types/interface";
 import { Box, Grid2, Typography, Button, Tooltip } from "@mui/material";
+import { getContrastRatio } from "@mui/material/styles";
 import { useAppTheme } from "@/app/ThemeProviderClient";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
@@ -21,6 +22,14 @@ export default function CardsProjects({
   const [hoveredButton, setHoveredButton] = useState<number | null>(null);
   const router = useRouter();
   const { colors } = useAppTheme();
+  const cardBackground = colors?.card || "#002338";
+  const lightCard = getContrastRatio(cardBackground, "#12304D") >= getContrastRatio(cardBackground, "#FFFFFF");
+  const cardTextColor = lightCard ? "#12304D" : "#FFFFFF";
+  const clientTextColor = lightCard ? "#176B66" : "#72E6D9";
+  const buttonBackground = colors?.button || "#0087FF";
+  const buttonTextColor = getContrastRatio(buttonBackground, "#12304D") >= getContrastRatio(buttonBackground, "#FFFFFF")
+    ? "#12304D"
+    : "#FFFFFF";
 
   useEffect(() => {
     const term = (searchTerm ?? "").trim().toLowerCase();
@@ -69,7 +78,7 @@ export default function CardsProjects({
                 width: "310px",
                 height: "417px",
                 // Usar el color card del theme para el fondo principal
-                bgcolor: colors?.card || "#002338",
+                bgcolor: cardBackground,
                 borderRadius: "29px",
                 position: "relative",
                 overflow: "hidden",
@@ -120,7 +129,7 @@ export default function CardsProjects({
                             fontSize: "24px",
                             fontFamily: "Poppins",
                             fontWeight: 500,
-                            color: "#FFFFFF",
+                            color: cardTextColor,
                           }}
                         >
                           {proyecto.name}
@@ -132,8 +141,7 @@ export default function CardsProjects({
                         fontSize: "20px",
                         fontFamily: "Poppins",
                         fontWeight: 500,
-                        // Solo el texto del cliente usa el color de texto del theme
-                        color: colors?.text || "#23FFDC",
+                        color: clientTextColor,
                         textAlign: "center",
                         transition: 'color .25s ease'
                       }}
@@ -145,7 +153,7 @@ export default function CardsProjects({
                         fontSize: "18px",
                         fontFamily: "Poppins",
                         fontWeight: 500,
-                        color: "#FFFFFF",
+                        color: cardTextColor,
                         textAlign: "center",
                         marginTop: "20px",
                       }}
@@ -158,7 +166,7 @@ export default function CardsProjects({
                         fontSize: "18px",
                         fontFamily: "Poppins",
                         fontWeight: 500,
-                        color: "#FFFFFF",
+                        color: cardTextColor,
                         textAlign: "center",
                         marginTop: "20px",
                       }}
@@ -181,18 +189,18 @@ export default function CardsProjects({
                     <Button
                       variant="contained"
                       sx={{
-                        bgcolor: colors?.button || '#0087FF',
+                        bgcolor: buttonBackground,
                         borderRadius: '20px',
                         width: '100%',
                         height: '50px',
                         textTransform: 'none',
                         transition: 'background-color .25s ease, opacity .25s ease',
                         '&:hover': {
-                          bgcolor: colors?.button || '#0087FF',
+                          bgcolor: buttonBackground,
                           opacity: 0.85,
                         },
                         '&:active': {
-                          bgcolor: colors?.button || '#0087FF',
+                          bgcolor: buttonBackground,
                           opacity: 0.75,
                         },
                       }}
@@ -208,7 +216,7 @@ export default function CardsProjects({
                           fontFamily: "Poppins",
                           fontWeight: 500,
                           textAlign: "center",
-                          color: colors?.background || '#002338',
+                          color: buttonTextColor,
                           lineHeight: "100%",
                         }}
                       >
