@@ -17,6 +17,12 @@ const nextConfig = {
         hostname: 'dev-rubik.s3.us-east-1.amazonaws.com',
         pathname: '/**',
       },
+      {
+        // Fotos de colaboradores y proyectos subidas a cualquier bucket S3
+        protocol: 'https',
+        hostname: '**.amazonaws.com',
+        pathname: '/**',
+      },
     ]
   },
   turbopack: {
