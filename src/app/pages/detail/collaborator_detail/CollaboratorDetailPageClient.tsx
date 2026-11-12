@@ -8,9 +8,7 @@ import { Employee } from "@/types/interface";
 export default function CollaboratorDetail({ colab }: { colab: Employee }) {
   return (
     <>
-      <Box sx={{ mb: 3 }}>
-        <Navbar />
-      </Box>
+      <Navbar />
       <Box sx={{ mb: 3 }}>
         <CardDetalle colabProp={colab} />
       </Box>

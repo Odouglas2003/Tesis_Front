@@ -70,8 +70,10 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
     <Grid2
       container
       sx={{
-        marginLeft: "55px",
-        marginRight: "55px",
+        maxWidth: 1320,
+        mx: "auto",
+        px: { xs: 2, md: 3 },
+        width: "100%",
       }}
     >
       <Grid2 size={12}>
@@ -87,14 +89,14 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
           }}
         >
           <KeyboardArrowLeftIcon
-            sx={{ width: "24px", height: "24px", color: "#002338" }}
+            sx={{ width: "24px", height: "24px", color: "#12304D" }}
           />
           <Typography
             sx={{
               textAlign: "center",
-              color: "#002338",
+              color: "#12304D",
               fontSize: "20px",
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 400,
             }}
           >
@@ -108,7 +110,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
           elevation={6}
           sx={{
             width: { xs: "90%", md: "100%" },
-            borderRadius: "20px",
+            borderRadius: "10px",
             backgroundColor: "#FFFFFF",
             padding: "40px",
           }}
@@ -157,7 +159,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                     color: "#999",
                     fontSize: { xs: "12px", md: "14px" },
                     textAlign: "center",
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                   }}
                 >
                   Sin imagen
@@ -169,9 +171,9 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
               <Typography
                 sx={{
                   fontSize: { xs: 24, md: "40px" },
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 600,
-                  color: "#0087FF",
+                  color: "#1D5FA0",
                   mb: 1,
                 }}
               >
@@ -180,7 +182,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
               <Typography
                 sx={{
                   fontSize: { xs: 18, md: "20px" },
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 400,
                   color: "#666",
                 }}
@@ -190,7 +192,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
               <Typography
                 sx={{
                   fontSize: { xs: 18, md: "18px" },
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 400,
                   color: "#666",
                 }}
@@ -204,28 +206,28 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
               <span>
                 <Button
                   variant="contained"
-                  startIcon={<EditIcon sx={{ color: colors?.background || "#002338" }} />}
+                  startIcon={<EditIcon />}
                   disabled={!canEdit}
                   onClick={() => router.push(`/pages/edit/project/${project.id}`)}
                   sx={{
-                    backgroundColor: colors?.button || "#23FFDC",
-                    borderRadius: "20px",
-                    padding: "12px 41px",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
-                    fontSize: "20px",
-                    height: "50px",
-                    color: colors?.background || "#002338",
+                    backgroundColor: colors?.button || "#72E6D9",
+                    borderRadius: "8px",
+                    padding: "0 16px",
+                    fontFamily: "inherit",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    height: "44px",
+                    color: colors?.text || "#FFFFFF",
                     boxShadow: "none",
                     textTransform: "none",
                     transition: 'background-color .25s ease, opacity .25s ease',
                     '&:hover': {
-                      backgroundColor: colors?.button || '#23FFDC',
+                      backgroundColor: colors?.button || '#72E6D9',
                       opacity: 0.85,
                       boxShadow: 'none'
                     },
                     '&:active': {
-                      backgroundColor: colors?.button || '#23FFDC',
+                      backgroundColor: colors?.button || '#72E6D9',
                       opacity: 0.75,
                       boxShadow: 'none'
                     },
@@ -242,7 +244,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
             </Tooltip>
           </Box>
 
-          <Divider sx={{ bgcolor: "#002338", mb: 4 }} />
+          <Divider sx={{ bgcolor: "#E2E8EF", mb: 4 }} />
 
           {project ? (
             <>
@@ -289,7 +291,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                         sx={{
                           fontSize: { xs: 18, md: "20px" },
                           fontWeight: 600,
-                          color: "#002338",
+                          color: "#12304D",
                           mb: 2,
                           textAlign: "left",
                           width: "100%",
@@ -329,7 +331,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                             iconType="circle"
                             formatter={(value, entry) => (
                               <span
-                                style={{ color: "#002338", fontSize: "14px" }}
+                                style={{ color: "#12304D", fontSize: "14px" }}
                               >
                                 {value}: {entry.payload?.value ?? 0} hrs
                               </span>
@@ -338,7 +340,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                         </PieChart>
                       </ResponsiveContainer>
                       <Box sx={{ width: '100%', mt: 2, textAlign: 'left' }}>
-                        <Typography sx={{ color: '#002338', fontWeight: 600 }}>
+                        <Typography sx={{ color: '#12304D', fontWeight: 600 }}>
                           Total horas asignadas: {totalHorasColaboradores} hrs
                         </Typography>
                       </Box>
@@ -358,7 +360,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                           sx={{
                             fontSize: { xs: 18, md: "20px" },
                             fontWeight: 600,
-                            color: "#002338",
+                            color: "#12304D",
                             mb: 2,
                             textAlign: "left",
                             width: "100%",
@@ -398,7 +400,7 @@ export default function ProjectDetail({ project }: { project: ProjectNew }) {
                               iconType="circle"
                               formatter={(value, entry) => (
                                 <span
-                                  style={{ color: "#002338", fontSize: "14px" }}
+                                  style={{ color: "#12304D", fontSize: "14px" }}
                                 >
                                   {value}: {entry.payload?.value ?? 0} hrs
                                 </span>
@@ -434,8 +436,8 @@ function InfoRow({ label, value }: InfoRowProps) {
       sx={{
         fontSize: { xs: 16, md: "18px" },
         fontWeight: 400,
-        fontFamily: "Poppins",
-        color: "#002338",
+        fontFamily: "inherit",
+        color: "#12304D",
         letterSpacing: "0px",
         marginBottom: "16px",
       }}

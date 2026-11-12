@@ -323,7 +323,7 @@ export default function CollaboratorList({
         <Box key={rol} sx={{ mb: 3 }}>
           <Typography
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 600,
               fontSize: "18px",
               color: "#1a73e8",
@@ -356,10 +356,10 @@ export default function CollaboratorList({
                   <Stack direction="row" gap={1} mb={"0.5px"} alignItems="center">
                     <Typography
                       sx={{
-                        fontFamily: "Poppins",
+                        fontFamily: "inherit",
                         fontWeight: 500,
                         fontSize: "16px",
-                        color: "#002338",
+                        color: "#12304D",
                       }}
                     >
                       Horas asignadas:
@@ -370,10 +370,10 @@ export default function CollaboratorList({
                         value={horas[v.id]}
                         min={0}
                         style={{
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontWeight: 300,
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                           width: "60px",
                         }}
                         autoFocus
@@ -386,10 +386,10 @@ export default function CollaboratorList({
                     ) : (
                       <Typography
                         sx={{
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontWeight: 300,
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {horas[v.id]}
@@ -459,10 +459,10 @@ function Info({
     <Stack direction="row" gap={1} mb={"0.5px"}>
       <Typography
         sx={{
-          fontFamily: "Poppins",
+          fontFamily: "inherit",
           fontWeight: 500,
           fontSize: "16px",
-          color: "#002338",
+          color: "#12304D",
           flexShrink: 0,
         }}
       >
@@ -470,10 +470,10 @@ function Info({
       </Typography>
       <Typography
         sx={{
-          fontFamily: "Poppins",
+          fontFamily: "inherit",
           fontWeight: 300,
           fontSize: "16px",
-          color: "#002338",
+          color: "#12304D",
           wordBreak: multiline ? "break-word" : "normal",
           overflow: "hidden",
           textOverflow: multiline ? "initial" : "ellipsis",

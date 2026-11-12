@@ -93,7 +93,7 @@ export default function SkillModal({
         <Paper
           sx={{
             width: "1042px",
-            borderRadius: "20px",
+            borderRadius: "10px",
             boxShadow: "0 24px 64px rgba(0, 35, 56, 0.15)",
             display: "flex",
             flexDirection: "column",
@@ -113,10 +113,10 @@ export default function SkillModal({
             <Typography
               variant="h5"
               sx={{
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 500,
                 fontSize: "24px",
-                color: "#002338",
+                color: "#12304D",
               }}
             >
               Modificar Habilidad
@@ -147,8 +147,8 @@ export default function SkillModal({
                 <Typography
                   variant="subtitle2"
                   sx={{
-                    fontFamily: "Poppins",
-                    color: "#002338",
+                    fontFamily: "inherit",
+                    color: "#12304D",
                     fontWeight: 500,
                   }}
                 >
@@ -161,7 +161,7 @@ export default function SkillModal({
                   fullWidth
                   placeholder="Ingrese el nombre de la habilidad"
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     "& .MuiOutlinedInput-root": {
                       height: "40px",
                       borderRadius: "12px",
@@ -170,15 +170,15 @@ export default function SkillModal({
                         borderColor: "#e0e0e0",
                       },
                       "&:hover fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#8FA3B6",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#1D5FA0",
                       },
                     },
                   }}
                   InputProps={{
-                    sx: { color: "#002338" }
+                    sx: { color: "#12304D" }
                   }}
                 />
               </Grid>
@@ -187,8 +187,8 @@ export default function SkillModal({
                 <Typography
                   variant="subtitle2"
                   sx={{
-                    fontFamily: "Poppins",
-                    color: "#002338",
+                    fontFamily: "inherit",
+                    color: "#12304D",
                     fontWeight: 500,
                   }}
                 >
@@ -205,25 +205,25 @@ export default function SkillModal({
 
                       borderRadius: "12px",
                       backgroundColor: "#fafafa",
-                      '& .MuiSelect-select': { color: '#002338' },
+                      '& .MuiSelect-select': { color: '#12304D' },
                       "& .MuiOutlinedInput-notchedOutline": {
                         borderColor: "#e0e0e0",
                       },
                       "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                       "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     }}
                     displayEmpty
                     MenuProps={{
-                      PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                      PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                       MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                     }}
                   >
-                    <MenuItem value="true" sx={{ color: "#002338" }}>Activo</MenuItem>
-                    <MenuItem value="false" sx={{ color: "#002338" }}>Inactivo</MenuItem>
+                    <MenuItem value="true" sx={{ color: "#12304D" }}>Activo</MenuItem>
+                    <MenuItem value="false" sx={{ color: "#12304D" }}>Inactivo</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -231,8 +231,8 @@ export default function SkillModal({
                 <Typography
                   variant="subtitle2"
                   sx={{
-                    fontFamily: "Poppins",
-                    color: "#002338",
+                    fontFamily: "inherit",
+                    color: "#12304D",
                     fontWeight: 500,
                   }}
                 >
@@ -247,7 +247,7 @@ export default function SkillModal({
                   fullWidth
                   placeholder="Ingrese una descripción del puesto de trabajo"
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     "& .MuiOutlinedInput-root": {
                       height: "40px",
                       borderRadius: "12px",
@@ -256,15 +256,15 @@ export default function SkillModal({
                         borderColor: "#e0e0e0",
                       },
                       "&:hover fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#8FA3B6",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#1D5FA0",
                       },
                     },
                   }}
                   InputProps={{
-                    sx: { color: "#002338" }
+                    sx: { color: "#12304D" }
                   }}
                 />
               </Grid>
@@ -284,15 +284,15 @@ export default function SkillModal({
               variant="outlined"
               onClick={onClose}
               sx={{
-                color: "#0087FF",
-                border: `1px solid "#0087FF"`,
-                borderRadius: "20px",
+                color: "#1D5FA0",
+                border: `1px solid "#1D5FA0"`,
+                borderRadius: "8px",
                 backgroundColor: "transparent",
                 height: "40px",
                 width: "200px",
                 textTransform: "none",
-                fontFamily: "Poppins",
-                fontWeight: 500,
+                fontFamily: "inherit",
+                fontWeight: 600,
                 '&:hover': {
                   backgroundColor: 'transparent',
                 },
@@ -304,14 +304,14 @@ export default function SkillModal({
               variant="contained"
               onClick={handleSave}
               sx={{
-                backgroundColor: colors.button || "#002338",
-                color: "#23FFDC",
-                borderRadius: "20px",
+                backgroundColor: colors.button || "#12304D",
+                color: "#FFFFFF",
+                borderRadius: "8px",
                 height: "40px",
                 width: "200px",
                 textTransform: "none",
-                fontFamily: "Poppins",
-                fontWeight: 500,
+                fontFamily: "inherit",
+                fontWeight: 600,
                 boxShadow: "0 4px 12px rgba(0, 35, 56, 0.3)",
               }}
             >

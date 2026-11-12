@@ -31,7 +31,7 @@ interface VacanteProps {
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: { style: { maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP, bgcolor: '#FFFFFF', color: '#002338' } },
+  PaperProps: { style: { maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP, bgcolor: '#FFFFFF', color: '#12304D' } },
   MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
 };
 
@@ -253,7 +253,7 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
           variant="h6"
           gutterBottom
           align="center"
-          sx={{ textAlign: "left", fontWeight: 600, fontFamily: "Poppins", color: "#002338" }}
+          sx={{ textAlign: "left", fontWeight: 600, fontFamily: "inherit", color: "#12304D" }}
         >
           Nueva Vacante
         </Typography>
@@ -263,11 +263,11 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -282,12 +282,12 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                 onChange={handleSelectChange}
                 label="Vacante"
                 MenuProps={{
-                  PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                  PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                   MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                 }}
               >
                 {jobs.map((job) => (
-                  <MenuItem key={job.id} value={job.name} sx={{ color: '#002338' }}>
+                  <MenuItem key={job.id} value={job.name} sx={{ color: '#12304D' }}>
                     {job.name}
                   </MenuItem>
                 ))}
@@ -297,11 +297,11 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -320,7 +320,7 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                 {projects
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((proyecto) => (
-                    <MenuItem key={proyecto.id} value={proyecto.id} sx={{ color: '#002338' }}>
+                    <MenuItem key={proyecto.id} value={proyecto.id} sx={{ color: '#12304D' }}>
                       {proyecto.name}
                     </MenuItem>
                   ))}
@@ -341,9 +341,9 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               sx={{
                 height: "40px",
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -355,18 +355,18 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                   display: "flex",
                   alignItems: "center",
                   pl: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 },
               }}
             />
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -383,7 +383,7 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               >
                 <MenuItem value="">Ninguno</MenuItem>
                 {managers.map((manager) => (
-                  <MenuItem key={manager.manager_id} value={manager.manager_id} sx={{ color: '#002338' }}>
+                  <MenuItem key={manager.manager_id} value={manager.manager_id} sx={{ color: '#12304D' }}>
                     {manager.manager_name}
                   </MenuItem>
                 ))}
@@ -405,9 +405,9 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               sx={{
                 height: "40px",
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -418,7 +418,7 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                   display: "flex",
                   alignItems: "center",
                   pl: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 },
               }}
             />
@@ -434,9 +434,9 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               sx={{
                 height: "40px",
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -447,7 +447,7 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                   display: "flex",
                   alignItems: "center",
                   pl: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 },
               }}
             />
@@ -459,11 +459,11 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -478,30 +478,30 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                 value={formData.seniority}
                 onChange={handleSelectChange}
                 MenuProps={{
-                  PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                  PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                   MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                 }}
               >
-                <MenuItem value="Senior" sx={{ color: '#002338' }}>Senior</MenuItem>
-                <MenuItem value="Senior Advanced" sx={{ color: '#002338' }}>Senior Advanced</MenuItem>
-                <MenuItem value="Semi Senior Advanced" sx={{ color: '#002338' }}>
+                <MenuItem value="Senior" sx={{ color: '#12304D' }}>Senior</MenuItem>
+                <MenuItem value="Senior Advanced" sx={{ color: '#12304D' }}>Senior Advanced</MenuItem>
+                <MenuItem value="Semi Senior Advanced" sx={{ color: '#12304D' }}>
                   Semi Senior Advanced
                 </MenuItem>
-                <MenuItem value="Semi Senior" sx={{ color: '#002338' }}>Semi Senior</MenuItem>
-                <MenuItem value="Junior Advanced" sx={{ color: '#002338' }}>Junior Advanced</MenuItem>
-                <MenuItem value="Junior" sx={{ color: '#002338' }}>Junior</MenuItem>
-                <MenuItem value="Trainee" sx={{ color: '#002338' }}>Trainee</MenuItem>
+                <MenuItem value="Semi Senior" sx={{ color: '#12304D' }}>Semi Senior</MenuItem>
+                <MenuItem value="Junior Advanced" sx={{ color: '#12304D' }}>Junior Advanced</MenuItem>
+                <MenuItem value="Junior" sx={{ color: '#12304D' }}>Junior</MenuItem>
+                <MenuItem value="Trainee" sx={{ color: '#12304D' }}>Trainee</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -525,7 +525,7 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                 MenuProps={MenuProps}
               >
                 {skills.map((skill) => (
-                  <MenuItem key={skill.id} value={skill.name} sx={{ color: '#002338' }}>
+                  <MenuItem key={skill.id} value={skill.name} sx={{ color: '#12304D' }}>
                     <Checkbox
                       checked={formData.skills.some(
                         (s) => s.name === skill.name
@@ -549,9 +549,9 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               sx={{
                 height: "40px",
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -563,17 +563,17 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                   display: "flex",
                   alignItems: "center",
                   pl: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 },
               }}
             />
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
-                  "& fieldset": { borderColor: "#002338" },
+                  borderRadius: "8px",
+                  "& fieldset": { borderColor: "#C9D3DE" },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
               }}
@@ -590,9 +590,9 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
                 onChange={handleSelectChange}
                 MenuProps={MenuProps}
               >
-                <MenuItem value="Abierta" sx={{ color: '#002338' }}>Abierta</MenuItem>
-                <MenuItem value="En Proceso" sx={{ color: '#002338' }}>En Proceso</MenuItem>
-                <MenuItem value="Finalizada" sx={{ color: '#002338' }}>Finalizada</MenuItem>
+                <MenuItem value="Abierta" sx={{ color: '#12304D' }}>Abierta</MenuItem>
+                <MenuItem value="En Proceso" sx={{ color: '#12304D' }}>En Proceso</MenuItem>
+                <MenuItem value="Finalizada" sx={{ color: '#12304D' }}>Finalizada</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -604,20 +604,20 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               sx={{
                 textTransform: "none",
                 width: "200px",
-                height: "50px",
-                fontFamily: "Poppins",
-                fontSize: "20px",
-                color: "#0087FF",
-                fontWeight: 500,
+                height: "44px",
+                fontFamily: "inherit",
+                fontSize: "14px",
+                color: "#1D5FA0",
+                fontWeight: 600,
                 lineHeight: "30px",
                 letterSpacing: "0%",
                 boxShadow: "none",
                 backgroundColor: "rgb(255, 255, 255)",
-                borderRadius: "20px",
+                borderRadius: "8px",
                 borderWidth: "1px",
                 gap: "10px",
                 marginRight: "16px",
-                border: "2px solid #0087ff",
+                border: "2px solid #1D5FA0",
               }}
             >
               Cerrar
@@ -629,18 +629,18 @@ export default function Vacante({ onClose, onSuccess }: VacanteProps) {
               fullWidth
               sx={{
                 width: "200px",
-                height: "50px",
+                height: "44px",
                 marginLeft: "4px",
-                borderRadius: "20px",
-                color: "#23FFDC",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-                fontSize: "20px",
+                borderRadius: "8px",
+                color: "#FFFFFF",
+                fontWeight: 600,
+                fontFamily: "inherit",
+                fontSize: "14px",
                 padding: "10px",
                 maxWidth: "30%",
                 textTransform: "none",
-                backgroundColor: "#002338",
-                "&:hover": { backgroundColor: "##002338" },
+                backgroundColor: "#1D5FA0",
+                "&:hover": { backgroundColor: "##12304D" },
               }}
             >
               Guardar

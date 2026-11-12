@@ -316,8 +316,10 @@ export default function EditEmploye({
       <Grid2
         container
         sx={{
-          marginLeft: "55px",
-          marginRight: "55px",
+          maxWidth: 1320,
+          mx: "auto",
+          px: { xs: 2, md: 3 },
+          width: "100%",
         }}
       >
         <Grid2 size={12}>
@@ -333,14 +335,14 @@ export default function EditEmploye({
             }}
           >
             <KeyboardArrowLeftIcon
-              sx={{ width: "24px", height: "24px", color: "#002338" }}
+              sx={{ width: "24px", height: "24px", color: "#12304D" }}
             />
             <Typography
               sx={{
                 textAlign: "center",
-                color: "#002338",
+                color: "#12304D",
                 fontSize: "20px",
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 400,
               }}
             >
@@ -353,7 +355,7 @@ export default function EditEmploye({
             elevation={6}
             sx={{
               width: { xs: "90%", md: "100%" },
-              borderRadius: "20px",
+              borderRadius: "10px",
               backgroundColor: "#FFFFFF",
               padding: "40px",
             }}
@@ -369,9 +371,9 @@ export default function EditEmploye({
               <Typography
                 sx={{
                   fontSize: { xs: 24, md: "32px" },
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 600,
-                  color: "#002338",
+                  color: "#12304D",
                 }}
               >
                 Editar Colaborador
@@ -380,18 +382,18 @@ export default function EditEmploye({
                 variant="contained"
                 onClick={handleSave}
                 sx={{
-                  background: colors?.button || "#0087FF",
-                  borderRadius: "20px",
-                  padding: "12px 41px",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  height: "50px",
+                  background: colors?.button || "#1D5FA0",
+                  borderRadius: "8px",
+                  padding: "0 16px",
+                  fontFamily: "inherit",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  height: "44px",
                   color: "#FFFFFF",
                   boxShadow: "none",
                   textTransform: "none",
                   "&:hover": {
-                    background: "#0066CC",
+                    background: "#174E85",
                     boxShadow: "none",
                   },
                 }}
@@ -405,9 +407,9 @@ export default function EditEmploye({
                 <Typography
                   sx={{
                     fontSize: "20px",
-                    fontFamily: "Poppins, sans-serif",
+                    fontFamily: "inherit",
                     fontWeight: 500,
-                    color: "#002338",
+                    color: "#12304D",
                     mb: 1,
                   }}
                 >
@@ -485,9 +487,9 @@ export default function EditEmploye({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -496,7 +498,7 @@ export default function EditEmploye({
                         }}
                         InputProps={{
                           sx: {
-                            color: "#002338",
+                            color: "#12304D",
                           },
                         }}
                       />
@@ -516,9 +518,9 @@ export default function EditEmploye({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -527,7 +529,7 @@ export default function EditEmploye({
                         }}
                         InputProps={{
                           sx: {
-                            color: "#002338",
+                            color: "#12304D",
                           },
                         }}
                       />
@@ -547,9 +549,9 @@ export default function EditEmploye({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -558,7 +560,7 @@ export default function EditEmploye({
                         }}
                         InputProps={{
                           sx: {
-                            color: "#002338",
+                            color: "#12304D",
                           },
                         }}
                       />
@@ -582,9 +584,9 @@ export default function EditEmploye({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -593,7 +595,7 @@ export default function EditEmploye({
                         }}
                         InputProps={{
                           sx: {
-                            color: "#002338",
+                            color: "#12304D",
                           },
                         }}
                       />
@@ -617,9 +619,9 @@ export default function EditEmploye({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -628,7 +630,7 @@ export default function EditEmploye({
                         }}
                         InputProps={{
                           sx: {
-                            color: "#002338",
+                            color: "#12304D",
                           },
                         }}
                       />
@@ -662,9 +664,9 @@ export default function EditEmploye({
               <Typography
                 sx={{
                   fontSize: "20px",
-                  fontFamily: "Poppins, sans-serif",
+                  fontFamily: "inherit",
                   fontWeight: 500,
-                  color: "#002338",
+                  color: "#12304D",
                   mb: 1,
                 }}
               >
@@ -686,16 +688,16 @@ export default function EditEmploye({
                     sx={{
                       height: "40px",
                       "& .MuiOutlinedInput-root": {
-                        borderRadius: "20px",
+                        borderRadius: "8px",
                         "& fieldset": {
-                          borderColor: "#002338",
+                          borderColor: "#C9D3DE",
                         },
                       },
                       "& .MuiInputLabel-root.Mui-focused": { color: "black" },
                     }}
                     InputProps={{
                       sx: {
-                        color: "#002338",
+                        color: "#12304D",
                       },
                     }}
                   />
@@ -705,11 +707,11 @@ export default function EditEmploye({
                   <FormControl
                     sx={{
                       height: "40px",
-                      '& .MuiSelect-select': { color: '#002338' },
+                      '& .MuiSelect-select': { color: '#12304D' },
 
                       "& .MuiOutlinedInput-root": {
-                        borderRadius: "20px",
-                        "& fieldset": { borderColor: "#002338" },
+                        borderRadius: "8px",
+                        "& fieldset": { borderColor: "#C9D3DE" },
                       },
                       "& .MuiInputLabel-root.Mui-focused": { color: "black" },
                     }}
@@ -728,7 +730,7 @@ export default function EditEmploye({
                         }))
                       }
                       MenuProps={{
-                        PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                        PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                         MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                       }}
                     >
@@ -755,9 +757,9 @@ export default function EditEmploye({
                     sx={{
                       height: "40px",
                       "& .MuiOutlinedInput-root": {
-                        borderRadius: "20px",
+                        borderRadius: "8px",
                         "& fieldset": {
-                          borderColor: "#002338",
+                          borderColor: "#C9D3DE",
                         },
                       },
                       "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -781,9 +783,9 @@ export default function EditEmploye({
                   sx={{
                     fontSize: "20px",
                     width: "100%",
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 500,
-                    color: "#002338",
+                    color: "#12304D",
                     mb: 1,
                   }}
                 >
@@ -798,15 +800,15 @@ export default function EditEmploye({
                   }
                   sx={{
                     width: "230px",
-                    height: "50px",
-                    backgroundColor: "#0087FF",
+                    height: "44px",
+                    backgroundColor: "#1D5FA0",
                     color: "#fff",
-                    borderRadius: "20px",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontWeight: 600,
                     textTransform: "none",
                     "&:hover": {
-                      backgroundColor: "#0066CC",
+                      backgroundColor: "#174E85",
                     },
                   }}
                 >
@@ -827,12 +829,12 @@ export default function EditEmploye({
                     <FormControl
                       sx={{
                         height: "40px",
-                        '& .MuiSelect-select': { color: '#002338' },
+                        '& .MuiSelect-select': { color: '#12304D' },
 
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -851,7 +853,7 @@ export default function EditEmploye({
                           setEditedColab((prev) => ({ ...prev, roles }));
                         }}
                         MenuProps={{
-                          PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                          PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                           MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                         }}
                       >
@@ -867,12 +869,12 @@ export default function EditEmploye({
                     <FormControl
                       sx={{
                         height: "40px",
-                        '& .MuiSelect-select': { color: '#002338' },
+                        '& .MuiSelect-select': { color: '#12304D' },
 
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -896,7 +898,7 @@ export default function EditEmploye({
                           setEditedColab((prev) => ({ ...prev, roles }));
                         }}
                         MenuProps={{
-                          PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                          PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                           MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                         }}
                       >
@@ -944,10 +946,10 @@ export default function EditEmploye({
                       <CloseIcon />
                       <Typography
                         sx={{
-                          fontFamily: "Poppins, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "14px",
                           color: "#d32f2f",
-                          fontWeight: 500,
+                          fontWeight: 600,
                           textTransform: "none",
                         }}
                       >
@@ -959,19 +961,19 @@ export default function EditEmploye({
               ))}
             </Box>
             <Box sx={{ px: { xs: 1, md: 3 }, pb: 3 }}>
-              <Typography variant="subtitle1" sx={{ mb: 1, color: "#002338", }}>
+              <Typography variant="subtitle1" sx={{ mb: 1, color: "#12304D", }}>
                 Tecnologías
               </Typography>
               <Grid item xs={12} sm={6}>
                 <FormControl
                   sx={{
                     height: "40px",
-                    '& .MuiSelect-select': { color: '#002338' },
+                    '& .MuiSelect-select': { color: '#12304D' },
 
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -1004,7 +1006,7 @@ export default function EditEmploye({
                     }}
                     renderValue={() => ""}
                     MenuProps={{
-                      PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                      PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                       MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                     }}
                   >
@@ -1062,9 +1064,9 @@ export default function EditEmploye({
                           }
                           sx={{
                             background: "#e5e8eb",
-                            color: "#002338",
+                            color: "#12304D",
                             fontWeight: 600,
-                            fontFamily: "Poppins, sans-serif",
+                            fontFamily: "inherit",
                             mr: 1,
                             mb: 1,
                             ".MuiChip-label": {
@@ -1095,9 +1097,9 @@ export default function EditEmploye({
                   variant="subtitle1"
                   sx={{
                     fontSize: "20px",
-                    fontFamily: "Poppins, sans-serif",
+                    fontFamily: "inherit",
                     fontWeight: 500,
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Asignaciones:
@@ -1123,17 +1125,17 @@ export default function EditEmploye({
                   }
                   sx={{
                     width: "230px",
-                    height: "50px",
-                    backgroundColor: "#0087FF",
+                    height: "44px",
+                    backgroundColor: "#1D5FA0",
                     color: "#fff",
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     px: 4,
                     py: 1,
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
+                    fontFamily: "inherit",
+                    fontWeight: 600,
                     textTransform: "none",
                     "&:hover": {
-                      backgroundColor: "#0066CC",
+                      backgroundColor: "#174E85",
                     },
                   }}
                 >
@@ -1159,10 +1161,10 @@ export default function EditEmploye({
                           sx={{
                             "& .MuiOutlinedInput-root": {
                               color: "#6c757d",
-                              fontFamily: "Poppins",
+                              fontFamily: "inherit",
                               fontSize: "14px",
                               height: "40px",
-                              borderRadius: "20px",
+                              borderRadius: "10px",
                               padding: "12px 16px",
                             },
                             "& .MuiInputLabel-root.Mui-disabled": {
@@ -1171,7 +1173,7 @@ export default function EditEmploye({
                           }}
                           InputProps={{
                             sx: {
-                              color: "#002338",
+                              color: "#12304D",
                             },
                           }}
                         />
@@ -1179,12 +1181,12 @@ export default function EditEmploye({
                         <FormControl
                           sx={{
                             height: "40px",
-                            '& .MuiSelect-select': { color: '#002338' },
+                            '& .MuiSelect-select': { color: '#12304D' },
 
                             "& .MuiOutlinedInput-root": {
-                              borderRadius: "20px",
+                              borderRadius: "8px",
                               "& fieldset": {
-                                borderColor: "#002338",
+                                borderColor: "#C9D3DE",
                               },
                             },
                             "& .MuiInputLabel-root.Mui-focused": {
@@ -1226,7 +1228,7 @@ export default function EditEmploye({
                               }));
                             }}
                             MenuProps={{
-                              PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                              PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                               MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                             }}
                           >
@@ -1246,12 +1248,12 @@ export default function EditEmploye({
                       <FormControl
                         sx={{
                           height: "40px",
-                          '& .MuiSelect-select': { color: '#002338' },
+                          '& .MuiSelect-select': { color: '#12304D' },
 
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -1287,7 +1289,7 @@ export default function EditEmploye({
                             }));
                           }}
                           MenuProps={{
-                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                             MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                           }}
                         >
@@ -1312,12 +1314,12 @@ export default function EditEmploye({
                         size="small"
                         sx={{
                           height: "40px",
-                          '& .MuiSelect-select': { color: '#002338' },
+                          '& .MuiSelect-select': { color: '#12304D' },
 
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -1326,7 +1328,7 @@ export default function EditEmploye({
                         }}
                         InputProps={{
                           sx: {
-                            color: "#002338",
+                            color: "#12304D",
                           },
                         }}
                       >
@@ -1358,7 +1360,7 @@ export default function EditEmploye({
                       <Box display="flex" alignItems="center" sx={{ mt: 2 }}>
                         <Grid container spacing={2} alignItems="center">
                           <Grid item>
-                            <Typography variant="body2" sx={{ color: "#002338" }}>
+                            <Typography variant="body2" sx={{ color: "#12304D" }}>
                               Horas asignadas (%)
                             </Typography>
                           </Grid>
@@ -1405,7 +1407,7 @@ export default function EditEmploye({
                                 }
                               }}
                               InputProps={{
-                                sx: { color: "#002338" },
+                                sx: { color: "#12304D" },
                                 inputProps: {
                                   min: 0,
                                   max: 160,
@@ -1455,10 +1457,10 @@ export default function EditEmploye({
                         <DeleteIcon sx={{ mr: 1 }} />
                         <Typography
                           sx={{
-                            fontFamily: "Poppins, sans-serif",
+                            fontFamily: "inherit",
                             fontSize: "14px",
                             color: "red",
-                            fontWeight: 500,
+                            fontWeight: 600,
                             textTransform: "none",
                           }}
                         >

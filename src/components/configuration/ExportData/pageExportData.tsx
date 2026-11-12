@@ -156,7 +156,7 @@ const ExportData: React.FC = () => {
 
   const renderList = (empty: boolean, children: React.ReactNode) =>
     empty ? (
-      <Typography sx={{ color: "#002338" }}>—  —</Typography>
+      <Typography sx={{ color: "#12304D" }}>—  —</Typography>
     ) : (
       <List dense sx={{ bgcolor: "rgba(255,255,255,0.6)", borderRadius: 1 }}>
         {children}
@@ -182,7 +182,7 @@ const ExportData: React.FC = () => {
             sx={{
               color: "#000",
               fontWeight: 500,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "24px",
             }}
           >
@@ -193,7 +193,7 @@ const ExportData: React.FC = () => {
             sx={{
               color: "#000",
               fontWeight: 400,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "16px",
             }}
           >
@@ -207,18 +207,18 @@ const ExportData: React.FC = () => {
           onClick={onExportar}
           disabled={loading}
           sx={{
-            borderRadius: "20px",
-            backgroundColor: "#23FFDC",
-            color: "#002338",
-            fontSize: "20px",
+            borderRadius: "8px",
+            backgroundColor: "#1D5FA0",
+            color: "#FFFFFF",
+            fontSize: "14px",
             width: "240px",
-            fontWeight: 500,
+            fontWeight: 600,
             textTransform: "none",
-            height: "50px",
-            fontFamily: "Poppins, sans-serif",
+            height: "44px",
+            fontFamily: "inherit",
             px: 3,
             boxShadow: "none",
-            "&:hover": { backgroundColor: "#23FFDC" },
+            "&:hover": { backgroundColor: "#174E85" },
           }}
         >
           {loading ? "Importando..." : "Importar datos"}
@@ -230,7 +230,7 @@ const ExportData: React.FC = () => {
         sx={{
           mx: 2,
           mb: 2.5,
-          borderRadius: "20px",
+          borderRadius: "10px",
           overflow: "hidden",
           backgroundColor: "#ADD8E6",
           border: "1px solid #B0CFE1",
@@ -241,14 +241,14 @@ const ExportData: React.FC = () => {
             {ejecucionOk === true ? (
               <CheckCircleOutlineIcon sx={{ color: "#0b5" }} />
             ) : (
-              <InfoOutlinedIcon sx={{ color: "#002338" }} />
+              <InfoOutlinedIcon sx={{ color: "#12304D" }} />
             )}
-            <Typography variant="h6" sx={{ m: 0, color: "#002338", fontFamily: "Poppins, sans-serif" }}>
+            <Typography variant="h6" sx={{ m: 0, color: "#12304D", fontFamily: "inherit" }}>
               Resultado de la Importación
             </Typography>
           </Box>
 
-          <Typography sx={{ color: "#002338", mb: 2, fontFamily: "Roboto, sans-serif" }}>
+          <Typography sx={{ color: "#12304D", mb: 2, fontFamily: "inherit" }}>
             {ejecucionOk === null &&
               "Presioná “Importar datos” para iniciar la sincronización con Bizneo."}
             {ejecucionOk === true &&
@@ -265,7 +265,7 @@ const ExportData: React.FC = () => {
             <Grid item xs={12} md={6}>
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: 700, color: "#002338", fontFamily: "Poppins, sans-serif", mb: 1 }}
+                sx={{ fontWeight: 700, color: "#12304D", fontFamily: "inherit", mb: 1 }}
               >
                 Colaboradores
               </Typography>
@@ -277,7 +277,7 @@ const ExportData: React.FC = () => {
                 sx={{ bgcolor: "transparent", border: "1px solid #B0CFE1", borderRadius: 1, mb: 1 }}
               >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography sx={{ fontWeight: 600, color: "#002338" }}>
+                  <Typography sx={{ fontWeight: 600, color: "#12304D" }}>
                     Agregados ({agregadosColab.length})
                   </Typography>
                 </AccordionSummary>
@@ -305,7 +305,7 @@ const ExportData: React.FC = () => {
                 sx={{ bgcolor: "transparent", border: "1px solid #B0CFE1", borderRadius: 1, mb: 1 }}
               >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography sx={{ fontWeight: 600, color: "#002338" }}>
+                  <Typography sx={{ fontWeight: 600, color: "#12304D" }}>
                     Actualizados ({actualizadosColab.length})
                   </Typography>
                 </AccordionSummary>
@@ -382,7 +382,7 @@ const ExportData: React.FC = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   {inactivosDb.length === 0 ? (
-                    <Typography sx={{ color: "#002338" }}>—  —</Typography>
+                    <Typography sx={{ color: "#12304D" }}>—  —</Typography>
                   ) : (
                     <List dense sx={{ bgcolor: "rgba(255,255,255,0.6)", borderRadius: 1 }}>
                       {inactivosDb.map((p) => (
@@ -400,17 +400,17 @@ const ExportData: React.FC = () => {
                             onClick={() => onReestablecer(p.id)}
                             startIcon={restoringIds.has(p.id) ? <CircularProgress size={16} /> : undefined}
                             sx={{
-                              backgroundColor: "#23FFDC",
-                              color: "#002338",
+                              backgroundColor: "#1D5FA0",
+                              color: "#FFFFFF",
                               fontSize: "12px",
-                              fontWeight: 500,
+                              fontWeight: 600,
                               textTransform: "none",
-                              borderRadius: "12px",
+                              borderRadius: "8px",
                               minWidth: "100px",
                               height: "32px",
-                              fontFamily: "Poppins, sans-serif",
+                              fontFamily: "inherit",
                               boxShadow: "none",
-                              "&:hover": { backgroundColor: "#1ee6c9" },
+                              "&:hover": { backgroundColor: "#174E85" },
                               "&:disabled": { 
                                 backgroundColor: "#e0e0e0", 
                                 color: "#9e9e9e" 

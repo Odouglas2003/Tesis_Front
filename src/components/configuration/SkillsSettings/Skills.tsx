@@ -93,16 +93,14 @@ export default function Skills() {
       alignItems="flex-start"
       width="100%"
       sx={{
-        marginRight: "55px",
-        bgcolor: "#f5f5f5",
       }}
     >
       <AddSkill onCreated={loadSkill} />
 
       <Card
         sx={{
-          borderRadius: "20px",
-          boxShadow: 3,
+          borderRadius: "10px",
+          boxShadow: "none",
           width: "100%",
           maxWidth: "100%",
           p: "4px",
@@ -114,10 +112,10 @@ export default function Skills() {
             <Box display={"flex"} justifyContent="space-between" mb={2}>
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 600,
                   fontSize: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 }}
               >
                 Listado de Skill
@@ -128,20 +126,20 @@ export default function Skills() {
             {loadingSkills ? (
               <CircularProgress size={24} />
             ) : (
-              <TableContainer sx={{ maxHeight: 700, borderRadius: "20px" }}>
+              <TableContainer sx={{ maxHeight: 700, borderRadius: "10px" }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center" style={{ backgroundColor: "#BDE0FF", fontWeight: "500", fontFamily: "Poppins", fontSize: "16.16px", color: "#000000" }}>
+                      <TableCell align="center" style={{ backgroundColor: "#F5F7FA", fontWeight: 700, fontFamily: "inherit", fontSize: "12px", color: "#566779" }}>
                         Nombre
                       </TableCell>
-                      <TableCell align="center" style={{ backgroundColor: "#BDE0FF", fontWeight: "500", fontFamily: "Poppins", fontSize: "16.16px", color: "#000000" }}>
+                      <TableCell align="center" style={{ backgroundColor: "#F5F7FA", fontWeight: 700, fontFamily: "inherit", fontSize: "12px", color: "#566779" }}>
                         Descripción
                       </TableCell>
-                      <TableCell align="center" style={{ backgroundColor: "#BDE0FF", fontWeight: "500", fontFamily: "Poppins", fontSize: "16.16px", color: "#000000" }}>
+                      <TableCell align="center" style={{ backgroundColor: "#F5F7FA", fontWeight: 700, fontFamily: "inherit", fontSize: "12px", color: "#566779" }}>
                         Activo
                       </TableCell>
-                      <TableCell align="center" style={{ backgroundColor: "#BDE0FF", fontWeight: "500", fontFamily: "Poppins", fontSize: "16.16px", color: "#000000" }}>
+                      <TableCell align="center" style={{ backgroundColor: "#F5F7FA", fontWeight: 700, fontFamily: "inherit", fontSize: "12px", color: "#566779" }}>
                         Acciones
                       </TableCell>
                     </TableRow>
@@ -149,15 +147,15 @@ export default function Skills() {
                   <TableBody>
                     {skills.map((j) => (
                       <TableRow hover key={j.id}>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.name}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.description}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.status ? "Si" : "No"}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.name}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.description}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.status ? "Si" : "No"}</TableCell>
                         <TableCell align="center">
                           <IconButton size="small" onClick={() => { setEditing(j); setOpen(true); }}>
-                            <EditIcon fontSize="inherit" sx={{ color: "#002338" }} />
+                            <EditIcon fontSize="inherit" sx={{ color: "#12304D" }} />
                           </IconButton>
                           <IconButton size="small" onClick={() => confirmDelete(j)}>
-                            <TrashIcon fontSize="inherit" sx={{ color: "#ff0000ff" }} />
+                            <TrashIcon fontSize="inherit" sx={{ color: "#9F2D12" }} />
                           </IconButton>
                         </TableCell>
                       </TableRow>

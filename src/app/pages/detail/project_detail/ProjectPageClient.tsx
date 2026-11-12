@@ -12,9 +12,7 @@ export default function ClientViewProjectDetail({
 }) {
   return (
     <>
-      <Box sx={{ mb: 3 }}>
-        <Navbar />
-      </Box>
+      <Navbar />
       <Box sx={{ mb: 3 }}>
         <Detalle_proyecto project={project} />
       </Box>

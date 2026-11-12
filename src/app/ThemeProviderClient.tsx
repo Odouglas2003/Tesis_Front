@@ -151,17 +151,24 @@ export default function ThemeProviderClient({
     return () => window.removeEventListener('brandConfig:update', handler as EventListener);
   }, []);
 
-  const poppinsUrl =
-    'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap';
-  const robotoUrl =
-    'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap';
+  const fontUrl =
+    'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap';
 
-  const fontFamArray = ['Poppins', 'Roboto', 'sans-serif'];
+  const fontFamArray = ["'Plus Jakarta Sans'", 'system-ui', 'sans-serif'];
   const fontFamily = fontFamArray.join(', ');
+  const isLight = currentTheme === 'claro';
+  const ink = isLight ? '#0F2233' : colors.primary;
+  const line = isLight ? '#E2E8EF' : 'rgba(226,237,247,0.12)';
+  const lineStrong = isLight ? '#C9D3DE' : 'rgba(226,237,247,0.24)';
 
   const muiTheme = useMemo(
     () =>
       createTheme({
+        typography: {
+          fontFamily,
+          button: { fontWeight: 600 },
+        },
+        shape: { borderRadius: 8 },
         palette: {
           primary: {
             main: colors.primary,
@@ -174,24 +181,27 @@ export default function ThemeProviderClient({
             paper: colors.modal || colors.card,
           },
           text: {
-            primary: colors.primary || THEME_TEXT_COLORS[currentTheme].primary,
-            secondary: colors.secondary || THEME_TEXT_COLORS[currentTheme].secondary,
+            primary: isLight ? THEME_TEXT_COLORS.claro.primary : colors.primary,
+            secondary: THEME_TEXT_COLORS[currentTheme].secondary,
           },
+          divider: line,
         },
         components: {
           MuiButton: {
             styleOverrides: {
               root: {
                 textTransform: 'none',
-                borderRadius: 12,
+                borderRadius: 8,
+                fontWeight: 600,
+                minHeight: 40,
               },
               contained: {
                 backgroundColor: colors.button,
                 color: colors.text,
                 boxShadow: 'none',
                 '&:hover': {
-                  backgroundColor: colors.primary,
-                  opacity: 0.95,
+                  backgroundColor: colors.button,
+                  filter: 'brightness(0.88)',
                   boxShadow: 'none',
                 },
               },
@@ -212,7 +222,7 @@ export default function ThemeProviderClient({
             styleOverrides: {
               root: {
                 backgroundImage: 'none',
-                borderRadius: 20,
+                borderRadius: 12,
               },
             },
           },
@@ -220,9 +230,9 @@ export default function ThemeProviderClient({
             styleOverrides: {
               root: {
                 backgroundColor: colors.card,
-                border: '1px solid rgba(18,48,77,0.08)',
-                boxShadow: '0 18px 45px rgba(18,48,77,0.08)',
-                borderRadius: 24,
+                border: `1px solid ${line}`,
+                boxShadow: 'none',
+                borderRadius: 12,
               },
             },
           },
@@ -230,67 +240,70 @@ export default function ThemeProviderClient({
             styleOverrides: {
               paper: {
                 backgroundColor: colors.modal,
-                border: '1px solid rgba(18,48,77,0.08)',
-                boxShadow: '0 24px 80px rgba(18,48,77,0.16)',
-                borderRadius: 28,
+                border: `1px solid ${line}`,
+                boxShadow: '0 24px 64px rgba(15,34,51,0.18)',
+                borderRadius: 16,
               },
             },
           },
           MuiOutlinedInput: {
             styleOverrides: {
               root: {
-                backgroundColor: 'rgba(244,248,251,0.95)',
-                borderRadius: 18,
-                color: colors.primary || THEME_TEXT_COLORS[currentTheme].primary,
+                backgroundColor: isLight ? '#FFFFFF' : 'rgba(255,255,255,0.04)',
+                borderRadius: 8,
+                color: ink,
                 transition: 'border-color .2s ease, box-shadow .2s ease, background-color .2s ease',
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(18,48,77,0.12)',
+                  borderColor: lineStrong,
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(42,108,168,0.28)',
+                  borderColor: '#8FA3B6',
                 },
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: colors.secondary,
                   borderWidth: 1,
                 },
                 '&.Mui-focused': {
-                  boxShadow: '0 0 0 4px rgba(114,230,217,0.14)',
+                  boxShadow: '0 0 0 3px rgba(29,95,160,0.18)',
                 },
               },
               input: {
-                paddingTop: 14,
-                paddingBottom: 14,
+                paddingTop: 11.5,
+                paddingBottom: 11.5,
               },
             },
           },
           MuiInputLabel: {
             styleOverrides: {
               root: {
-                color: colors.secondary || THEME_TEXT_COLORS[currentTheme].secondary,
+                color: THEME_TEXT_COLORS[currentTheme].secondary,
               },
             },
           },
           MuiTableContainer: {
             styleOverrides: {
               root: {
-                borderRadius: 24,
+                borderRadius: 12,
                 backgroundColor: colors.modal,
-                border: '1px solid rgba(18,48,77,0.08)',
+                border: `1px solid ${line}`,
+                boxShadow: 'none',
               },
             },
           },
           MuiTableCell: {
             styleOverrides: {
               head: {
-                backgroundColor: 'rgba(42,108,168,0.10)',
-                color: colors.primary || THEME_TEXT_COLORS[currentTheme].primary,
+                backgroundColor: isLight ? '#F5F7FA' : 'rgba(255,255,255,0.04)',
+                color: THEME_TEXT_COLORS[currentTheme].secondary,
                 fontWeight: 700,
-                fontSize: '0.92rem',
-                borderBottom: '1px solid rgba(18,48,77,0.08)',
+                fontSize: '0.75rem',
+                whiteSpace: 'nowrap',
+                borderBottom: `1px solid ${line}`,
               },
               body: {
-                color: colors.primary || THEME_TEXT_COLORS[currentTheme].primary,
-                borderBottom: '1px solid rgba(18,48,77,0.06)',
+                color: ink,
+                fontSize: '0.875rem',
+                borderBottom: `1px solid ${line}`,
               },
             },
           },
@@ -298,7 +311,7 @@ export default function ThemeProviderClient({
             styleOverrides: {
               root: {
                 '&:hover': {
-                  backgroundColor: 'rgba(42,108,168,0.04)',
+                  backgroundColor: isLight ? '#F8FAFC' : 'rgba(255,255,255,0.03)',
                 },
               },
             },
@@ -307,7 +320,7 @@ export default function ThemeProviderClient({
             styleOverrides: {
               root: {
                 color: colors.primary || THEME_TEXT_COLORS[currentTheme].primary,
-                borderTop: '1px solid rgba(18,48,77,0.08)',
+                borderTop: `1px solid ${line}`,
               },
               toolbar: {
                 color: colors.primary || THEME_TEXT_COLORS[currentTheme].primary,
@@ -325,22 +338,22 @@ export default function ThemeProviderClient({
           MuiPopover: {
             styleOverrides: {
               paper: {
-                borderRadius: 20,
-                border: '1px solid rgba(18,48,77,0.08)',
-                boxShadow: '0 16px 40px rgba(18,48,77,0.12)',
+                borderRadius: 12,
+                border: `1px solid ${line}`,
+                boxShadow: '0 12px 32px rgba(15,34,51,0.14)',
               },
             },
           },
           MuiModal: {
             styleOverrides: {
               root: {
-                backdropFilter: 'blur(6px)',
+                backdropFilter: 'blur(2px)',
               },
             },
           },
         },
       }),
-    [colors, currentTheme]
+    [colors, currentTheme, fontFamily, isLight, ink, line, lineStrong]
   );
 
   const themeContextValue = {
@@ -355,8 +368,7 @@ export default function ThemeProviderClient({
       <ThemeProvider theme={muiTheme}>
         <Global
           styles={css`
-            @import url(${poppinsUrl});
-            @import url(${robotoUrl});
+            @import url(${fontUrl});
 
             :root {
               --color-primary: ${colors.primary};
@@ -382,10 +394,24 @@ export default function ThemeProviderClient({
             body {
               font-family: ${fontFamily};
               background-color: ${colors.background};
-              color: ${colors.primary};
+              color: ${ink};
               margin: 0;
+              -webkit-font-smoothing: antialiased;
               padding: 0;
               transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            :focus-visible {
+              outline: 2px solid #1D5FA0;
+              outline-offset: 2px;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+              *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+              }
             }
 
             /* Utilidades CSS para usar en componentes */

@@ -57,15 +57,15 @@ export default function PagesError({
       }}
     >
       {waiting && <CircularProgress />}
-      <Typography sx={{ fontFamily: "Poppins", fontSize: 22, fontWeight: 600, color: "#12304D" }}>
+      <Typography sx={{ fontFamily: "inherit", fontSize: 22, fontWeight: 600, color: "#12304D" }}>
         {waiting ? "Conectando con el servidor…" : "No pudimos cargar esta página"}
       </Typography>
-      <Typography sx={{ fontFamily: "Poppins", color: "#5b6b7a", maxWidth: 480 }}>
+      <Typography sx={{ fontFamily: "inherit", color: "#5b6b7a", maxWidth: 480 }}>
         {waiting
           ? "El servicio se está iniciando. Esto puede tardar hasta un minuto; la página se va a cargar sola."
           : "El servidor no respondió. Probá de nuevo en unos segundos."}
       </Typography>
-      <Button variant="contained" onClick={retry} sx={{ textTransform: "none", borderRadius: "10px" }}>
+      <Button variant="contained" onClick={retry} sx={{ textTransform: "none", borderRadius: "8px" }}>
         Reintentar ahora
       </Button>
     </Box>

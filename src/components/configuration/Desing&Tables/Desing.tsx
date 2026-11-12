@@ -83,18 +83,18 @@ const THEME_FIELDS: Array<{
 
 const cardSx = {
   p: { xs: 3, md: 4 },
-  boxShadow: "0 20px 60px rgba(18,48,77,0.12)",
-  borderRadius: "28px",
+  boxShadow: "none",
+  borderRadius: "12px",
   maxWidth: 1080,
   mx: "auto",
   bgcolor: "#FFFFFF",
-  border: "1px solid rgba(18,48,77,0.08)",
+  border: "1px solid #E2E8EF",
 };
 
 const inputSx = {
   "& .MuiOutlinedInput-root": {
-    borderRadius: "18px",
-    backgroundColor: "rgba(244,248,251,0.92)",
+    borderRadius: "8px",
+    backgroundColor: "#FFFFFF",
   },
 };
 
@@ -381,7 +381,7 @@ export default function ConfigureComponent() {
                 borderStyle: "dashed",
                 borderWidth: 2,
                 borderColor: "rgba(18,48,77,0.14)",
-                borderRadius: "22px",
+                borderRadius: "12px",
                 backgroundColor: "rgba(244,248,251,0.72)",
                 "&:hover": { backgroundColor: "rgba(244,248,251,0.92)" },
               }}
@@ -424,11 +424,11 @@ export default function ConfigureComponent() {
           <Box
             sx={{
               mb: 4,
-              borderRadius: "24px",
+              borderRadius: "12px",
               overflow: "hidden",
               border: "1px solid rgba(18,48,77,0.08)",
               backgroundColor: themeForm.background,
-              boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
+              boxShadow: "none",
             }}
           >
             <Box
@@ -447,7 +447,7 @@ export default function ConfigureComponent() {
                   sx={{
                     width: 44,
                     height: 44,
-                    borderRadius: "14px",
+                    borderRadius: "8px",
                     backgroundColor: "rgba(255,255,255,0.10)",
                     display: "flex",
                     alignItems: "center",
@@ -498,7 +498,7 @@ export default function ConfigureComponent() {
                 sx={{
                   backgroundColor: themeForm.button,
                   color: themeForm.text,
-                  borderRadius: "14px",
+                  borderRadius: "8px",
                   boxShadow: "none",
                   textTransform: "none",
                   fontWeight: 700,
@@ -518,7 +518,7 @@ export default function ConfigureComponent() {
                   <Box
                     sx={{
                       p: 2.5,
-                      borderRadius: "22px",
+                      borderRadius: "12px",
                       backgroundColor: themeForm.card,
                       border: "1px solid rgba(18,48,77,0.08)",
                     }}
@@ -536,7 +536,7 @@ export default function ConfigureComponent() {
                   <Box
                     sx={{
                       p: 2.5,
-                      borderRadius: "22px",
+                      borderRadius: "12px",
                       background: previewMiniCard,
                       border: "1px solid rgba(18,48,77,0.08)",
                     }}
@@ -629,13 +629,13 @@ export default function ConfigureComponent() {
                 sx={{
                   backgroundColor: colors.button,
                   color: colors.text,
-                  borderRadius: "18px",
+                  borderRadius: "8px",
                   height: "46px",
                   minWidth: "200px",
                   textTransform: "none",
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 600,
-                  boxShadow: "0 10px 24px rgba(18,48,77,0.18)",
+                  boxShadow: "none",
                 }}
               >
                 Editar branding
@@ -649,12 +649,12 @@ export default function ConfigureComponent() {
                   sx={{
                     color: colors.secondary,
                     borderColor: "rgba(42,108,168,0.18)",
-                    borderRadius: "18px",
+                    borderRadius: "8px",
                     backgroundColor: "transparent",
                     height: "46px",
                     minWidth: "200px",
                     textTransform: "none",
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
                     "&:hover": {
                       backgroundColor: "rgba(42,108,168,0.04)",
@@ -671,13 +671,13 @@ export default function ConfigureComponent() {
                   sx={{
                     backgroundColor: colors.button,
                     color: colors.text,
-                    borderRadius: "18px",
+                    borderRadius: "8px",
                     height: "46px",
                     minWidth: "220px",
                     textTransform: "none",
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 700,
-                    boxShadow: "0 10px 24px rgba(18,48,77,0.18)",
+                    boxShadow: "none",
                   }}
                 >
                   {saving ? "Guardando..." : "Guardar cambios"}

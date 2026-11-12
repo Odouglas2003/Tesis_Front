@@ -1,159 +1,66 @@
-import { Card, CardContent, Typography, Box } from "@mui/material"
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
-import { useAppTheme } from "@/app/ThemeProviderClient";
+import { Box, Typography } from "@mui/material";
+import { UI, cardSx } from "@/theme/appPalette";
 
 interface DonutChartData {
-    name: string
-    value: number
-    color: string
+  name: string;
+  value: number;
+  color: string;
 }
 
 interface DonutChartCardProps {
-    title: string
-    data: DonutChartData[]
-    total: number
+  title: string;
+  data: DonutChartData[];
+  total: number;
 }
 
+// Distribución por estado: barra apilada + lista con cantidades (antes era un gráfico de dona).
 export default function DonutChartCard({ title, data, total }: DonutChartCardProps) {
-    const { colors } = useAppTheme();
-    return (
-        <Card 
-            sx={{ 
-                height: { xs: "280px", sm: "320px", md: "340px" }, 
-                borderRadius: { xs: "16px", sm: "20px" }, 
-                width: "100%", 
-                maxWidth: "100%",
-                boxSizing: "border-box",
-                backgroundColor: colors?.card || '#FCFEFF'
-            }}
-        >
-            <CardContent sx={{ 
-                p: { xs: "12px", sm: "16px" },
-                height: "100%",
-                display: "flex",
-                flexDirection: "column"
-            }}>
-                <Typography 
-                    variant="h6" 
-                    component="div" 
-                    sx={{ 
-                        fontFamily: "Poppins", 
-                        fontWeight: 600, 
-                        color: colors?.primary || "#12304D",
-                        fontSize: { xs: "14px", sm: "16px" },
-                        mb: { xs: 1, sm: 2 }
-                    }}
-                >
-                    {title}
-                </Typography>
+  const sum = data.reduce((acc, item) => acc + (Number(item.value) || 0), 0);
 
-                <Box sx={{ 
-                    position: "relative", 
-                    height: { xs: 140, sm: 160, md: 173 },
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    mb: { xs: 1, sm: 2 } // Agregar margen inferior
-                }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <Pie 
-                                data={data} 
-                                cx="50%" 
-                                cy="50%" 
-                                innerRadius={60}
-                                outerRadius={75}
-                                dataKey="value"
-                            >
-                                {data.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                            </Pie>
-                        </PieChart>
-                    </ResponsiveContainer>
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            textAlign: "center",
-                        }}
-                    >
-                        <Typography 
-                            variant="body2" 
-                            sx={{ 
-                                fontSize: { xs: "12px", sm: "14px" }, 
-                                fontWeight: 500, 
-                                color: "rgba(18,48,77,0.58)", 
-                                fontFamily: "Poppins" 
-                            }}
-                        >
-                            Total
-                        </Typography>
-                        <Typography 
-                                variant="h4" 
-                            component="div" 
-                            sx={{ 
-                                fontWeight: 600, 
-                                fontSize: { xs: "24px", sm: "28px", md: "32px" }, 
-                                color: colors?.primary || "#12304D", 
-                                fontFamily: "Poppins",
-                                lineHeight: 1
-                            }}
-                        >
-                            {total}
-                        </Typography>
-                    </Box>
-                </Box>
+  return (
+    <Box
+      component="section"
+      sx={{ ...cardSx, p: 3, height: "100%", display: "flex", flexDirection: "column", gap: 2.5 }}
+    >
+      <Box sx={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 1.5 }}>
+        <Typography component="h2" sx={{ fontSize: "1rem", fontWeight: 700, color: UI.ink }}>
+          {title}
+        </Typography>
+        <Typography sx={{ fontSize: "0.8125rem", color: UI.muted, whiteSpace: "nowrap" }}>
+          {total} en total
+        </Typography>
+      </Box>
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "flex-start", 
-                        flexWrap: "wrap",
-                        gap: { xs: "8px", sm: "12px" }, 
-                        minHeight: { xs: "60px", sm: "80px" }, 
-                        overflow: "visible" 
-                    }}
-                >
-                    {data.map((item, idx) => (
-                        <Box
-                            key={idx}
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px", 
-                                minWidth: "fit-content", 
-                                mb: { xs: "4px", sm: "6px" } 
-                            }}
-                        >
-                            <Box
-                                sx={{
-                                    width: { xs: 10, sm: 12 },
-                                    height: { xs: 10, sm: 12 },
-                                    borderRadius: "50%",
-                                    bgcolor: item.color,
-                                    flexShrink: 0
-                                }}
-                            />
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    fontSize: { xs: "11px", sm: "13px" }, 
-                                    fontWeight: 500,
-                                    color: "rgba(18,48,77,0.72)",
-                                    fontFamily: "Poppins",
-                                    whiteSpace: "nowrap",
-                                    overflow: "visible" 
-                                }}
-                            >
-                                {item.name} ({item.value})
-                            </Typography>
-                        </Box>
-                    ))}
-                </Box>
-            </CardContent>
-        </Card>
-    )
+      <Box
+        aria-hidden
+        sx={{ display: "flex", gap: "3px", height: 10, borderRadius: "999px", overflow: "hidden", backgroundColor: UI.track }}
+      >
+        {sum > 0 &&
+          data
+            .filter((item) => Number(item.value) > 0)
+            .map((item) => (
+              <Box key={item.name} sx={{ width: `${(Number(item.value) / sum) * 100}%`, backgroundColor: item.color }} />
+            ))}
+      </Box>
+
+      <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", flexDirection: "column", gap: 1.5 }}>
+        {data.map((item) => (
+          <Box component="li" key={item.name} sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+            <Box sx={{ width: 10, height: 10, borderRadius: "3px", backgroundColor: item.color, flexShrink: 0 }} />
+            <Typography component="span" sx={{ flex: 1, minWidth: 0, fontSize: "0.875rem", color: UI.inkSoft }}>
+              {item.name}
+            </Typography>
+            <Typography component="span" sx={{ fontSize: "0.875rem", fontWeight: 700, color: UI.ink, fontVariantNumeric: "tabular-nums" }}>
+              {item.value}
+            </Typography>
+          </Box>
+        ))}
+        {data.length === 0 && (
+          <Typography component="li" sx={{ fontSize: "0.875rem", color: UI.muted }}>
+            Sin datos todavía.
+          </Typography>
+        )}
+      </Box>
+    </Box>
+  );
 }

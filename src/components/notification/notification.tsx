@@ -93,17 +93,20 @@ const NotificationModal = () => {
     <>
       <IconButton
         onClick={handleNotificationButtonClick}
+        aria-label={`Notificaciones${notificationCount ? `, ${notificationCount} sin leer` : ""}`}
         sx={{
-          '&:hover .top-notif-icon': { color: colors.text },
+          width: 44,
+          height: 44,
+          '&:hover .top-notif-icon': { color: colors.accent },
         }}
       >
         <Badge
           badgeContent={notificationCount}
-          sx={{ "& .MuiBadge-badge": { backgroundColor: "#23FFDC" } }}
+          sx={{ "& .MuiBadge-badge": { backgroundColor: "#72E6D9", color: "#12304D", fontWeight: 700 } }}
           overlap="circular"
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
-          <NotificationsIcon className="top-notif-icon" sx={{ fontSize: "24px", color: '#fff', transition: 'color .25s ease' }} />
+          <NotificationsIcon className="top-notif-icon" sx={{ fontSize: "22px", color: '#fff', transition: 'color .25s ease' }} />
         </Badge>
       </IconButton>
 
@@ -140,7 +143,7 @@ const NotificationModal = () => {
               <Typography
                 variant="h6"
                 fontWeight="bold"
-                fontFamily="Poppins"
+                fontFamily="inherit"
                 fontSize="20px"
                 sx={{ color: "#002B5B" }}
               >
@@ -158,13 +161,13 @@ const NotificationModal = () => {
             <Typography
               sx={{ color: "#000", fontWeight: 500 }}
               fontSize="16px"
-              fontFamily="Poppins"
+              fontFamily="inherit"
             >
               Recientes
             </Typography>
             <Typography
               fontSize="16px"
-              fontFamily="Poppins"
+              fontFamily="inherit"
               fontWeight={400}
               sx={{
                 color: "#000",
@@ -195,7 +198,7 @@ const NotificationModal = () => {
             ) : notifications.length === 0 ? (
               <Typography
                 variant="body2"
-                fontFamily="Poppins"
+                fontFamily="inherit"
                 fontSize="16px"
                 sx={{ color: "#000", textAlign: "center", py: 4 }}
               >
@@ -229,7 +232,7 @@ const NotificationModal = () => {
                 >
                   <Avatar
                     sx={{
-                      bgcolor: "#0087FF",
+                      bgcolor: "#1D5FA0",
                       width: 40,
                       height: 40,
                       mr: 1.5,
@@ -250,7 +253,7 @@ const NotificationModal = () => {
                     <Typography
                       fontSize="14px"
                       color="#000"
-                      fontFamily="Poppins"
+                      fontFamily="inherit"
                       fontWeight={400}
                       sx={{
                         lineHeight: 1.4,

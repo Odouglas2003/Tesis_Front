@@ -653,7 +653,7 @@ export default function Proyecto({
               textAlign: "left",
               fontSize: "20px",
               fontWeight: 500,
-              color: "#002338",
+              color: "#12304D",
             }}
           >
             Nuevo Proyecto
@@ -684,7 +684,7 @@ export default function Proyecto({
               }}
             >
               <Typography
-                sx={{ fontSize: "20px", fontWeight: 500, color: "#002338" }}
+                sx={{ fontSize: "20px", fontWeight: 500, color: "#12304D" }}
               >
                 Staff Requerido
               </Typography>

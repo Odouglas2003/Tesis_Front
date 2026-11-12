@@ -204,7 +204,7 @@ export default function VacanciesPageClient({
       description="Centraliza necesidades de talento, prioridades y estados de cobertura para cada proyecto."
     >
       <Box sx={{ mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, mb: 2 }}>
           <SearchCardToggle
             viewMode={viewMode}
             setViewMode={setViewMode}

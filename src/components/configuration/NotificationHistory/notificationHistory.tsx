@@ -200,8 +200,6 @@ export default function Record() {
       alignItems="flex-start"
       width="100%"
       sx={{
-        marginRight: "55px",
-        bgcolor: "#f5f5f5",
       }}
     >
       <Grid2
@@ -212,8 +210,8 @@ export default function Record() {
       >
         <Card
           sx={{
-            borderRadius: "20px",
-            boxShadow: 3,
+            borderRadius: "10px",
+            boxShadow: "none",
             p: { xs: 1, sm: 2, md: 3 },
             width: "100%",
             maxWidth: "100%",
@@ -231,20 +229,20 @@ export default function Record() {
                 <Typography
                   variant="h6"
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
                     fontSize: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Historial
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontSize: "16px",
                     fontWeight: 400,
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Registro de lectura de notificaciones.
@@ -253,17 +251,17 @@ export default function Record() {
               <Box display="flex" alignItems="center" gap={1}>
                 <Typography
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontSize: "20px",
                     fontWeight: 500,
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Ordenar
                 </Typography>
                 <IconButton
                   onClick={handleOrderClick}
-                  sx={{ fontSize: "30px", color: "#002338" }}
+                  sx={{ fontSize: "30px", color: "#12304D" }}
                 >
                   <KeyboardArrowDownIcon />
                 </IconButton>
@@ -295,10 +293,10 @@ export default function Record() {
                   <MenuItem
                     onClick={() => handleOrderSelect("newest")}
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                       fontWeight: orderBy === "newest" ? 600 : 400,
-                      color: orderBy === "newest" ? "#002338" : "#666666",
+                      color: orderBy === "newest" ? "#1D5FA0" : "#666666",
                       backgroundColor:
                         orderBy === "newest" ? "#F0FDFC" : "transparent",
                       borderRadius: "8px",
@@ -311,7 +309,7 @@ export default function Record() {
                       "&:before": {
                         content: orderBy === "newest" ? '"✓"' : '""',
                         marginRight: orderBy === "newest" ? "8px" : "0",
-                        color: "#23FFDC",
+                        color: "#FFFFFF",
                         fontWeight: "bold",
                       },
                     }}
@@ -321,10 +319,10 @@ export default function Record() {
                   <MenuItem
                     onClick={() => handleOrderSelect("oldest")}
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                       fontWeight: orderBy === "oldest" ? 600 : 400,
-                      color: orderBy === "oldest" ? "#002338" : "#666666",
+                      color: orderBy === "oldest" ? "#1D5FA0" : "#666666",
                       backgroundColor:
                         orderBy === "oldest" ? "#F0FDFC" : "transparent",
                       borderRadius: "8px",
@@ -337,7 +335,7 @@ export default function Record() {
                       "&:before": {
                         content: orderBy === "oldest" ? '"✓"' : '""',
                         marginRight: orderBy === "oldest" ? "8px" : "0",
-                        color: "#23FFDC",
+                        color: "#FFFFFF",
                         fontWeight: "bold",
                       },
                     }}
@@ -350,15 +348,15 @@ export default function Record() {
                   startIcon={<FilterListIcon />}
                   onClick={handleOpenFilters}
                   sx={{
-                    bgcolor: "#23FFDC",
-                    color: "#002338",
-                    fontWeight: 500,
-                    fontFamily: "Poppins",
-                    borderRadius: "20px",
+                    bgcolor: "#1D5FA0",
+                    color: "#FFFFFF",
+                    fontWeight: 600,
+                    fontFamily: "inherit",
+                    borderRadius: "8px",
                     textTransform: "none",
                     width: "200px",
-                    height: "50px",
-                    fontSize: "20px",
+                    height: "44px",
+                    fontSize: "14px",
                   }}
                 >
                   Filtros
@@ -368,7 +366,7 @@ export default function Record() {
             <TableContainer
               component={Paper}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 overflow: "hidden",
                 width: "100%",
                 boxShadow: "none",
@@ -382,13 +380,13 @@ export default function Record() {
                         key={text}
                         sx={{
                           bgcolor: "#CCCCCC",
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontWeight: 500,
                           fontSize: "16.16px",
                           p: 1.5,
                           whiteSpace: "normal",
                           wordBreak: "break-word",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {text}
@@ -423,16 +421,16 @@ export default function Record() {
                         <TableCell
                           sx={{
                             fontSize: "16px",
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             height: "105px",
-                            color: "#002338",
+                            color: "#12304D",
                           }}
                         >
                           {row.message}
                         </TableCell>
 
                         <TableCell
-                          sx={{ fontSize: "16px", fontFamily: "Roboto" , color: "#002338"}}
+                          sx={{ fontSize: "16px", fontFamily: "inherit" , color: "#12304D"}}
                         >
                           {formatDate(row.sentAt)}
                         </TableCell>
@@ -440,12 +438,12 @@ export default function Record() {
                         <TableCell
                           sx={{
                             fontSize: "16px",
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             verticalAlign: "center",
                             position: "relative",
                             p: 1.5,
                             width: "400px",
-                            color: "#002338",
+                            color: "#12304D",
                           }}
                         >
                           {row.readers && row.readers.length > 0 ? (
@@ -478,8 +476,8 @@ export default function Record() {
                                     <Typography
                                       fontWeight={600}
                                       fontSize="14px"
-                                      fontFamily="Poppins"
-                                      color="#002338"
+                                      fontFamily="inherit"
+                                      color="#12304D"
                                     >
                                       Personas:
                                     </Typography>
@@ -496,7 +494,7 @@ export default function Record() {
                                       key={r.email + (r.readAt || "") + i}
                                       fontSize="14px"
                                       fontFamily="Roboto"
-                                      sx={{ ml: 1, mt: 0.9 , color: "#002338"}}
+                                      sx={{ ml: 1, mt: 0.9 , color: "#12304D"}}
                                     >
                                       {r.email.replace(/@mindfactory\.ar$/, "")}
                                     </Typography>
@@ -507,8 +505,8 @@ export default function Record() {
                                   <Typography
                                     fontWeight={600}
                                     fontSize="14px"
-                                    fontFamily="Poppins"
-                                    sx={{ mb: 0.2, mt: 1 ,color: "#002338"}}
+                                    fontFamily="inherit"
+                                    sx={{ mb: 0.2, mt: 1 ,color: "#12304D"}}
                                   >
                                     Fechas de lectura:
                                   </Typography>
@@ -517,7 +515,7 @@ export default function Record() {
                                       key={r.email + (r.readAt || "") + i}
                                       fontSize="14px"
                                       fontFamily="Roboto"
-                                      sx={{ ml: 1, mt: 1, color: "#002338" }}
+                                      sx={{ ml: 1, mt: 1, color: "#12304D" }}
                                     >
                                       {r.readAt ? formatDate(r.readAt) : " "}
                                     </Typography>
@@ -529,7 +527,7 @@ export default function Record() {
                             <Typography
                               fontSize="16px"
                               fontFamily="Roboto"
-                              sx={{ ml: 1, color: "#002338" }}
+                              sx={{ ml: 1, color: "#12304D" }}
                             >
                               Nadie lo leyó
                             </Typography>
@@ -555,31 +553,31 @@ export default function Record() {
                 sx={{
                   bgcolor: "#EDEDED",
                   borderTop: "1px solid #ccc",
-                  '& .MuiTablePagination-toolbar': { color: '#002338' },
-                  '& .MuiTablePagination-selectLabel': { color: '#002338' },
-                  '& .MuiTablePagination-displayedRows': { color: '#002338' },
-                  '& .MuiTablePagination-actions .MuiIconButton-root': { color: '#002338' },
-                  '& .MuiIconButton-root': { color: '#002338' },
-                  '& .MuiSvgIcon-root': { color: '#002338' },
-                  '& .MuiSelect-select': { color: '#002338', backgroundColor: '#ffffff' },
+                  '& .MuiTablePagination-toolbar': { color: '#12304D' },
+                  '& .MuiTablePagination-selectLabel': { color: '#12304D' },
+                  '& .MuiTablePagination-displayedRows': { color: '#12304D' },
+                  '& .MuiTablePagination-actions .MuiIconButton-root': { color: '#12304D' },
+                  '& .MuiIconButton-root': { color: '#12304D' },
+                  '& .MuiSvgIcon-root': { color: '#12304D' },
+                  '& .MuiSelect-select': { color: '#12304D', backgroundColor: '#ffffff' },
                 }}
                 SelectProps={{
                   MenuProps: {
                     PaperProps: {
                       sx: {
                         backgroundColor: '#ffffff',
-                        color: '#002338',
+                        color: '#12304D',
                       },
                     },
                     MenuListProps: {
                       sx: {
                         backgroundColor: '#ffffff',
-                        color: '#002338',
-                        '& .MuiMenuItem-root': { color: '#002338' },
+                        color: '#12304D',
+                        '& .MuiMenuItem-root': { color: '#12304D' },
                       },
                     },
                   },
-                  sx: { color: '#002338' },
+                  sx: { color: '#12304D' },
                 }}
               />
             </TableContainer>
@@ -607,14 +605,14 @@ export default function Record() {
             p: 2,
             mt: "20px",
             backgroundColor: '#ffffff',
-            color: '#002338',
+            color: '#12304D',
           },
         }}
       >
         <Box>
           <Typography
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 600,
               fontSize: "18px",
               mb: 1.5,
@@ -632,9 +630,9 @@ export default function Record() {
                     checked={selectedPMs.indexOf(pm) !== -1}
                     onChange={() => handlePMChange(pm)}
                     sx={{
-                      color: "#009DFF",
+                      color: "#1D5FA0",
                       "&.Mui-checked": {
-                        color: "#009DFF",
+                        color: "#1D5FA0",
                       },
                     }}
                   />
@@ -642,7 +640,7 @@ export default function Record() {
                 label={
                   <Typography
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                     }}
                   >
@@ -657,7 +655,7 @@ export default function Record() {
 
           <Typography
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 600,
               fontSize: "18px",
               mb: 1.5,
@@ -675,9 +673,9 @@ export default function Record() {
                     checked={messageStatus.indexOf(status) !== -1}
                     onChange={() => handleStatusChange(status)}
                     sx={{
-                      color: "#009DFF",
+                      color: "#1D5FA0",
                       "&.Mui-checked": {
-                        color: "#009DFF",
+                        color: "#1D5FA0",
                       },
                     }}
                   />
@@ -685,7 +683,7 @@ export default function Record() {
                 label={
                   <Typography
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                     }}
                   >
@@ -702,14 +700,14 @@ export default function Record() {
               onClick={handleApplyFilters}
               sx={{
                 bgcolor: "#00FFD1",
-                color: "#002338",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-                borderRadius: "25px",
+                color: "#12304D",
+                fontWeight: 600,
+                fontFamily: "inherit",
+                borderRadius: "8px",
                 textTransform: "none",
                 width: "200px",
                 height: "45px",
-                fontSize: "18px",
+                fontSize: "14px",
                 "&:hover": {
                   bgcolor: "#00E6BD",
                 },

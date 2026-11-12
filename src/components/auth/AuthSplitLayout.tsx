@@ -21,10 +21,10 @@ interface AuthSplitLayoutProps {
 
 export const authFieldSx = {
   "& .MuiOutlinedInput-root": {
-    borderRadius: "18px",
+    borderRadius: "8px",
     bgcolor: AUTH_PALETTE.inputBg,
     color: AUTH_PALETTE.inputText,
-    minHeight: "56px",
+    minHeight: "48px",
     transition: "border-color .2s ease, box-shadow .2s ease, background-color .2s ease",
     "& fieldset": {
       borderColor: AUTH_PALETTE.inputBorder,
@@ -37,12 +37,12 @@ export const authFieldSx = {
       borderWidth: "1px",
     },
     "&.Mui-focused": {
-      boxShadow: "0 0 0 4px rgba(114, 230, 217, 0.14)",
+      boxShadow: "0 0 0 3px rgba(29,95,160,0.18)",
     },
   },
   "& .MuiInputBase-input": {
-    py: 1.8,
-    fontSize: "0.98rem",
+    py: 1.4,
+    fontSize: "0.9375rem",
   },
   "& .MuiInputBase-input::placeholder": {
     color: AUTH_PALETTE.inputPlaceholder,
@@ -53,8 +53,8 @@ export const authFieldSx = {
 export const authPrimaryButtonSx = {
   bgcolor: AUTH_PALETTE.primaryButton,
   color: AUTH_PALETTE.primaryButtonText,
-  borderRadius: "18px",
-  minHeight: "56px",
+  borderRadius: "8px",
+  minHeight: "48px",
   py: 1.2,
   textTransform: "none",
   fontWeight: 700,
@@ -69,8 +69,8 @@ export const authPrimaryButtonSx = {
 export const authSecondaryButtonSx = {
   bgcolor: AUTH_PALETTE.secondaryButton,
   color: AUTH_PALETTE.secondaryButtonText,
-  borderRadius: "18px",
-  minHeight: "56px",
+  borderRadius: "8px",
+  minHeight: "48px",
   py: 1.2,
   textTransform: "none",
   fontWeight: 700,
@@ -124,8 +124,6 @@ export default function AuthSplitLayout({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        px: { xs: 2, md: 3 },
-        py: { xs: 2, md: 3 },
         backgroundColor: colors.background,
         transition: "background-color 0.3s ease",
       }}
@@ -133,12 +131,12 @@ export default function AuthSplitLayout({
       <Paper
         elevation={0}
         sx={{
-          width: "min(1140px, 100%)",
-          minHeight: { xs: "auto", md: "680px" },
-          borderRadius: { xs: "28px", md: "32px" },
+          width: "100%",
+          minHeight: "100vh",
+          borderRadius: 0,
           overflow: "hidden",
-          border: `1px solid ${AUTH_PALETTE.divider}`,
-          boxShadow: "0 28px 80px rgba(18,48,77,0.14)",
+          border: 0,
+          boxShadow: "none",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           backgroundColor: AUTH_PALETTE.panelRight,
@@ -151,32 +149,12 @@ export default function AuthSplitLayout({
             overflow: "hidden",
             background: AUTH_PALETTE.panelLeft,
             color: AUTH_PALETTE.textPrimary,
-            px: { xs: 3, sm: 4, md: 4.5 },
-            py: { xs: 4, md: 5 },
+            px: { xs: 3, sm: 5, md: 7 },
+            py: { xs: 4, md: 7 },
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
             gap: 4,
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              inset: "auto -80px -60px auto",
-              width: "220px",
-              height: "220px",
-              borderRadius: "50%",
-              background: "rgba(114,230,217,0.18)",
-              filter: "blur(18px)",
-            },
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              inset: "40px auto auto -100px",
-              width: "220px",
-              height: "220px",
-              borderRadius: "50%",
-              background: "rgba(255,255,255,0.08)",
-              filter: "blur(24px)",
-            },
           }}
         >
           <Box sx={{ position: "relative", zIndex: 1 }}>
@@ -196,11 +174,11 @@ export default function AuthSplitLayout({
 
             <Box
               sx={{
-                width: { xs: 82, md: 96 },
-                height: { xs: 82, md: 96 },
-                borderRadius: "22px",
-                backgroundColor: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.10)",
+                width: { xs: 56, md: 64 },
+                height: { xs: 56, md: 64 },
+                borderRadius: "12px",
+                backgroundColor: "rgba(255,255,255,0.96)",
+                border: 0,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -224,8 +202,8 @@ export default function AuthSplitLayout({
 
             <Typography
               sx={{
-                fontSize: { xs: "2rem", md: "2.8rem" },
-                lineHeight: 1.08,
+                fontSize: { xs: "2rem", md: "2.5rem" },
+                lineHeight: 1.15,
                 fontWeight: 700,
                 letterSpacing: "-0.03em",
                 maxWidth: 440,
@@ -263,11 +241,7 @@ export default function AuthSplitLayout({
                   display: "flex",
                   alignItems: "center",
                   gap: 1,
-                  px: 1.5,
-                  py: 1.25,
-                  borderRadius: "16px",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.10)",
+                  py: 0.25,
                 }}
               >
                 <CheckCircleOutlineRoundedIcon
@@ -279,7 +253,7 @@ export default function AuthSplitLayout({
                 />
                 <Typography
                   sx={{
-                    fontSize: "0.88rem",
+                    fontSize: "1rem",
                     fontWeight: 500,
                     color: "rgba(247,251,255,0.92)",
                   }}
@@ -298,19 +272,19 @@ export default function AuthSplitLayout({
             py: { xs: 3.5, md: 5 },
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
+            justifyContent: "center",
             gap: 3,
             backgroundColor: AUTH_PALETTE.panelRight,
           }}
         >
-          <Box sx={{ width: "100%", maxWidth: 520, mx: "auto" }}>
+          <Box sx={{ width: "100%", maxWidth: 420, mx: "auto" }}>
             {headerAction && <Box sx={{ mb: 3 }}>{headerAction}</Box>}
 
             <Typography
               sx={{
-                fontSize: { xs: "1.9rem", md: "2.2rem" },
+                fontSize: { xs: "1.5rem", md: "1.625rem" },
                 fontWeight: 700,
-                letterSpacing: "-0.03em",
+                letterSpacing: "-0.02em",
                 color: AUTH_PALETTE.title,
               }}
             >
@@ -321,7 +295,7 @@ export default function AuthSplitLayout({
                 mt: 1.25,
                 fontSize: "0.98rem",
                 lineHeight: 1.65,
-                color: "rgba(18,48,77,0.72)",
+                color: "#566779",
                 maxWidth: 480,
               }}
             >
@@ -336,7 +310,7 @@ export default function AuthSplitLayout({
               variant="caption"
               sx={{
                 alignSelf: "flex-end",
-                color: "rgba(18,48,77,0.60)",
+                color: "#566779",
               }}
             >
               Versión: {version}

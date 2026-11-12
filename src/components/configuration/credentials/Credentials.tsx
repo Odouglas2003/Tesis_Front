@@ -214,7 +214,7 @@ const Credentials: React.FC = () => {
             sx={{
               color: "#000",
               fontWeight: 500,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "24px",
             }}
           >
@@ -225,7 +225,7 @@ const Credentials: React.FC = () => {
             sx={{
               color: "#000",
               fontWeight: 400,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "16px",
             }}
           >
@@ -238,19 +238,19 @@ const Credentials: React.FC = () => {
             variant="contained"
             onClick={saveAllChanges}
             sx={{
-              borderRadius: "20px",
-              backgroundColor: colors.button || "#002338",
-              color: "#23FFDC",
-              fontSize: "20px",
+              borderRadius: "8px",
+              backgroundColor: colors.button || "#12304D",
+              color: "#FFFFFF",
+              fontSize: "14px",
               width: "200px",
-              fontWeight: 500,
+              fontWeight: 600,
               textTransform: "none",
-              height: "50px",
-              fontFamily: "Poppins, sans-serif",
+              height: "44px",
+              fontFamily: "inherit",
               px: 3,
               boxShadow: "none",
               "&:hover": {
-                backgroundColor: "#002338",
+                backgroundColor: "#174E85",
               },
             }}
           >
@@ -262,19 +262,19 @@ const Credentials: React.FC = () => {
             startIcon={<Edit />}
             onClick={toggleEditMode}
             sx={{
-              borderRadius: "20px",
-              backgroundColor: colors.button || "#23FFDC",
-              color: "#002338",
-              fontSize: "20px",
+              borderRadius: "8px",
+              backgroundColor: colors.button || "#72E6D9",
+              color: "#FFFFFF",
+              fontSize: "14px",
               width: "200px",
-              fontWeight: 500,
+              fontWeight: 600,
               textTransform: "none",
-              height: "50px",
-              fontFamily: "Poppins, sans-serif",
+              height: "44px",
+              fontFamily: "inherit",
               px: 3,
               boxShadow: "none",
               "&:hover": {
-                backgroundColor: "#23FFDC",
+                backgroundColor: "#174E85",
               },
             }}
           >
@@ -292,7 +292,7 @@ const Credentials: React.FC = () => {
         <Box>
           <Card
             sx={{
-              borderRadius: "20px",
+              borderRadius: "10px",
               boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
               overflow: "hidden",
               backgroundColor: "#f9f9f9",
@@ -317,7 +317,7 @@ const Credentials: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -327,7 +327,7 @@ const Credentials: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -337,7 +337,7 @@ const Credentials: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -347,7 +347,7 @@ const Credentials: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -357,7 +357,7 @@ const Credentials: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -375,27 +375,27 @@ const Credentials: React.FC = () => {
                     >
                       <TableCell
                         sx={{
-                          fontFamily: "Roboto, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {user.name}
                       </TableCell>
                       <TableCell
                         sx={{
-                          fontFamily: "Roboto, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {user.email}
                       </TableCell>
                       <TableCell
                         sx={{
-                          fontFamily: "Roboto, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {isEditMode ? (
@@ -409,7 +409,7 @@ const Credentials: React.FC = () => {
                                 borderColor: "#E0E0E0",
                                 borderRadius: "8px",
                                 textTransform: "none",
-                                color: "#002338",
+                                color: "#12304D",
                                 "&:hover": {
                                   backgroundColor: "#f5f5f5",
                                   borderColor: "#BDBDBD",
@@ -425,7 +425,7 @@ const Credentials: React.FC = () => {
                               PaperProps={{
                                 sx: {
                                   backgroundColor: '#ffffff',
-                                  color: '#002338',
+                                  color: '#12304D',
                                 }
                               }}
                             >
@@ -437,7 +437,7 @@ const Credentials: React.FC = () => {
                                       handleRoleChange(user.email, role)
                                     }
                                     selected={roles[user.email] === role}
-                                    sx={{ color: '#002338' }}
+                                    sx={{ color: '#12304D' }}
                                   >
                                     {role}
                                   </MenuItem>
@@ -463,7 +463,7 @@ const Credentials: React.FC = () => {
                                 borderColor: "#E0E0E0",
                                 borderRadius: "8px",
                                 textTransform: "none",
-                                color: "#002338",
+                                color: "#12304D",
                                 "&:hover": {
                                   backgroundColor: "#f5f5f5",
                                   borderColor: "#BDBDBD",
@@ -476,7 +476,7 @@ const Credentials: React.FC = () => {
                               anchorEl={statusAnchorEls[user.email]}
                               open={Boolean(statusAnchorEls[user.email])}
                               onClose={() => handleCloseStatusMenu(user.email)}
-                              PaperProps={{ sx: { backgroundColor: '#ffffff', color: '#002338' } }}
+                              PaperProps={{ sx: { backgroundColor: '#ffffff', color: '#12304D' } }}
                             >
                               {[
                                 { value: "active", label: "Activo" },
@@ -491,7 +491,7 @@ const Credentials: React.FC = () => {
                                   selected={
                                     statuses[user.email] === status.value
                                   }
-                                  sx={{ color: '#002338' }}
+                                  sx={{ color: '#12304D' }}
                                 >
                                   {status.label}
                                 </MenuItem>
@@ -499,7 +499,7 @@ const Credentials: React.FC = () => {
                             </Menu>
                           </>
                         ) : (
-                          <Typography sx={{ color: '#002338' }}>
+                          <Typography sx={{ color: '#12304D' }}>
                             {getStatusLabel(statuses[user.email])}
                           </Typography>
                         )}

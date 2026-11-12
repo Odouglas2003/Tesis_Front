@@ -11,9 +11,7 @@ export default function VacanciesDetailPageClient({
 }) {
   return (
     <Box>
-      <Box sx={{ mb: 3 }}>
-        <Navbar />
-      </Box>
+      <Navbar />
       <Box sx={{ mb: 3 }}>
         <VacanciesDetail vacancie={vacancie} />
       </Box>

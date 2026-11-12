@@ -105,8 +105,8 @@ export default function Journey() {
 
       <Card
         sx={{
-          borderRadius: "20px",
-          boxShadow: 3,
+          borderRadius: "10px",
+          boxShadow: "none",
           width: "100%",
           maxWidth: "100%",
           p: "4px",
@@ -127,10 +127,10 @@ export default function Journey() {
               >
                 <Typography
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
                     fontSize: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Jornadas de trabajo
@@ -142,19 +142,19 @@ export default function Journey() {
             {loadingJourneys ? (
               <CircularProgress size={24} />
             ) : (
-              <TableContainer sx={{ maxHeight: 700, borderRadius: "20px" }}>
+              <TableContainer sx={{ maxHeight: 700, borderRadius: "10px" }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Nombre"}
@@ -162,12 +162,12 @@ export default function Journey() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Descripción"}
@@ -175,12 +175,12 @@ export default function Journey() {
                        <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Horas"}
@@ -188,12 +188,12 @@ export default function Journey() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Activo"}
@@ -203,12 +203,12 @@ export default function Journey() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Acciones"}
@@ -219,10 +219,10 @@ export default function Journey() {
                   <TableBody>
                     {journeys.map((j) => (
                       <TableRow hover key={j.id}>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.name}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.description}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.hours}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.name}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.description}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.hours}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>
                           {j.status == true ? "Si" : "No"}
                         </TableCell>
                         <TableCell align="center">
@@ -235,7 +235,7 @@ export default function Journey() {
                           >
                             <EditIcon
                               fontSize="inherit"
-                              sx={{ color: "#002338" }}
+                              sx={{ color: "#12304D" }}
                             />
                           </IconButton>
                           <IconButton
@@ -246,7 +246,7 @@ export default function Journey() {
                           >
                             <TrashIcon
                               fontSize="inherit"
-                              sx={{ color: "#ff0000ff" }}
+                              sx={{ color: "#9F2D12" }}
                             />
                           </IconButton>
                         </TableCell>

@@ -2,9 +2,17 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Employee } from "@/types/interface";
-import { Box, Grid2, Typography, Button, Tooltip } from "@mui/material";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Box, Typography, Tooltip } from "@mui/material";
 import { useAppTheme } from "@/app/ThemeProviderClient";
+import { UI, cardSx } from "@/theme/appPalette";
+
+const STATUS_STYLES: Record<string, { bg: string; color: string }> = {
+  Asignado: { bg: "#DDF5F1", color: "#0B5F58" },
+  Subasignado: { bg: "#E3F1FB", color: "#154A7D" },
+  "Sin asignación": { bg: "#E9EEF3", color: "#32475B" },
+  Sobreasignado: { bg: "#FDE7DC", color: "#8A2F0A" },
+};
 
 interface Props {
   searchTerm: string;
@@ -23,8 +31,8 @@ const getContractAlert = (endDate: Employee["fin_contrato"]) => {
     (contractEnd.getTime() - today.getTime()) / 86400000
   );
 
-  if (daysLeft < 0) return { color: "#E5484D", label: "Contrato vencido" };
-  if (daysLeft <= 30) return { color: "#FFD600", label: "Contrato por vencer" };
+  if (daysLeft < 0) return { bg: "#FDE7DC", color: "#8A2F0A", label: "Contrato vencido" };
+  if (daysLeft <= 30) return { bg: "#FEF3C7", color: "#7C4A03", label: "Contrato por vencer" };
   return null;
 };
 
@@ -34,8 +42,6 @@ export default function CardsEmployes({
 }: Props) {
   const { colors } = useAppTheme();
   const [filteredEmployee, setFilteredEmployee] = useState<Employee[]>([]);
-  const [hoveredButton, setHoveredButton] = useState<number | null>(null);
-  const router = useRouter();
   useEffect(() => {
     const normalize = (s?: string | number) =>
       (s === undefined || s === null ? "" : String(s))
@@ -97,254 +103,97 @@ export default function CardsEmployes({
   }, [collaboratorProp, searchTerm]);
 
 
-  const handleMouseEnter = (index: number) => {
-    setHoveredButton(index);
-  };
-  const handleMouseLeave: () => void = () => {
-    setHoveredButton(null);
-  };
   if ((searchTerm ?? "").trim() && filteredEmployee.length === 0) {
     return (
       <Box display="flex" justifyContent="center" mt={4}>
-        <Typography sx={{ fontFamily: "Poppins", color: "#5b6b7a" }}>
+        <Typography sx={{ color: UI.muted }}>
           No se encontraron resultados para &quot;{searchTerm.trim()}&quot;.
         </Typography>
       </Box>
     );
   }
+
   return (
-    <Box display="flex" justifyContent="center" mt={1}>
-      <Grid2 container spacing={3} justifyContent="space-between" >
-        {filteredEmployee.map((empleado, index) => {
-          const contractAlert = getContractAlert(empleado.fin_contrato);
-          return (
-          <Grid2
-            key={index}
-            justifyContent="center"
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
-            sx={{
-              width: "247px",
-              height: "318px",
-              bgcolor: colors?.card || "#FCFEFF",
-              borderRadius: "29px",
-              position: "relative",
-              overflow: "hidden",
-              cursor: "pointer",
-              boxShadow: "0 18px 45px rgba(18,48,77,0.10)",
-              border: "1px solid rgba(18,48,77,0.08)",
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(auto-fill, minmax(340px, 1fr))" },
+        gap: 2,
+      }}
+    >
+      {filteredEmployee.map((empleado) => {
+        const contractAlert = getContractAlert(empleado.fin_contrato);
+        const fullName = `${empleado.first_name ?? ""} ${empleado.last_name ?? ""}`.trim();
+        const initials = `${empleado.first_name?.[0] ?? ""}${empleado.last_name?.[0] ?? ""}`.toUpperCase();
+        const mainRole = empleado.roles?.[0];
+        const extraRoles = (empleado.roles ?? []).slice(1);
+        const techs = (Array.isArray(empleado.tecnologias) ? empleado.tecnologias : []).filter(
+          (t) => typeof t === "string" && t.trim() && !/^[0-9a-f]{24}$/i.test(t)
+        );
+        const projectNames = (Array.isArray(empleado.Proyectos) ? empleado.Proyectos : [])
+          .map((p) =>
+            typeof p.projectId === "object" && p.projectId !== null
+              ? ((p.projectId as { name?: string }).name ?? "")
+              : ""
+          )
+          .filter(Boolean);
+        const status = STATUS_STYLES[empleado.estado] ? empleado.estado : null;
 
-              transition: "all 0.3s ease",
-            }}
+        return (
+          <Link
+            key={empleado.id}
+            href={`/pages/detail/collaborator_detail/${empleado.id}`}
+            style={{ textDecoration: "none", color: "inherit", display: "block" }}
           >
-            {contractAlert && (
-              <Tooltip title={contractAlert.label} arrow placement="left">
-                <Box
-                  aria-label={contractAlert.label}
-                  sx={{
-                    position: "absolute",
-                    zIndex: 4,
-                    top: "13px",
-                    right: "-24px",
-                    width: "88px",
-                    height: "18px",
-                    bgcolor: contractAlert.color,
-                    transform: "rotate(45deg)",
-                    boxShadow: `0 3px 10px ${contractAlert.color}66`,
-                  }}
-                />
-              </Tooltip>
-            )}
-            {hoveredButton === index ? (
-              <Grid2
-                sx={{
-                  marginTop: "20px",
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                }}
-              >
-                <Box>
-                  <Typography
-                    textAlign="center"
-                    sx={{
-                      fontSize: "20px",
-                      fontFamily: "Poppins",
-                      fontWeight: 500,
-                      color: colors?.primary || "#12304D",
-                    }}
-                  >
-                    {`${empleado.last_name} ${empleado.first_name} `}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "18px",
-                      fontFamily: "Poppins",
-                      fontWeight: 500,
-                      color: colors?.secondary || "#2A6CA8",
-                      textAlign: "center",
-                    }}
-                  >
-                    {empleado.roles && empleado.roles.length > 0
-                      ? empleado.roles.map((r) => r.rol).join(" / ")
-                      : ""}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontFamily: "Poppins",
-                      fontWeight: 500,
-                      color: "rgba(18,48,77,0.76)",
-                      textAlign: "center",
-                      marginTop: "5px",
-                    }}
-                  >
-                    Proyectos:
-                  </Typography>
-                  <Box sx={{ height: "104px" }}>
-                    {Array.isArray(empleado.Proyectos) && empleado.Proyectos.length > 0 ? (
-                      empleado.Proyectos
-                        .filter((p) => p.projectId && typeof p.projectId !== "string")
-                        .map((p, idx) => {
-                          const pr =
-                            typeof p.projectId === "object" && p.projectId !== null
-                              ? (p.projectId as { id?: string; _id?: string; name?: string })
-                              : undefined;
-                          const pid = pr?.id ?? pr?._id ?? `${empleado.id}-${idx}`;
-                          const pname = pr?.name ?? "";
-
-                          return (
-                            <Typography
-                              key={String(pid)}
-                              sx={{
-                                fontSize: "16px",
-                                fontFamily: "Poppins",
-                                fontWeight: 500,
-                                color: colors?.primary || "#12304D",
-                                textAlign: "center",
-                              }}
-                            >
-                              • {pname}
-                            </Typography>
-                          );
-                        })
-                    ) : (
-                      <Typography
-                        sx={{
-                          fontSize: "16px",
-                          fontFamily: "Poppins",
-                          fontWeight: 500,
-                          color: colors?.primary || "#12304D",
-                          textAlign: "center",
-                        }}
-                      >
-                        No hay proyectos asignados
-                      </Typography>
-                    )}
-                  </Box>
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontFamily: "Poppins",
-                      fontWeight: 500,
-                      color: "rgba(18,48,77,0.76)",
-                      textAlign: "center",
-                    }}
-                  >
-                    Horas asignadas: {`${empleado.horasAsignadas || 0}hs`}
-                  </Typography>
-                </Box>
+            <Box
+              sx={{
+                ...cardSx,
+                backgroundColor: colors?.card || "#FFFFFF",
+                height: "100%",
+                p: 2.5,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                transition: "border-color .2s ease, box-shadow .2s ease",
+                "&:hover": { borderColor: UI.borderStrong, boxShadow: "0 4px 14px rgba(15,34,51,0.08)" },
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.75 }}>
                 <Box
                   sx={{
-                    position: "absolute",
-                    bottom: "20px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "80%",
+                    position: "relative",
+                    width: 52,
+                    height: 52,
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    flexShrink: 0,
+                    backgroundColor: UI.avatarBg,
+                    color: "#12304D",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 700,
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    sx={{
-                      bgcolor: colors?.button || "#123B66",
-                      borderRadius: "16px",
-                      marginTop: "20px",
-                      width: "100%",
-                      height: "40px",
-                      textTransform: "none",
-                      "&:hover": {
-                        bgcolor: colors?.primary || "#12304D",
-                      },
-                      "&:active": {
-                        bgcolor: colors?.primary || "#12304D",
-                      },
-                    }}
-                    onClick={() =>
-                      router.push(
-                        `/pages/detail/collaborator_detail/${empleado.id}`
-                      )
-                    }
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: "18px",
-                        fontFamily: "Poppins",
-                        fontWeight: 600,
-                        textAlign: "center",
-                        color: colors?.text || "#7DEBDC",
-                        lineHeight: "100%",
-                      }}
-                    >
-                      Ver Perfil
-                    </Typography>
-                  </Button>
+                  {empleado.image ? (
+                    <Image src={empleado.image} alt="" fill sizes="52px" style={{ objectFit: "cover" }} />
+                  ) : (
+                    initials
+                  )}
                 </Box>
-              </Grid2>
-            ) : (
-              <>
-                <Box className="profile-pic">
-                  <Image
-                    src={empleado.image ? empleado.image : "/anonimo.jpeg"}
-                    alt={`${empleado.last_name}${empleado.first_name}`}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </Box>
-
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    width: "100%",
-                    height: "68px",
-                    bgcolor: "rgba(18,48,77,0.86)",
-                    p: "5px 20px",
-                    color: "white",
-                    textAlign: "center",
-                    transition: "all 2s cubic-bezier(0.4, 0, 0.2, 1)",
-                  }}
-                >
-                  <Typography variant="h6">
-                    {empleado.last_name} {empleado.first_name}
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: UI.ink, lineHeight: 1.3 }} noWrap>
+                    {fullName}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    color={colors?.text || "#23FFDC"}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px",
-                      fontSize: "16px",
-                      fontFamily: "Poppins",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {empleado.roles?.[0]?.rol || ""}
-                    {empleado.roles && empleado.roles.length > 1 && (
+                  <Typography sx={{ fontSize: "0.8125rem", color: UI.muted, display: "flex", alignItems: "center", gap: 0.75 }}>
+                    <Box component="span" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {mainRole ? [mainRole.rol, mainRole.seniority].filter(Boolean).join(" · ") : "Sin rol asignado"}
+                    </Box>
+                    {extraRoles.length > 0 && (
                       <Tooltip
                         title={
                           <Box>
-                            {empleado.roles.slice(1).map((r, i) => (
+                            {extraRoles.map((r, i) => (
                               <div key={i}>
                                 Rol adicional: {r.rol} - {r.seniority}
                               </div>
@@ -354,30 +203,111 @@ export default function CardsEmployes({
                         arrow
                         placement="top"
                       >
-                        <span
-                          style={{
-                            background: colors?.secondary || "#2A6CA8",
-                            color: "#fff",
-                            borderRadius: "50%",
-                            padding: "6px",
-                            cursor: "pointer",
-                            fontSize: "14px",
-                            marginLeft: "4px",
-                            display: "inline-block",
+                        <Box
+                          component="span"
+                          sx={{
+                            px: 0.75,
+                            borderRadius: "999px",
+                            backgroundColor: UI.blueSoft,
+                            color: UI.blueSoftText,
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            flexShrink: 0,
                           }}
                         >
-                          +{empleado.roles.length - 1}
-                        </span>
+                          +{extraRoles.length}
+                        </Box>
                       </Tooltip>
                     )}
                   </Typography>
                 </Box>
-              </>
-            )}
-          </Grid2>
-          );
-        })}
-      </Grid2>
+              </Box>
+
+              {(techs.length > 0 || status || contractAlert) && (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                  {status && (
+                    <Box
+                      component="span"
+                      sx={{
+                        px: 1.25,
+                        py: 0.4,
+                        borderRadius: "999px",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        backgroundColor: STATUS_STYLES[status].bg,
+                        color: STATUS_STYLES[status].color,
+                      }}
+                    >
+                      {status}
+                    </Box>
+                  )}
+                  {contractAlert && (
+                    <Box
+                      component="span"
+                      sx={{
+                        px: 1.25,
+                        py: 0.4,
+                        borderRadius: "999px",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        backgroundColor: contractAlert.bg,
+                        color: contractAlert.color,
+                      }}
+                    >
+                      {contractAlert.label}
+                    </Box>
+                  )}
+                  {techs.slice(0, 4).map((tech) => (
+                    <Box
+                      component="span"
+                      key={tech}
+                      sx={{
+                        px: 1.25,
+                        py: 0.4,
+                        borderRadius: "6px",
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        backgroundColor: UI.track,
+                        color: UI.inkSoft,
+                      }}
+                    >
+                      {tech}
+                    </Box>
+                  ))}
+                  {techs.length > 4 && (
+                    <Box component="span" sx={{ px: 0.5, py: 0.4, fontSize: "0.75rem", fontWeight: 600, color: UI.muted }}>
+                      +{techs.length - 4}
+                    </Box>
+                  )}
+                </Box>
+              )}
+
+              <Box
+                sx={{
+                  mt: "auto",
+                  pt: 1.75,
+                  borderTop: `1px solid ${UI.border}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 1.5,
+                  fontSize: "0.8125rem",
+                }}
+              >
+                <Typography component="span" sx={{ fontSize: "inherit", color: UI.muted, minWidth: 0 }} noWrap>
+                  {projectNames.length > 0 ? projectNames.join(" · ") : "Sin proyecto asignado"}
+                </Typography>
+                <Typography
+                  component="span"
+                  sx={{ fontSize: "inherit", fontWeight: 700, color: UI.ink, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}
+                >
+                  {empleado.horasAsignadas || 0} h asignadas
+                </Typography>
+              </Box>
+            </Box>
+          </Link>
+        );
+      })}
     </Box>
   );
 }

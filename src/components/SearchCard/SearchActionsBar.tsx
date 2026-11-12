@@ -3,11 +3,8 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  Tooltip,
   Modal,
-  Grid,
   Typography,
- 
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AddProyecto from "../add_cards/Proyecto/ProjectModal";
@@ -20,6 +17,7 @@ import ViewCompactIcon from "@mui/icons-material/ViewCompact";
 import { useAuthRole } from "@/app/hooks/useAuthRole";
 import { useProjectSuggestion } from "@/context/ProjectSuggestionContext";
 import { useAppTheme } from "@/app/ThemeProviderClient";
+import { UI } from "@/theme/appPalette";
 
 type Props = SearchCardToggleProps & {
   onAssignmentFilterChange?: (estado: string | null) => void;
@@ -90,84 +88,82 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        p: { xs: 1.25, md: 1.5 },
-        borderRadius: "22px",
-        backgroundColor: "rgba(252,254,255,0.82)",
-        border: "1px solid rgba(18,48,77,0.08)",
-        boxShadow: "0 16px 36px rgba(18,48,77,0.08)",
-        backdropFilter: "blur(8px)",
-      }}
-    >
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} md>
+    <Box sx={{ flex: 1, minWidth: 0, width: "100%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          gap: 1.5,
+        }}
+      >
+        <Box sx={{ flex: "1 1 320px", minWidth: 0 }}>
           <Shearch onSearch={setSearchTerm} />
-        </Grid>
+        </Box>
 
-        <Grid item xs={6} sm="auto">
-          <Tooltip title={viewMode === "table" ? "Ver Cards" : "Ver Tabla"}>
-            <Button
-              variant="contained"
-              onClick={() =>
-                setViewMode(viewMode === "table" ? "cards" : "table")
-              }
-              startIcon={
-                viewMode === "table" ? (
-                  <ViewCompactIcon sx={{ color: "white" }} />
-                ) : (
-                  <SpaceDashboardIcon sx={{ color: "white" }} />
-                )
-              }
-              sx={{
-                borderRadius: "16px",
-                backgroundColor: colors.button || "#123B66",
-                color: colors.text || "#7DEBDC",
-                textTransform: "none",
-                fontSize: "16px",
-                fontWeight: 600,
-                height: "50px",
-                px: 3,
-                boxShadow: "none",
-                width: "100%",
-                "&:hover": { backgroundColor: colors.primary || "#12304D", boxShadow: "none" },
-
-              }}
-            >
-              {viewMode === "table" ? "Ver Cards" : "Ver Tabla"}
-            </Button>
-          </Tooltip>
-        </Grid>
-
-
+        <Box
+          role="group"
+          aria-label="Vista"
+          sx={{
+            display: "flex",
+            p: "3px",
+            backgroundColor: "#E9EEF3",
+            borderRadius: "8px",
+          }}
+        >
+          {([
+            { mode: "cards", label: "Tarjetas", icon: <SpaceDashboardIcon sx={{ fontSize: 18 }} /> },
+            { mode: "table", label: "Tabla", icon: <ViewCompactIcon sx={{ fontSize: 18 }} /> },
+          ] as const).map((option) => {
+            const selected = (viewMode === "table") === (option.mode === "table");
+            return (
+              <Button
+                key={option.mode}
+                onClick={() => setViewMode(option.mode)}
+                aria-pressed={selected}
+                startIcon={option.icon}
+                sx={{
+                  minHeight: 38,
+                  px: 1.75,
+                  borderRadius: "6px",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  color: selected ? UI.ink : "#44586B",
+                  backgroundColor: selected ? "#FFFFFF" : "transparent",
+                  boxShadow: selected ? "0 1px 2px rgba(15,34,51,0.12)" : "none",
+                  "&:hover": { backgroundColor: selected ? "#FFFFFF" : "rgba(255,255,255,0.5)" },
+                }}
+              >
+                {option.label}
+              </Button>
+            );
+          })}
+        </Box>
 
         {canAddInCurrentSection() && (
-          <Grid item xs={12} sm="auto">
-            <Button
-              variant="contained"
-              startIcon={<AddIcon sx={{ fontSize: "24px" }} />}
-              onClick={handleOpenModal}
-              sx={{
-                borderRadius: "16px",
-                backgroundColor: colors.secondary || "#2A6CA8",
-                color: "#F7FBFF",
-                fontSize: "16px",
-                fontWeight: 600,
-                textTransform: "none",
-                height: "50px",
-                fontFamily: "Poppins, sans-serif",
-                px: 3,
-                boxShadow: "none",
-                width: "100%",
-                "&:hover": { backgroundColor: colors.primary || "#12304D", boxShadow: "none" },
-              }}
-            >
-              Agregar
-            </Button>
-          </Grid>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenModal}
+            sx={{
+              minHeight: 44,
+              px: 2,
+              borderRadius: "8px",
+              backgroundColor: colors.button || UI.blue,
+              color: colors.text || "#FFFFFF",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "none",
+              width: { xs: "100%", sm: "auto" },
+              "&:hover": { backgroundColor: colors.button || UI.blue, filter: "brightness(0.88)", boxShadow: "none" },
+            }}
+          >
+            Agregar
+          </Button>
         )}
-      </Grid>
+      </Box>
 
       <Modal
         open={openModal}
@@ -186,11 +182,11 @@ const SearchCardToggle: React.FC<Props> & { onAddSuccess?: () => void } = ({
             width: { xs: "95vw", md: "1042px" },
             maxHeight: "95vh",
             overflowY: "auto",
-            backgroundColor: "#FCFEFF",
-            border: "1px solid rgba(18,48,77,0.10)",
-            boxShadow: 24,
-            borderRadius: "24px",
-            p: 2,
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E2E8EF",
+            boxShadow: "0 24px 64px rgba(15,34,51,0.18)",
+            borderRadius: "16px",
+            p: { xs: 2, md: 3 },
             textAlign: "center",
           }}
         >

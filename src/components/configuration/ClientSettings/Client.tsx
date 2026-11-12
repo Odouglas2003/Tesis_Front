@@ -95,16 +95,14 @@ export default function Client() {
       alignItems="flex-start"
       width="100%"
       sx={{
-        marginRight: "55px",
-        bgcolor: "#f5f5f5",
       }}
     >
       <AddClient onCreated={loadClients} />
 
       <Card
         sx={{
-          borderRadius: "20px",
-          boxShadow: 3,
+          borderRadius: "10px",
+          boxShadow: "none",
           width: "100%",
           maxWidth: "100%",
           p: "4px",
@@ -116,10 +114,10 @@ export default function Client() {
             <Box display={"flex"} justifyContent="space-between" mb={2}>
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 600,
                   fontSize: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 }}
               >
                 Listado de Clientes
@@ -133,7 +131,7 @@ export default function Client() {
               <TableContainer
                 sx={{
                   maxHeight: 700,
-                  borderRadius: "20px",
+                  borderRadius: "10px",
                 }}
               >
                 <Table stickyHeader aria-label="sticky table">
@@ -142,12 +140,12 @@ export default function Client() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Nombre"}
@@ -155,12 +153,12 @@ export default function Client() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"CUIT"}
@@ -168,12 +166,12 @@ export default function Client() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Razón Social"}
@@ -181,12 +179,12 @@ export default function Client() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Descripción"}
@@ -194,12 +192,12 @@ export default function Client() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Activo"}
@@ -208,12 +206,12 @@ export default function Client() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Acciones"}
@@ -226,31 +224,31 @@ export default function Client() {
                       <TableRow hover key={c.id}>
                         <TableCell
                           align="center"
-                          sx={{ fontFamily: "Roboto", fontSize: "16px", color: "#002338" }}
+                          sx={{ fontFamily: "inherit", fontSize: "16px", color: "#12304D" }}
                         >
                           {c.name}
                         </TableCell>
                         <TableCell
                           align="center"
-                          sx={{ fontFamily: "Roboto", fontSize: "16px", color: "#002338" }}
+                          sx={{ fontFamily: "inherit", fontSize: "16px", color: "#12304D" }}
                         >
                           {c.cuit}
                         </TableCell>
                         <TableCell
                           align="center"
-                          sx={{ fontFamily: "Roboto", fontSize: "16px", color: "#002338" }}
+                          sx={{ fontFamily: "inherit", fontSize: "16px", color: "#12304D" }}
                         >
                           {c.razonSocial}
                         </TableCell>
                         <TableCell
                           align="center"
-                          sx={{ fontFamily: "Roboto", fontSize: "16px", color: "#002338" }}
+                          sx={{ fontFamily: "inherit", fontSize: "16px", color: "#12304D" }}
                         >
                           {c.description}
                         </TableCell>
                         <TableCell
                           align="center"
-                          sx={{ fontFamily: "Roboto", fontSize: "16px", color: "#002338" }}
+                          sx={{ fontFamily: "inherit", fontSize: "16px", color: "#12304D" }}
                         >
                           {c.status == true ? "Si" : "No"}
                         </TableCell>
@@ -264,7 +262,7 @@ export default function Client() {
                           >
                             <EditIcon
                               fontSize="inherit"
-                              sx={{ color: "#002338" }}
+                              sx={{ color: "#12304D" }}
                             />
                           </IconButton>
                           <IconButton
@@ -275,7 +273,7 @@ export default function Client() {
                           >
                             <TrashIcon
                               fontSize="inherit"
-                              sx={{ color: "#ff0000ff" }}
+                              sx={{ color: "#9F2D12" }}
                             />
                           </IconButton>
                         </TableCell>

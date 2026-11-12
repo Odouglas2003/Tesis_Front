@@ -113,7 +113,7 @@ export default function CarouselVacancie({
               left: -10,
               transform: "translateY(-50%)",
               zIndex: 2,
-              color: "#002338",
+              color: "#12304D",
               "&:hover": {
                 backgroundColor: "transparent",
                 color: "#666666",
@@ -146,7 +146,7 @@ export default function CarouselVacancie({
                 alignItems: "center",
                 minWidth: groupedVacancies.length <= 3 ? 431 : 243,
                 height: 121,
-                borderRadius: "20px",
+                borderRadius: "10px",
                 paddingTop: "20px",
                 paddingLeft: "20px",
                 paddingRight: "12px",
@@ -177,8 +177,8 @@ export default function CarouselVacancie({
                     endAngle={-270}
                     stroke="none"
                   >
-                    <Cell fill="#002338" />
-                    <Cell fill="#0087FF" />
+                    <Cell fill="#12304D" />
+                    <Cell fill="#1D5FA0" />
                   </Pie>
                 </PieChart>
 
@@ -190,8 +190,8 @@ export default function CarouselVacancie({
                     transform: "translate(-50%, -50%)",
                     fontWeight: 500,
                     fontSize: "16px",
-                    color: "#002338",
-                    fontFamily: "Poppins",
+                    color: "#12304D",
+                    fontFamily: "inherit",
                   }}
                 >
                   {vac.porcentaje}%
@@ -203,8 +203,8 @@ export default function CarouselVacancie({
                   sx={{
                     fontSize: "20px",
                     fontWeight: 500,
-                    fontFamily: "Poppins",
-                    color: "#002338",
+                    fontFamily: "inherit",
+                    color: "#12304D",
                   }}
                 >
                   {vac.nombre}
@@ -212,8 +212,8 @@ export default function CarouselVacancie({
                 <Typography
                   sx={{
                     fontSize: "16px",
-                    fontFamily: "Poppins",
-                    color: "#002338",
+                    fontFamily: "inherit",
+                    color: "#12304D",
                   }}
                 >
                   {vac.cantidad} vacantes disponibles
@@ -232,7 +232,7 @@ export default function CarouselVacancie({
               right: -10,
               transform: "translateY(-50%)",
               zIndex: 2,
-              color: "#002338",
+              color: "#12304D",
               "&:hover": {
                 backgroundColor: "transparent",
                 color: "#666666",

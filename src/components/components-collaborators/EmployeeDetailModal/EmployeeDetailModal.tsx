@@ -82,7 +82,7 @@ const BizneoDetailModal: React.FC<Props> = ({ open, onClose, loading, error, dat
                                     <Avatar
                                         src={data?.image || undefined}
                                         alt={fullname}
-                                        sx={{ width: 96, height: 96, borderRadius: 2, boxShadow: 1 }}
+                                        sx={{ width: 96, height: 96, borderRadius: 2, boxShadow: "none" }}
                                     />
                                 </Grid>
                                 <Grid item xs>

@@ -34,7 +34,7 @@ interface FormData {
 }
 
 const selectSx = {
-  borderRadius: "18px",
+  borderRadius: "10px",
   bgcolor: AUTH_PALETTE.inputBg,
   minHeight: "56px",
   color: AUTH_PALETTE.inputText,
@@ -190,7 +190,7 @@ const RegisterForm = () => {
       >
         <Box
           sx={{
-            borderRadius: "24px",
+            borderRadius: "10px",
             border: "1px solid rgba(18,48,77,0.08)",
             backgroundColor: "rgba(244,248,251,0.78)",
             p: { xs: 2.5, md: 3 },

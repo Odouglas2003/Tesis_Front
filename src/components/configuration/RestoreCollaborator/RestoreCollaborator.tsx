@@ -165,7 +165,7 @@ const RestoreCollaborator: React.FC = () => {
             sx={{
               color: "#000",
               fontWeight: 500,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "24px",
             }}
           >
@@ -176,7 +176,7 @@ const RestoreCollaborator: React.FC = () => {
             sx={{
               color: "#000",
               fontWeight: 400,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "16px",
             }}
           >
@@ -188,11 +188,11 @@ const RestoreCollaborator: React.FC = () => {
           icon={<RestoreIcon />}
           label={`${collaborators.length} colaboradores inactivos`}
           sx={{
-            backgroundColor: colors.button || "#23FFDC",
-            color: "#002338",
+            backgroundColor: colors.button || "#72E6D9",
+            color: "#12304D",
             fontSize: "16px",
             fontWeight: 500,
-            fontFamily: "Poppins, sans-serif",
+            fontFamily: "inherit",
             height: "40px",
           }}
         />
@@ -221,16 +221,16 @@ const RestoreCollaborator: React.FC = () => {
             "& .MuiOutlinedInput-root": {
               borderRadius: "12px",
               backgroundColor: "#f5f5f5",
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontSize: "16px",
               "& fieldset": {
                 borderColor: "#e0e0e0",
               },
               "&:hover fieldset": {
-                borderColor: colors.button || "#23FFDC",
+                borderColor: colors.button || "#72E6D9",
               },
               "&.Mui-focused fieldset": {
-                borderColor: colors.button || "#23FFDC",
+                borderColor: colors.button || "#72E6D9",
               },
             },
           }}
@@ -248,7 +248,7 @@ const RestoreCollaborator: React.FC = () => {
             sx={{
               color: "#666",
               fontSize: "18px",
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
             }}
           >
             {searchTerm 
@@ -261,7 +261,7 @@ const RestoreCollaborator: React.FC = () => {
         <Box>
           <Card
             sx={{
-              borderRadius: "20px",
+              borderRadius: "10px",
               boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
               overflow: "hidden",
               backgroundColor: "#f9f9f9",
@@ -282,7 +282,7 @@ const RestoreCollaborator: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -292,7 +292,7 @@ const RestoreCollaborator: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -302,7 +302,7 @@ const RestoreCollaborator: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -312,7 +312,7 @@ const RestoreCollaborator: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -322,7 +322,7 @@ const RestoreCollaborator: React.FC = () => {
                       sx={{
                         fontWeight: 500,
                         color: "#000",
-                        fontFamily: "Poppins, sans-serif",
+                        fontFamily: "inherit",
                         fontSize: "16px",
                       }}
                     >
@@ -342,18 +342,18 @@ const RestoreCollaborator: React.FC = () => {
                     >
                       <TableCell
                         sx={{
-                          fontFamily: "Roboto, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {`${collaborator.first_name} ${collaborator.last_name}`.trim()}
                       </TableCell>
                       <TableCell
                         sx={{
-                          fontFamily: "Roboto, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {collaborator.email}
@@ -371,9 +371,9 @@ const RestoreCollaborator: React.FC = () => {
                       </TableCell>
                       <TableCell
                         sx={{
-                          fontFamily: "Roboto, sans-serif",
+                          fontFamily: "inherit",
                           fontSize: "16px",
-                          color: "#002338",
+                          color: "#12304D",
                         }}
                       >
                         {formatDate(collaborator.delete_at)}
@@ -397,17 +397,17 @@ const RestoreCollaborator: React.FC = () => {
                             )
                           }
                           sx={{
-                            backgroundColor: "#23FFDC",
-                            color: "#002338",
+                            backgroundColor: "#1D5FA0",
+                            color: "#FFFFFF",
                             fontSize: "12px",
-                            fontWeight: 500,
+                            fontWeight: 600,
                             textTransform: "none",
-                            borderRadius: "12px",
+                            borderRadius: "8px",
                             minWidth: "120px",
                             height: "32px",
-                            fontFamily: "Poppins, sans-serif",
+                            fontFamily: "inherit",
                             boxShadow: "none",
-                            "&:hover": { backgroundColor: "#1ee6c9" },
+                            "&:hover": { backgroundColor: "#174E85" },
                             "&:disabled": {
                               backgroundColor: "#e0e0e0",
                               color: "#9e9e9e",

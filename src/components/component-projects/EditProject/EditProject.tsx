@@ -154,8 +154,10 @@ export default function EditProject({
     <Grid2
       container
       sx={{
-        marginLeft: "55px",
-        marginRight: "55px",
+        maxWidth: 1320,
+        mx: "auto",
+        px: { xs: 2, md: 3 },
+        width: "100%",
       }}
     >
       <Grid2 size={12}>
@@ -171,14 +173,14 @@ export default function EditProject({
           }}
         >
           <KeyboardArrowLeftIcon
-            sx={{ width: "24px", height: "24px", color: "#002338" }}
+            sx={{ width: "24px", height: "24px", color: "#12304D" }}
           />
           <Typography
             sx={{
               textAlign: "center",
-              color: "#002338",
+              color: "#12304D",
               fontSize: "20px",
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 400,
             }}
           >
@@ -192,7 +194,7 @@ export default function EditProject({
           elevation={6}
           sx={{
             width: { xs: "90%", md: "100%" },
-            borderRadius: "20px",
+            borderRadius: "10px",
             backgroundColor: "#FFFFFF",
             padding: "40px",
           }}
@@ -208,9 +210,9 @@ export default function EditProject({
             <Typography
               sx={{
                 fontSize: { xs: 24, md: "32px" },
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 600,
-                color: "#002338",
+                color: "#12304D",
               }}
             >
               Editar proyecto
@@ -219,24 +221,24 @@ export default function EditProject({
               variant="contained"
               onClick={handleSave}
               sx={{
-                backgroundColor: colors?.button || "#0087FF",
-                borderRadius: "20px",
-                padding: "12px 41px",
-                fontFamily: "Poppins, sans-serif",
-                fontWeight: 500,
-                fontSize: "20px",
-                height: "50px",
-                color: colors?.background || "#FFFFFF",
+                backgroundColor: colors?.button || "#1D5FA0",
+                borderRadius: "8px",
+                padding: "0 16px",
+                fontFamily: "inherit",
+                fontWeight: 600,
+                fontSize: "14px",
+                height: "44px",
+                color: colors?.text || "#FFFFFF",
                 boxShadow: "none",
                 textTransform: "none",
                 transition: 'background-color .25s ease, opacity .25s ease',
                 '&:hover': {
-                  backgroundColor: colors?.button || '#0087FF',
+                  backgroundColor: colors?.button || '#1D5FA0',
                   opacity: 0.85,
                   boxShadow: 'none'
                 },
                 '&:active': {
-                  backgroundColor: colors?.button || '#0087FF',
+                  backgroundColor: colors?.button || '#1D5FA0',
                   opacity: 0.75,
                   boxShadow: 'none'
                 }
@@ -321,12 +323,12 @@ export default function EditProject({
                         }
                         sx={{
                           height: "40px",
-                          color: "#002338",
+                          color: "#12304D",
 
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -339,7 +341,7 @@ export default function EditProject({
                             display: "flex",
                             alignItems: "center",
                             pl: "18px",
-                            color: "#002338",
+                            color: "#12304D",
 
                           },
                         }}
@@ -350,12 +352,12 @@ export default function EditProject({
                       <FormControl
                         sx={{
                           height: "40px",
-                          color: "#002338",
-                          '& .MuiSelect-select': { color: '#002338' },
+                          color: "#12304D",
+                          '& .MuiSelect-select': { color: '#12304D' },
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -377,12 +379,12 @@ export default function EditProject({
                           }
                           input={<OutlinedInput label="Cliente" />}
                           MenuProps={{
-                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                             MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                           }}
                         >
                           {client.map((clients) => (
-                            <MenuItem key={clients.id} value={clients.name} sx={{ color: '#002338' }}>
+                            <MenuItem key={clients.id} value={clients.name} sx={{ color: '#12304D' }}>
                               {clients.name}
                             </MenuItem>
                           ))}
@@ -394,12 +396,12 @@ export default function EditProject({
                       <FormControl
                         sx={{
                           height: "40px",
-                          color: "#002338",
-                          '& .MuiSelect-select': { color: '#002338' },
+                          color: "#12304D",
+                          '& .MuiSelect-select': { color: '#12304D' },
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -421,7 +423,7 @@ export default function EditProject({
                           }
                           input={<OutlinedInput label="Estado" />}
                           MenuProps={{
-                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                             MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                           }}
                         >
@@ -430,7 +432,7 @@ export default function EditProject({
                               index === self.findIndex(s => s.id === states.id)
                             )
                             .map((states) => (
-                              <MenuItem key={states.id} value={states.status} sx={{ color: '#002338' }}>
+                              <MenuItem key={states.id} value={states.status} sx={{ color: '#12304D' }}>
                                 {states.status}
                               </MenuItem>
                             ))}
@@ -442,12 +444,12 @@ export default function EditProject({
                       <FormControl
                         sx={{
                           height: "40px",
-                          color: "#002338",
-                          '& .MuiSelect-select': { color: '#002338' },
+                          color: "#12304D",
+                          '& .MuiSelect-select': { color: '#12304D' },
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -477,14 +479,14 @@ export default function EditProject({
                           }}
                           input={<OutlinedInput label="Project Manager" />}
                           MenuProps={{
-                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                             MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                           }}
                         >
                           {managers.map((manager, index) => (
                             <MenuItem
                               key={`${manager.id || 'manager'}-${index}`}
-                              value={manager.id} sx={{ color: '#002338' }}
+                              value={manager.id} sx={{ color: '#12304D' }}
                             >
                               {`${manager.first_name || ""} ${manager.last_name || ""}`.trim() || manager.email || "Manager sin nombre"}
                             </MenuItem>
@@ -511,12 +513,12 @@ export default function EditProject({
                         InputLabelProps={{ shrink: true }}
                         sx={{
                           height: "40px",
-                          color: "#002338",
+                          color: "#12304D",
 
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -529,7 +531,7 @@ export default function EditProject({
                             display: "flex",
                             alignItems: "center",
                             pl: "18px",
-                            color: "#002338",
+                            color: "#12304D",
 
                           },
                         }}
@@ -554,11 +556,11 @@ export default function EditProject({
                         InputLabelProps={{ shrink: true }}
                         sx={{
                           height: "40px",
-                          color: "#002338",
+                          color: "#12304D",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -571,7 +573,7 @@ export default function EditProject({
                             display: "flex",
                             alignItems: "center",
                             pl: "18px",
-                            color: "#002338",
+                            color: "#12304D",
 
                           },
                         }}
@@ -582,12 +584,12 @@ export default function EditProject({
                       <FormControl
                         sx={{
                           height: "40px",
-                          color: "#002338",
-                          '& .MuiSelect-select': { color: '#002338' },
+                          color: "#12304D",
+                          '& .MuiSelect-select': { color: '#12304D' },
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -611,13 +613,13 @@ export default function EditProject({
                             }))
                           }
                           MenuProps={{
-                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                             MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                           }}
                         >
-                          <MenuItem value="Gobierno" sx={{ color: '#002338' }}>Gobierno</MenuItem>
-                          <MenuItem value="Privado" sx={{ color: '#002338' }}>Privado</MenuItem>
-                          <MenuItem value="Inversion" sx={{ color: '#002338' }}>Inversion</MenuItem>
+                          <MenuItem value="Gobierno" sx={{ color: '#12304D' }}>Gobierno</MenuItem>
+                          <MenuItem value="Privado" sx={{ color: '#12304D' }}>Privado</MenuItem>
+                          <MenuItem value="Inversion" sx={{ color: '#12304D' }}>Inversion</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -640,12 +642,12 @@ export default function EditProject({
                         InputLabelProps={{ shrink: true }}
                         sx={{
                           height: "40px",
-                          color: "#002338",
+                          color: "#12304D",
 
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -658,7 +660,7 @@ export default function EditProject({
                             display: "flex",
                             alignItems: "center",
                             pl: "18px",
-                            color: "#002338",
+                            color: "#12304D",
 
                           },
                         }}
@@ -688,21 +690,21 @@ export default function EditProject({
                     display: "flex",
                     alignItems: "center",
                     pl: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   },
                 }}
                 sx={{
                   mb: 3,
                   "& .MuiOutlinedInput-root": {
-                    fontFamily: "Poppins, sans-serif",
+                    fontFamily: "inherit",
                     fontSize: "14px",
                     height: "auto",
                     minHeight: "80px",
-                    borderRadius: "20px",
+                    borderRadius: "10px",
                     padding: "12px 30px",
                     alignItems: "center",
                     "& fieldset": {
-                      borderColor: "#002338",
+                      borderColor: "#C9D3DE",
                     },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -715,9 +717,9 @@ export default function EditProject({
                 <Typography
                   sx={{
                     fontSize: { xs: 20, md: "24px" },
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
-                    color: "#002338",
+                    color: "#12304D",
                     mb: 2,
                   }}
                 >
@@ -766,19 +768,19 @@ export default function EditProject({
                 >
                   <Typography
                     sx={{
-                      fontFamily: "Poppins, sans-serif",
+                      fontFamily: "inherit",
                       fontWeight: 600,
                       fontSize: { xs: 18, md: "20px" },
-                      color: "#002338",
+                      color: "#12304D",
                     }}
                   >
                     Agregar colaborador
                   </Typography>
                   <IconButton size="small">
                     {isCollaboratorSectionOpen ? (
-                      <ExpandLessIcon sx={{ color: "#002338" }} />
+                      <ExpandLessIcon sx={{ color: "#12304D" }} />
                     ) : (
-                      <ExpandMoreIcon sx={{ color: "#002338" }} />
+                      <ExpandMoreIcon sx={{ color: "#12304D" }} />
                     )}
                   </IconButton>
                 </Box>

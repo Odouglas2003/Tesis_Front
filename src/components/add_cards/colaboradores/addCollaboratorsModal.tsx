@@ -49,7 +49,7 @@ import {
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: { sx: { maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP, bgcolor: '#FFFFFF', color: '#002338' } },
+  PaperProps: { sx: { maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP, bgcolor: '#FFFFFF', color: '#12304D' } },
   MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
 
 };
@@ -364,10 +364,10 @@ export default function Colaboradores({
             gutterBottom
             textAlign="left"
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 500,
               fontSize: "20px",
-              color: "#002338",
+              color: "#12304D",
             }}
           >
             Nuevo Colaborador
@@ -378,9 +378,9 @@ export default function Colaboradores({
                 sx={{
                   height: "40px",
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#002338",
+                      borderColor: "#C9D3DE",
                     },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -391,7 +391,7 @@ export default function Colaboradores({
                     display: "flex",
                     alignItems: "center",
                     pl: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   },
                 }}
                 label="DNI*"
@@ -415,9 +415,9 @@ export default function Colaboradores({
                 sx={{
                   height: "40px",
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#002338",
+                      borderColor: "#C9D3DE",
                     },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -428,7 +428,7 @@ export default function Colaboradores({
                     display: "flex",
                     alignItems: "center",
                     pl: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   },
                 }}
                 label="Nombre"
@@ -451,9 +451,9 @@ export default function Colaboradores({
                 sx={{
                   height: "40px",
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#002338",
+                      borderColor: "#C9D3DE",
                     },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -464,7 +464,7 @@ export default function Colaboradores({
                     display: "flex",
                     alignItems: "center",
                     pl: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   },
                 }}
                 label="Apellido"
@@ -487,9 +487,9 @@ export default function Colaboradores({
                 sx={{
                   height: "40px",
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#002338",
+                      borderColor: "#C9D3DE",
                     },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -500,7 +500,7 @@ export default function Colaboradores({
                     display: "flex",
                     alignItems: "center",
                     pl: "18px",
-                    color: "#002338"
+                    color: "#12304D"
                   },
                 }}
                 label="Email"
@@ -523,10 +523,10 @@ export default function Colaboradores({
               <FormControl
                 sx={{
                   height: "40px",
-                  '& .MuiSelect-select': { color: '#002338' },
+                  '& .MuiSelect-select': { color: '#12304D' },
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
-                    "& fieldset": { borderColor: "#002338" },
+                    borderRadius: "8px",
+                    "& fieldset": { borderColor: "#C9D3DE" },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
                 }}
@@ -547,12 +547,12 @@ export default function Colaboradores({
                   }}
                   input={<OutlinedInput label="Modalidad*" />}
                   MenuProps={{
-                    PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                    PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                     MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                   }}
                 >
                   {journeyModes.map((jm) => (
-                    <MenuItem key={jm.id} value={jm.id} sx={{ color: "#002338" }}>
+                    <MenuItem key={jm.id} value={jm.id} sx={{ color: "#12304D" }}>
                       {jm.name}
                     </MenuItem>
                   ))}
@@ -567,9 +567,9 @@ export default function Colaboradores({
                 sx={{
                   height: "40px",
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
+                    borderRadius: "8px",
                     "& fieldset": {
-                      borderColor: "#002338",
+                      borderColor: "#C9D3DE",
                     },
                   },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -595,7 +595,7 @@ export default function Colaboradores({
                 <Button
                   component="label"
                   sx={{
-                    color: "#0087FF",
+                    color: "#1D5FA0",
                     textTransform: "none",
                     bgcolor: "transparent",
                     cursor: "pointer",
@@ -607,7 +607,7 @@ export default function Colaboradores({
                   />
                   <Typography
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                       fontWeight: 500,
                     }}
@@ -626,7 +626,7 @@ export default function Colaboradores({
                 variant="caption"
                 color="text.secondary"
                 sx={{
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontSize: "16px",
                   fontWeight: 500,
                 }}
@@ -659,11 +659,11 @@ export default function Colaboradores({
               variant="h6"
               textAlign="left"
               sx={{
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 500,
                 fontSize: "20px",
                 mb: 2,
-                color: "#002338",
+                color: "#12304D",
               }}
             >
               Fechas:
@@ -674,9 +674,9 @@ export default function Colaboradores({
                   sx={{
                     height: "40px",
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -688,7 +688,7 @@ export default function Colaboradores({
                       display: "flex",
                       alignItems: "center",
                       pl: "18px",
-                      color: "#002338"
+                      color: "#12304D"
                     },
                   }}
                   label="Fecha de ingreso"
@@ -704,9 +704,9 @@ export default function Colaboradores({
                   sx={{
                     height: "40px",
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -718,7 +718,7 @@ export default function Colaboradores({
                       display: "flex",
                       alignItems: "center",
                       pl: "18px",
-                      color: "#002338"
+                      color: "#12304D"
                     },
                   }}
                   label="Fecha de Egreso"
@@ -743,10 +743,10 @@ export default function Colaboradores({
               <Typography
                 variant="h6"
                 sx={{
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 500,
                   fontSize: "20px",
-                  color: "#002338",
+                  color: "#12304D",
                 }}
               >
                 Roles:
@@ -764,11 +764,11 @@ export default function Colaboradores({
                   <FormControl
                     sx={{
                       height: "40px",
-                      '& .MuiSelect-select': { color: '#002338' },
+                      '& .MuiSelect-select': { color: '#12304D' },
                       "& .MuiOutlinedInput-root": {
-                        borderRadius: "20px",
+                        borderRadius: "8px",
                         "& fieldset": {
-                          borderColor: "#002338",
+                          borderColor: "#C9D3DE",
                         },
                       },
                       "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -784,7 +784,7 @@ export default function Colaboradores({
                       MenuProps={MenuProps}
                     >
                       {jobs.map((job) => (
-                        <MenuItem key={job.id} value={job.name} sx={{ color: "#002338" }}>
+                        <MenuItem key={job.id} value={job.name} sx={{ color: "#12304D" }}>
                           {job.name}
                         </MenuItem>
                       ))}
@@ -795,12 +795,12 @@ export default function Colaboradores({
                   <FormControl
                     sx={{
                       height: "40px",
-                      '& .MuiSelect-select': { color: '#002338' },
+                      '& .MuiSelect-select': { color: '#12304D' },
 
                       "& .MuiOutlinedInput-root": {
-                        borderRadius: "20px",
+                        borderRadius: "8px",
                         "& fieldset": {
-                          borderColor: "#002338",
+                          borderColor: "#C9D3DE",
                         },
                       },
                       "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -818,7 +818,7 @@ export default function Colaboradores({
                       MenuProps={MenuProps}
                     >
                       {seniorityOptions.map((s) => (
-                        <MenuItem key={s} value={s} sx={{ color: "#002338" }}>
+                        <MenuItem key={s} value={s} sx={{ color: "#12304D" }}>
                           {s}
                         </MenuItem>
                       ))}
@@ -829,7 +829,7 @@ export default function Colaboradores({
                   <IconButton
                     onClick={addRole}
                     size="small"
-                    sx={{ mr: 2, color: "#0087FF" }}
+                    sx={{ mr: 2, color: "#1D5FA0" }}
                     title="Agregar rol"
                   >
                     <AddCircleOutlineIcon />
@@ -853,11 +853,11 @@ export default function Colaboradores({
               variant="h6"
               textAlign="left"
               sx={{
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 500,
                 fontSize: "20px",
                 mb: 2,
-                color: "#002338",
+                color: "#12304D",
               }}
             >
               Tecnología:
@@ -867,11 +867,11 @@ export default function Colaboradores({
                 <FormControl
                   sx={{
                     height: "40px",
-                    '& .MuiSelect-select': { color: '#002338' },
+                    '& .MuiSelect-select': { color: '#12304D' },
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -895,7 +895,7 @@ export default function Colaboradores({
                     MenuProps={MenuProps}
                   >
                     {tecnologiasDisponibles.map((tech) => (
-                      <MenuItem key={tech.id} value={tech.name} sx={{ color: "#002338" }}>
+                      <MenuItem key={tech.id} value={tech.name} sx={{ color: "#12304D" }}>
                         <Checkbox
                           checked={data.tecnologias.includes(tech.name)}
                         />
@@ -912,11 +912,11 @@ export default function Colaboradores({
               variant="h6"
               textAlign="left"
               sx={{
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 500,
                 fontSize: "20px",
                 mb: 2,
-                color: "#002338",
+                color: "#12304D",
               }}
             >
               Asignaciones:
@@ -926,11 +926,11 @@ export default function Colaboradores({
                 <FormControl
                   sx={{
                     height: "40px",
-                    '& .MuiSelect-select': { color: '#002338' },
+                    '& .MuiSelect-select': { color: '#12304D' },
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -956,7 +956,7 @@ export default function Colaboradores({
                     {projects
                       .sort((a, b) => a.name.localeCompare(b.name))
                       .map((p) => (
-                        <MenuItem key={p.id} value={p.name} sx={{ color: '#002338' }}>
+                        <MenuItem key={p.id} value={p.name} sx={{ color: '#12304D' }}>
                           <Checkbox
                             checked={data.proyectos.includes(p.name)}
                             sx={{ mr: 1 }}
@@ -980,9 +980,9 @@ export default function Colaboradores({
                         mt: 2,
                         mb: 0.5,
                         fontWeight: 600,
-                        fontFamily: "Poppins",
+                        fontFamily: "inherit",
                         fontSize: "14px",
-                        color: "#002338",
+                        color: "#12304D",
                       }}
                     >
                       Tecnologías
@@ -1021,12 +1021,12 @@ export default function Colaboradores({
                           bgcolor: "#E8ECEF",
                           borderRadius: "9999px",
                           height: 30,
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontSize: 12,
                           fontWeight: 300,
                           marginRight: "4px",
                           marginBottom: "4px",
-                          color: "#002338",
+                          color: "#12304D",
                           textTransform: "none",
                           letterSpacing: 0.5,
                         }}
@@ -1075,12 +1075,12 @@ export default function Colaboradores({
                           borderRadius: "9999px",
                           height: 30,
                           px: 1,
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontSize: 12,
                           marginRight: "4px",
                           marginBottom: "4px",
                           fontWeight: 300,
-                          color: "#002338",
+                          color: "#12304D",
                           textTransform: "none",
                           letterSpacing: 0.5,
                         }}
@@ -1112,9 +1112,9 @@ export default function Colaboradores({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -1146,9 +1146,9 @@ export default function Colaboradores({
                         sx={{
                           height: "40px",
                           "& .MuiOutlinedInput-root": {
-                            borderRadius: "20px",
+                            borderRadius: "8px",
                             "& fieldset": {
-                              borderColor: "#002338",
+                              borderColor: "#C9D3DE",
                             },
                           },
                           "& .MuiInputLabel-root.Mui-focused": {
@@ -1252,23 +1252,23 @@ export default function Colaboradores({
               sx={{
                 textTransform: "none",
                 width: "200px",
-                height: "50px",
-                fontFamily: "Poppins",
-                fontSize: "20px",
-                color: "#0087FF",
-                fontWeight: 500,
+                height: "44px",
+                fontFamily: "inherit",
+                fontSize: "14px",
+                color: "#1D5FA0",
+                fontWeight: 600,
                 lineHeight: "30px",
                 letterSpacing: "0%",
                 boxShadow: "none",
                 backgroundColor: "rgb(255, 255, 255)",
-                borderRadius: "20px",
+                borderRadius: "8px",
                 borderWidth: "1px",
                 gap: "10px",
                 paddingTop: "13px",
                 paddingRight: "41px",
                 paddingBottom: "13px !important",
                 paddingLeft: "41px !important",
-                border: "2px solid #0087ff",
+                border: "2px solid #1D5FA0",
               }}
             >
               Cerrar
@@ -1280,18 +1280,18 @@ export default function Colaboradores({
               fullWidth
               sx={{
                 width: "200px",
-                height: "50px",
+                height: "44px",
                 marginLeft: "4px",
-                borderRadius: "20px",
-                color: "#23FFDC",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-                fontSize: "20px",
+                borderRadius: "8px",
+                color: "#FFFFFF",
+                fontWeight: 600,
+                fontFamily: "inherit",
+                fontSize: "14px",
                 padding: "10px",
                 maxWidth: "30%",
                 textTransform: "none",
-                backgroundColor: "#002338",
-                "&:hover": { backgroundColor: "##002338" },
+                backgroundColor: "#1D5FA0",
+                "&:hover": { backgroundColor: "##12304D" },
               }}
             >
               Guardar

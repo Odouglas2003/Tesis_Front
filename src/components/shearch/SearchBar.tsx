@@ -20,38 +20,38 @@ export default function Search({ onSearch }: SearchProps) {
   return (
     <TextField
       placeholder="Buscar por nombre, estado o referencia"
+      inputProps={{ "aria-label": "Buscar" }}
       variant="outlined"
       onChange={handleSearchChange}
       fullWidth
       InputProps={{
         sx: {
-          minHeight: "50px",
-          pl: 1,
+          minHeight: "44px",
+          pl: 0.5,
           color: colors.primary,
-          backgroundColor: "rgba(244,248,251,0.92)",
-          borderRadius: "18px",
+          backgroundColor: "#FFFFFF",
+          borderRadius: "8px",
         },
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: "rgba(18,48,77,0.58)", fontSize: "1.25rem" }} />
+            <SearchIcon sx={{ color: "#566779", fontSize: "1.25rem" }} />
           </InputAdornment>
         ),
       }}
       sx={{
-        maxWidth: "820px",
         "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: "rgba(18,48,77,0.12)",
+          borderColor: "#C9D3DE",
         },
         "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-          borderColor: "rgba(42,108,168,0.22)",
+          borderColor: "#8FA3B6",
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
           borderColor: colors.secondary,
         },
         "& input::placeholder": {
-          color: "rgba(18,48,77,0.52)",
+          color: "#566779",
           opacity: 1,
-          fontSize: "0.96rem",
+          fontSize: "0.875rem",
         },
       }}
     />

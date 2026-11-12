@@ -411,29 +411,30 @@ export default function SmartSearchFilter({
           variant="outlined"
           disabled={isSearching}
           sx={{
-            bgcolor: aiFilteredItems !== null ? colors.button : colors.navbar,
-            borderRadius: "18px",
+            bgcolor: aiFilteredItems !== null ? "#E3F1FB" : "#FFFFFF",
+            borderRadius: "8px",
             textTransform: "none",
-            fontSize: "15px",
+            fontSize: "0.875rem",
             fontWeight: 600,
-            height: "50px",
+            height: "44px",
             width: "fit-content",
             minWidth: "unset",
+            whiteSpace: "nowrap",
             px: 2,
-            fontFamily: "Poppins, sans-serif",
-            color: aiFilteredItems !== null ? colors.text : "#F7FBFF",
-            border: "1px solid transparent",
-            transition: "all 0.3s ease",
+            fontFamily: "inherit",
+            color: aiFilteredItems !== null ? "#154A7D" : "#12304D",
+            border: aiFilteredItems !== null ? "1px solid #1D5FA0" : "1px solid #C9D3DE",
+            transition: "background-color 0.2s ease, border-color 0.2s ease",
             "&:hover": {
-              bgcolor: colors.primary,
-              border: "1px solid transparent",
+              bgcolor: "#F5F7FA",
+              border: "1px solid #8FA3B6",
             },
             "&:disabled": { bgcolor: "#cccccc", color: "#666" }
           }}
           startIcon={isSearching ? <CircularProgress size={20} sx={{ color: "#666" }} /> : aiFilteredItems !== null ? <FilterListOffIcon fontSize="medium" /> : <AutoAwesomeIcon fontSize="medium" />}
           onClick={() => { if (aiFilteredItems !== null) { handleClearAIFilter(); } else { setOpenSearch(true); } }}
         >
-          {isSearching ? "Buscando..." : aiFilteredItems !== null ? "Limpiar filtro IA" : "Filtrar por IA"}
+          {isSearching ? "Buscando..." : aiFilteredItems !== null ? "Limpiar filtro IA" : "Filtrar con IA"}
         </Button>
 
         {aiFilteredItems !== null && (
@@ -442,12 +443,12 @@ export default function SmartSearchFilter({
             disabled={isExporting}
             startIcon={isExporting ? <CircularProgress size={16} sx={{ color: "#666" }} /> : <GetAppIcon />}
             sx={{
-              borderRadius: "18px",
+              borderRadius: "8px",
               textTransform: "none",
               fontSize: "14px",
-              height: "50px",
+              height: "44px",
               px: 2,
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               color: colors.primary,
               borderColor: "rgba(18,48,77,0.14)",
               backgroundColor: "rgba(252,254,255,0.84)",
@@ -485,7 +486,7 @@ export default function SmartSearchFilter({
             label={`Mostrando ${aiFilteredItems.length} de ${items.length} ${pluralLabel}`}
             aria-label="mostrando-resultados"
             sx={{
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "inherit",
               fontWeight: 600,
               bgcolor: colors.button,
               color: colors.text,
@@ -503,7 +504,7 @@ export default function SmartSearchFilter({
         maxWidth="sm"
         PaperProps={{
           sx: {
-            borderRadius: "24px",
+            borderRadius: "10px",
             boxShadow: "0 24px 70px rgba(18,48,77,0.16)",
             maxHeight: "80vh",
             border: "1px solid rgba(18,48,77,0.08)",
@@ -512,7 +513,7 @@ export default function SmartSearchFilter({
       >
         <DialogTitle
           sx={{
-            fontFamily: "Poppins, sans-serif",
+            fontFamily: "inherit",
             color: colors.primary,
             bgcolor: "#ffffff",
             fontSize: "1.4rem",
@@ -560,7 +561,7 @@ export default function SmartSearchFilter({
               gap: 1,
               alignItems: "center",
               minWidth: 280,
-              borderRadius: "18px",
+              borderRadius: "10px",
             }}
           >
             <Chip

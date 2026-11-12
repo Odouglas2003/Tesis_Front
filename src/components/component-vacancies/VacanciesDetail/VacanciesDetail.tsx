@@ -32,8 +32,10 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
     <Grid2
       container
       sx={{
-        marginLeft: "55px",
-        marginRight: "55px",
+        maxWidth: 1320,
+        mx: "auto",
+        px: { xs: 2, md: 3 },
+        width: "100%",
       }}
     >
       <Grid2 size={12}>
@@ -49,15 +51,15 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
           }}
         >
           <KeyboardArrowLeftIcon
-            sx={{ width: "24px", height: "24px", color: "#002338" }}
+            sx={{ width: "24px", height: "24px", color: "#12304D" }}
           />
 
           <Typography
             sx={{
               textAlign: "center",
-              color: "#002338",
+              color: "#12304D",
               fontSize: "24px",
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 400,
             }}
           >
@@ -70,7 +72,7 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
           elevation={6}
           sx={{
             width: { xs: "90%", md: "100%" },
-            borderRadius: "20px",
+            borderRadius: "10px",
             backgroundColor: "#FFFFFF",
           }}
         >
@@ -86,32 +88,32 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
                 <Typography
                   sx={{
                     fontSize: { xs: 24, md: "40px" },
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   {vacancie.vacancieName}
                 </Typography>
                 <Button
                   variant="contained"
-                  startIcon={<EditIcon sx={{ color: "#002338" }} />}
+                  startIcon={<EditIcon />}
                   onClick={() =>
                     router.push(`/pages/edit/vacancie/${vacancie.id}`)
                   }
                   sx={{
-                    background: colors?.button || "#1CFFF9",
-                    borderRadius: "20px",
-                    padding: "12px 41px",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
-                    fontSize: "20px",
-                    height: "50px",
-                    color: "#002338",
+                    background: colors?.button || "#72E6D9",
+                    borderRadius: "8px",
+                    padding: "0 16px",
+                    fontFamily: "inherit",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    height: "44px",
+                    color: "#FFFFFF",
                     boxShadow: "none",
                     textTransform: "none",
                     "&:hover": {
-                      background: "#1CFFF9",
+                      background: "#174E85",
                       boxShadow: "none",
                     },
                   }}
@@ -122,9 +124,9 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
               <Typography
                 sx={{
                   fontSize: { xs: 24, md: "24px" },
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 500,
-                  color: "#0087FF",
+                  color: "#1D5FA0",
                 }}
               >
                 {getProject()}
@@ -132,7 +134,7 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
               <Typography
                 sx={{
                   fontSize: { xs: 18, md: "18px" },
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 400,
                   color: "#666",
                 }}
@@ -141,7 +143,7 @@ export default function VacanciesDetail({ vacancie }: VacanciesDetailProps) {
                 {formatDate(vacancie.last_edited_on)}
               </Typography>
             </Box>
-            <Divider sx={{ bgcolor: "#002338" }} />
+            <Divider sx={{ bgcolor: "#E2E8EF" }} />
             {vacancie ? (
               <Grid2
                 sx={{ display: "flex", flexDirection: "column" }}
@@ -183,8 +185,8 @@ function InfoRow({ label, value }: InfoRowProps) {
       sx={{
         fontSize: { xs: 18, md: "20px" },
         fontWeight: 400,
-        fontFamily: "Poppins",
-        color: "#002338",
+        fontFamily: "inherit",
+        color: "#12304D",
         letterSpacing: "0px",
         marginBottom: "20px",
       }}

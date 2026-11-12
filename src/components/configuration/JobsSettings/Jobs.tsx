@@ -105,8 +105,8 @@ export default function Jobs() {
 
       <Card
         sx={{
-          borderRadius: "20px",
-          boxShadow: 3,
+          borderRadius: "10px",
+          boxShadow: "none",
           width: "100%",
           maxWidth: "100%",
           p: "4px",
@@ -127,10 +127,10 @@ export default function Jobs() {
               >
                 <Typography
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
                     fontSize: "18px",
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Puestos de trabajo
@@ -142,19 +142,19 @@ export default function Jobs() {
             {loadingJobs ? (
               <CircularProgress size={24} />
             ) : (
-              <TableContainer sx={{ maxHeight: 700, borderRadius: "20px" }}>
+              <TableContainer sx={{ maxHeight: 700, borderRadius: "10px" }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Nombre"}
@@ -162,12 +162,12 @@ export default function Jobs() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Descripción"}
@@ -175,12 +175,12 @@ export default function Jobs() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Activo"}
@@ -189,12 +189,12 @@ export default function Jobs() {
                       <TableCell
                         align="center"
                         style={{
-                          backgroundColor: "#BDE0FF",
+                          backgroundColor: "#F5F7FA",
                           textAlign: "center",
-                          fontWeight: "500",
-                          fontFamily: "Poppins",
-                          fontSize: "16.16px",
-                          color: "#000000",
+                          fontWeight: 700,
+                          fontFamily: "inherit",
+                          fontSize: "12px",
+                          color: "#566779",
                         }}
                       >
                         {"Acciones"}
@@ -205,9 +205,9 @@ export default function Jobs() {
                   <TableBody>
                     {jobs.map((j) => (
                       <TableRow hover key={j.id}>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.name}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>{j.description}</TableCell>
-                        <TableCell align="center" sx={{ color: "#002338" }}>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.name}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>{j.description}</TableCell>
+                        <TableCell align="center" sx={{ color: "#12304D" }}>
                           {j.status == true ? "Si" : "No"}
                         </TableCell>
                         <TableCell align="center">
@@ -220,7 +220,7 @@ export default function Jobs() {
                           >
                             <EditIcon
                               fontSize="inherit"
-                              sx={{ color: "#002338" }}
+                              sx={{ color: "#12304D" }}
                             />
                           </IconButton>
                           <IconButton
@@ -231,7 +231,7 @@ export default function Jobs() {
                           >
                             <TrashIcon
                               fontSize="inherit"
-                              sx={{ color: "#ff0000ff" }}
+                              sx={{ color: "#9F2D12" }}
                             />
                           </IconButton>
                         </TableCell>

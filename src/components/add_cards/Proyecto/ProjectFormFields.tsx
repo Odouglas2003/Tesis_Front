@@ -55,9 +55,9 @@ export default function ProjectFormFields({
             sx={{
               height: "40px",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -68,7 +68,7 @@ export default function ProjectFormFields({
                 display: "flex",
                 alignItems: "center",
                 pl: "18px",
-                color: "#002338",
+                color: "#12304D",
 
               },
             }}
@@ -87,11 +87,11 @@ export default function ProjectFormFields({
           <FormControl
             sx={{
               height: "40px",
-              '& .MuiSelect-select': { color: '#002338' },
+              '& .MuiSelect-select': { color: '#12304D' },
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -109,13 +109,13 @@ export default function ProjectFormFields({
               onChange={handleSelectChange}
               input={<OutlinedInput label="Cliente" />}
               MenuProps={{
-                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                 MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
               }}
             >
               {clients.length > 0 ? (
                 clients.map((client) => (
-                  <MenuItem key={client.id} value={client.name} sx={{ color: '#002338' }}>
+                  <MenuItem key={client.id} value={client.name} sx={{ color: '#12304D' }}>
                     {client.name}
                   </MenuItem>
                 ))
@@ -131,11 +131,11 @@ export default function ProjectFormFields({
           <FormControl
             sx={{
               height: "40px",
-              '& .MuiSelect-select': { color: '#002338' },
+              '& .MuiSelect-select': { color: '#12304D' },
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -153,13 +153,13 @@ export default function ProjectFormFields({
               onChange={handleSelectChange}
               input={<OutlinedInput label="Estado" />}
               MenuProps={{
-                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                 MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
               }}
             >
               {estadosProyecto.length > 0 ? (
                 estadosProyecto.map((estado) => (
-                  <MenuItem key={estado.id} value={estado.status || estado.id} sx={{ color: '#002338' }}>
+                  <MenuItem key={estado.id} value={estado.status || estado.id} sx={{ color: '#12304D' }}>
                     {estado.status || estado.id}
 
                   </MenuItem>
@@ -176,11 +176,11 @@ export default function ProjectFormFields({
           <FormControl
             sx={{
               height: "40px",
-              '& .MuiSelect-select': { color: '#002338' },
+              '& .MuiSelect-select': { color: '#12304D' },
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -198,7 +198,7 @@ export default function ProjectFormFields({
               onChange={handleSelectChange}
               input={<OutlinedInput label="Project Manager" />}
               MenuProps={{
-                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                 MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
               }}
             >
@@ -207,7 +207,7 @@ export default function ProjectFormFields({
                   <MenuItem
                     key={manager.manager_id || Math.random().toString()}
                     value={manager.manager_name}
-                    sx={{ color: "#002338" }}
+                    sx={{ color: "#12304D" }}
                   >
                     {manager.manager_name}
                   </MenuItem>
@@ -225,9 +225,9 @@ export default function ProjectFormFields({
             sx={{
               height: "40px",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -238,7 +238,7 @@ export default function ProjectFormFields({
                 display: "flex",
                 alignItems: "center",
                 pl: "18px",
-                color: "#002338",
+                color: "#12304D",
 
               },
             }}
@@ -262,9 +262,9 @@ export default function ProjectFormFields({
             sx={{
               height: "40px",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -275,7 +275,7 @@ export default function ProjectFormFields({
                 display: "flex",
                 alignItems: "center",
                 pl: "18px",
-                color: "#002338",
+                color: "#12304D",
               },
             }}
             size="small"
@@ -299,11 +299,11 @@ export default function ProjectFormFields({
           <FormControl
             sx={{
               height: "40px",
-              '& .MuiSelect-select': { color: '#002338' },
+              '& .MuiSelect-select': { color: '#12304D' },
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -321,13 +321,13 @@ export default function ProjectFormFields({
               onChange={handleSelectChange}
               input={<OutlinedInput label="Categoría" />}
               MenuProps={{
-                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                 MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
               }}
             >
-              <MenuItem value="Gobierno" sx={{ color: '#002338' }}>Gobierno</MenuItem>
-              <MenuItem value="Privado" sx={{ color: '#002338' }}>Privado</MenuItem>
-              <MenuItem value="Inversion" sx={{ color: '#002338' }}>Inversión</MenuItem>
+              <MenuItem value="Gobierno" sx={{ color: '#12304D' }}>Gobierno</MenuItem>
+              <MenuItem value="Privado" sx={{ color: '#12304D' }}>Privado</MenuItem>
+              <MenuItem value="Inversion" sx={{ color: '#12304D' }}>Inversión</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -337,9 +337,9 @@ export default function ProjectFormFields({
             sx={{
               height: "40px",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -350,7 +350,7 @@ export default function ProjectFormFields({
                 display: "flex",
                 alignItems: "center",
                 pl: "18px",
-                color: "#002338",
+                color: "#12304D",
 
               },
             }}
@@ -370,7 +370,7 @@ export default function ProjectFormFields({
             <Button
               component="label"
               sx={{
-                color: "#0087FF",
+                color: "#1D5FA0",
                 textTransform: "none",
                 cursor: "pointer",
                 bgcolor: "transparent",
@@ -380,7 +380,7 @@ export default function ProjectFormFields({
               <CloudUploadIcon sx={{ mr: 1, width: "24px", height: "24px" }} />
               <Typography
                 sx={{
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontSize: "16px",
                   fontWeight: 500,
                 }}
@@ -399,7 +399,7 @@ export default function ProjectFormFields({
             variant="caption"
             color="text.secondary"
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontSize: "16px",
               fontWeight: 500,
             }}
@@ -431,9 +431,9 @@ export default function ProjectFormFields({
             sx={{
               height: "40px",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "8px",
                 "& fieldset": {
-                  borderColor: "#002338",
+                  borderColor: "#C9D3DE",
                 },
               },
               "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -444,7 +444,7 @@ export default function ProjectFormFields({
                 display: "flex",
                 alignItems: "center",
                 pl: "18px",
-                color: "#002338",
+                color: "#12304D",
               },
             }}
             size="small"

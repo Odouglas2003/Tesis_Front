@@ -1,13 +1,51 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Project } from "@/types/interface";
-import { Box, Grid2, Typography, Button, Tooltip } from "@mui/material";
-import { getContrastRatio } from "@mui/material/styles";
+import { Box, Typography, Tooltip } from "@mui/material";
 import { useAppTheme } from "@/app/ThemeProviderClient";
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { UI, cardSx } from "@/theme/appPalette";
+import { formatDate as formatDateUtil } from "@/utils/utils";
+
+const STATUS_STYLES: Record<string, { bg: string; color: string }> = {
+  activo: { bg: "#DDF5F1", color: "#0B5F58" },
+  "en curso": { bg: "#DDF5F1", color: "#0B5F58" },
+  planificacion: { bg: "#E9EEF3", color: "#32475B" },
+  "a iniciar": { bg: "#E3F1FB", color: "#154A7D" },
+  "en pausa": { bg: "#FEF3C7", color: "#7C4A03" },
+  finalizado: { bg: "#E9EEF3", color: "#32475B" },
+};
+
+const normalize = (value?: string | null) =>
+  (value ?? "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .trim()
+    .toLowerCase();
+
+const formatDate = (value: Date | string | null | undefined) => (value ? formatDateUtil(value) || "Sin definir" : "Sin definir");
+
+const initialsOf = (name?: string) =>
+  (name ?? "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <Box sx={{ minWidth: 0 }}>
+      <Typography component="dt" sx={{ fontSize: "0.75rem", fontWeight: 600, color: UI.muted }}>
+        {label}
+      </Typography>
+      <Typography component="dd" sx={{ m: 0, fontSize: "0.875rem", fontWeight: 600, color: UI.ink }} noWrap title={value}>
+        {value}
+      </Typography>
+    </Box>
+  );
+}
 
 export default function CardsProjects({
   searchTerm,
@@ -16,20 +54,8 @@ export default function CardsProjects({
   searchTerm: string;
   projectsProp: Project[];
 }) {
-  const [filteredProjects, setFilteredProjects] =
-    useState<Project[]>(projectsProp);
-
-  const [hoveredButton, setHoveredButton] = useState<number | null>(null);
-  const router = useRouter();
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsProp);
   const { colors } = useAppTheme();
-  const cardBackground = colors?.card || "#002338";
-  const lightCard = getContrastRatio(cardBackground, "#12304D") >= getContrastRatio(cardBackground, "#FFFFFF");
-  const cardTextColor = lightCard ? "#12304D" : "#FFFFFF";
-  const clientTextColor = lightCard ? "#176B66" : "#72E6D9";
-  const buttonBackground = colors?.button || "#0087FF";
-  const buttonTextColor = getContrastRatio(buttonBackground, "#12304D") >= getContrastRatio(buttonBackground, "#FFFFFF")
-    ? "#12304D"
-    : "#FFFFFF";
 
   useEffect(() => {
     const term = (searchTerm ?? "").trim().toLowerCase();
@@ -47,254 +73,149 @@ export default function CardsProjects({
     setFilteredProjects(filter);
   }, [searchTerm, projectsProp]);
 
-  const handleMouseEnter = (index: number) => {
-    setHoveredButton(index);
-  };
-
-  const handleMouseLeave: () => void = () => {
-    setHoveredButton(null);
-  };
-
   if ((searchTerm ?? "").trim() && filteredProjects.length === 0) {
     return (
       <Box display="flex" justifyContent="center" mt={4}>
-        <Typography sx={{ fontFamily: "Poppins", color: "#5b6b7a" }}>
+        <Typography sx={{ color: UI.muted }}>
           No se encontraron resultados para &quot;{searchTerm.trim()}&quot;.
         </Typography>
       </Box>
     );
   }
+
   return (
-    <Box display="flex" justifyContent="center" mt={2}>
-      <Grid2 container spacing={3} justifyContent="space-between">
-        {filteredProjects.map((proyecto, index) => {
-          return (
-            <Grid2
-              key={index}
-              justifyContent="center"
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(auto-fill, minmax(340px, 1fr))" },
+        gap: 2,
+      }}
+    >
+      {filteredProjects.map((proyecto) => {
+        const statusStyle = STATUS_STYLES[normalize(proyecto.status)] ?? { bg: "#E9EEF3", color: "#32475B" };
+        const team = Array.isArray(proyecto.assignedPersons) ? proyecto.assignedPersons : [];
+        const hours = team.reduce((sum, person) => sum + (Number(person.horasAsignadas) || 0), 0);
+        const subtitle = [proyecto.client, proyecto.category].filter(Boolean).join(" · ");
+
+        return (
+          <Link
+            key={proyecto.id}
+            href={`/pages/detail/project_detail/${proyecto.id}`}
+            style={{ textDecoration: "none", color: "inherit", display: "block" }}
+          >
+            <Box
+              component="article"
               sx={{
-                width: "310px",
-                height: "417px",
-                // Usar el color card del theme para el fondo principal
-                bgcolor: cardBackground,
-                borderRadius: "29px",
-                position: "relative",
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "all 0.1s ease",
-                border: "1px solid #CDCDCD",
-                boxShadow:
-                  hoveredButton === index
-                    ? "0px 8px 16px rgba(0, 0, 0, 0.4)"
-                    : "none",
+                ...cardSx,
+                backgroundColor: colors?.card || "#FFFFFF",
+                height: "100%",
+                p: 2.5,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                transition: "border-color .2s ease, box-shadow .2s ease",
+                "&:hover": { borderColor: UI.borderStrong, boxShadow: "0 4px 14px rgba(15,34,51,0.08)" },
               }}
             >
-              {hoveredButton === index ? (
-                <Grid2
-                  sx={{
-                    marginTop: "40px",
-                  }}
-                >
-                  <Box sx={{ marginTop: "65px" }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, textAlign: 'center' }}>                        {(() => {
-                        const st = (proyecto.status || '')
-                        if (st.includes('En curso')) {
-                          return (
-                            <Tooltip title={`Estado: ${proyecto.status}`} arrow>
-                              <HourglassBottomIcon sx={{ color: '#FFD54F' }} />
-                            </Tooltip>
-                          );
-                        }
-                        if (st.includes('Finalizado')) {
-                          return (
-                            <Tooltip title={`Estado: ${proyecto.status}`} arrow>
-                              <DoneAllIcon sx={{ color: '#4CAF50' }} />
-                            </Tooltip>
-                          );
-                        }
-                        if (st.includes('A iniciar')) {
-                          return (
-                            <Tooltip title={`Estado: ${proyecto.status}`} arrow>
-                              <FiberManualRecordIcon sx={{ color: '#0087FF' }} />
-                            </Tooltip>
-                          );
-                        }
-                        return null;
-                      })()}
-                        <Typography
-                          sx={{
-                            fontSize: "24px",
-                            fontFamily: "Poppins",
-                            fontWeight: 500,
-                            color: cardTextColor,
-                          }}
-                        >
-                          {proyecto.name}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontSize: "20px",
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: clientTextColor,
-                        textAlign: "center",
-                        transition: 'color .25s ease'
-                      }}
-                    >
-                      {proyecto.client}
+              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}>
+                {proyecto.image && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={proyecto.image}
+                    alt=""
+                    width={40}
+                    height={40}
+                    style={{ width: 40, height: 40, borderRadius: 8, objectFit: "cover", flexShrink: 0, border: `1px solid ${UI.border}` }}
+                  />
+                )}
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography component="h2" sx={{ fontSize: "1.0625rem", fontWeight: 700, color: UI.ink, lineHeight: 1.3 }}>
+                    {proyecto.name}
+                  </Typography>
+                  {subtitle && (
+                    <Typography sx={{ fontSize: "0.8125rem", color: UI.muted }} noWrap>
+                      {subtitle}
                     </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "18px",
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: cardTextColor,
-                        textAlign: "center",
-                        marginTop: "20px",
-                      }}
-                    >
-                      Project Manager: {proyecto.managerName}
-                    </Typography>
-
-                    <Typography
-                      sx={{
-                        fontSize: "18px",
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: cardTextColor,
-                        textAlign: "center",
-                        marginTop: "20px",
-                      }}
-                    >
-                      Staff Asignado:{" "}
-                      {proyecto.assignedPersons
-                        ? proyecto.assignedPersons.length
-                        : 0}
-                    </Typography>
-                  </Box>
+                  )}
+                </Box>
+                {proyecto.status && (
                   <Box
+                    component="span"
                     sx={{
-                      position: "absolute",
-                      bottom: "20px",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: "80%",
+                      px: 1.25,
+                      py: 0.4,
+                      borderRadius: "999px",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      whiteSpace: "nowrap",
+                      backgroundColor: statusStyle.bg,
+                      color: statusStyle.color,
                     }}
                   >
-                    <Button
-                      variant="contained"
-                      sx={{
-                        bgcolor: buttonBackground,
-                        borderRadius: '20px',
-                        width: '100%',
-                        height: '50px',
-                        textTransform: 'none',
-                        transition: 'background-color .25s ease, opacity .25s ease',
-                        '&:hover': {
-                          bgcolor: buttonBackground,
-                          opacity: 0.85,
-                        },
-                        '&:active': {
-                          bgcolor: buttonBackground,
-                          opacity: 0.75,
-                        },
-                      }}
-                      onClick={() => {
-                        router.push(
-                          `/pages/detail/project_detail/${proyecto.id}`
-                        );
-                      }}
-                    >
-                      <Typography
+                    {proyecto.status}
+                  </Box>
+                )}
+              </Box>
+
+              <Box
+                component="dl"
+                sx={{ m: 0, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "12px 16px" }}
+              >
+                <Fact label="Fase" value={proyecto.phase || "Sin definir"} />
+                <Fact label="Project Manager" value={proyecto.managerName || "Sin asignar"} />
+                <Fact label="Inicio" value={formatDate(proyecto.startDate)} />
+                <Fact label="Fin" value={formatDate(proyecto.endDate)} />
+              </Box>
+
+              <Box
+                sx={{
+                  mt: "auto",
+                  pt: 1.75,
+                  borderTop: `1px solid ${UI.border}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 1.5,
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", pl: team.length ? 0.75 : 0 }}>
+                  {team.slice(0, 4).map((person) => (
+                    <Tooltip key={person.id} title={`${person.name} · ${person.rol}`} arrow>
+                      <Box
                         sx={{
-                          fontSize: "20px",
-                          fontFamily: "Poppins",
-                          fontWeight: 500,
-                          textAlign: "center",
-                          color: buttonTextColor,
-                          lineHeight: "100%",
+                          width: 28,
+                          height: 28,
+                          ml: "-6px",
+                          borderRadius: "50%",
+                          border: "2px solid #FFFFFF",
+                          backgroundColor: UI.avatarBg,
+                          color: "#12304D",
+                          fontSize: "0.6875rem",
+                          fontWeight: 700,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        Ver más
-                      </Typography>
-                    </Button>
-                  </Box>
-                </Grid2>
-              ) : (
-                <>
-                  <Box
-                    sx={{
-                      bgcolor: "#fff",
-                      position: "relative",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <img
-                      src={proyecto.image || "/image-login.png"}
-                      alt={proyecto.name || ""}
-                    // layout="fill"
-                    // objectFit="scale-down"
-                    />
-                  </Box>
-
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 0,
-                      width: "100%",
-                      height: "88.92px",
-                      bgcolor: "#fff",
-                      p: "14px 20px",
-                      color: "#002338",
-                      alignItems: "left",
-                      textAlign: "left",
-                      transition: "all 2s cubic-bezier(0.4, 0, 0.2, 1)",
-                      boxShadow: "0px -4px 4px rgba(0, 0, 0, 0.25)",
-                    }}
-                  >
-                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                      <Box sx={{ display: 'inline-flex', alignItems: 'flex-start', gap: 1, maxWidth: '85%', textAlign: 'left' }}>
-                        {(() => {
-                          const st = (proyecto.status || '')
-                          if (st.includes('En curso')) {
-                            return (
-                              <Tooltip title={`Estado: ${proyecto.status}`} arrow>
-                                <HourglassBottomIcon sx={{ color: '#FFD54F' }} />
-                              </Tooltip>
-                            );
-                          }
-                          if (st.includes('Finalizado')) {
-                            return (
-                              <Tooltip title={`Estado: ${proyecto.status}`} arrow>
-                                <DoneAllIcon sx={{ color: '#4CAF50' }} />
-                              </Tooltip>
-                            );
-                          }
-                          if (st.includes('A iniciar')) {
-                            return (
-                              <Tooltip title={`Estado: ${proyecto.status}`} arrow>
-                                <FiberManualRecordIcon sx={{ color: '#0087FF' }} />
-                              </Tooltip>
-                            );
-                          }
-                          return null;
-                        })()}
-                        <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>{proyecto.name}</Typography>
+                        {initialsOf(person.name)}
                       </Box>
-                    </Box>
-                  </Box>
-                </>
-              )}
-            </Grid2>
-          );
-        })}
-      </Grid2>
+                    </Tooltip>
+                  ))}
+                  <Typography component="span" sx={{ ml: team.length ? 1.25 : 0, fontSize: "0.8125rem", color: UI.muted }}>
+                    {team.length === 1 ? "1 persona" : `${team.length} personas`}
+                  </Typography>
+                </Box>
+                <Typography
+                  component="span"
+                  sx={{ fontSize: "0.8125rem", fontWeight: 700, color: UI.ink, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}
+                >
+                  {hours} h asignadas
+                </Typography>
+              </Box>
+            </Box>
+          </Link>
+        );
+      })}
     </Box>
   );
 }

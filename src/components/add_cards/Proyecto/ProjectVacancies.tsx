@@ -198,12 +198,12 @@ export default function ProjectVacancies({
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
 
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -219,12 +219,12 @@ export default function ProjectVacancies({
                 onChange={(e) => handleRoleChange(index, e)}
                 MenuProps={{
                   PaperProps: { sx: { bgcolor: '#FFFFFF' } },
-                  MenuListProps: { sx: { bgcolor: '#FFFFFF', '& .MuiMenuItem-root': { color: '#002338' } } }
+                  MenuListProps: { sx: { bgcolor: '#FFFFFF', '& .MuiMenuItem-root': { color: '#12304D' } } }
                 }}
               >
                 {getAvailableRoles(vacante, colaboradores).map(
                   (role, roleIndex) => (
-                    <MenuItem key={roleIndex} value={role.rol} sx={{ color: '#002338' }}>
+                    <MenuItem key={roleIndex} value={role.rol} sx={{ color: '#12304D' }}>
                       {role.rol}
                     </MenuItem>
                   )
@@ -237,11 +237,11 @@ export default function ProjectVacancies({
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -265,7 +265,7 @@ export default function ProjectVacancies({
                     },
                     sx: { bgcolor: '#FFFFFF' }
                   },
-                  MenuListProps: { sx: { bgcolor: '#FFFFFF', '& .MuiMenuItem-root': { color: '#002338' } } }
+                  MenuListProps: { sx: { bgcolor: '#FFFFFF', '& .MuiMenuItem-root': { color: '#12304D' } } }
                 }}
               >
                 {getAvailableTechnologies(
@@ -273,13 +273,13 @@ export default function ProjectVacancies({
                   colaboradores,
                   tecnologiasDisponibles
                 ).map((tech, techIndex) => (
-                  <MenuItem key={techIndex} value={tech.name} sx={{ color: '#002338' }}>
+                  <MenuItem key={techIndex} value={tech.name} sx={{ color: '#12304D' }}>
                     <Checkbox
                       checked={vacante.technology?.indexOf(tech.name) > -1}
                       sx={{
-                        color: "#002338",
+                        color: "#12304D",
                         "&.Mui-checked": {
-                          color: "#002338",
+                          color: "#12304D",
                         },
                       }}
                     />
@@ -294,11 +294,11 @@ export default function ProjectVacancies({
             <FormControl
               sx={{
                 height: "40px",
-                '& .MuiSelect-select': { color: '#002338' },
+                '& .MuiSelect-select': { color: '#12304D' },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -318,19 +318,19 @@ export default function ProjectVacancies({
                 }
                 MenuProps={{
                   PaperProps: { sx: { bgcolor: '#FFFFFF' } },
-                  MenuListProps: { sx: { bgcolor: '#FFFFFF', '& .MuiMenuItem-root': { color: '#002338' } } }
+                  MenuListProps: { sx: { bgcolor: '#FFFFFF', '& .MuiMenuItem-root': { color: '#12304D' } } }
                 }}
 
               >
-                <MenuItem value="Senior" sx={{ color: '#002338' }}>Senior</MenuItem>
-                <MenuItem value="Senior Advanced" sx={{ color: '#002338' }}>Senior Advanced</MenuItem>
-                <MenuItem value="Semi Senior Advanced" sx={{ color: '#002338' }}>
+                <MenuItem value="Senior" sx={{ color: '#12304D' }}>Senior</MenuItem>
+                <MenuItem value="Senior Advanced" sx={{ color: '#12304D' }}>Senior Advanced</MenuItem>
+                <MenuItem value="Semi Senior Advanced" sx={{ color: '#12304D' }}>
                   Semi Senior Advanced
                 </MenuItem>
-                <MenuItem value="Semi Senior" sx={{ color: '#002338' }}>Semi Senior</MenuItem>
-                <MenuItem value="Junior Advanced" sx={{ color: '#002338' }}>Junior Advanced</MenuItem>
-                <MenuItem value="Junior" sx={{ color: '#002338' }}>Junior</MenuItem>
-                <MenuItem value="Trainee" sx={{ color: '#002338' }}>Trainee</MenuItem>
+                <MenuItem value="Semi Senior" sx={{ color: '#12304D' }}>Semi Senior</MenuItem>
+                <MenuItem value="Junior Advanced" sx={{ color: '#12304D' }}>Junior Advanced</MenuItem>
+                <MenuItem value="Junior" sx={{ color: '#12304D' }}>Junior</MenuItem>
+                <MenuItem value="Trainee" sx={{ color: '#12304D' }}>Trainee</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -349,9 +349,9 @@ export default function ProjectVacancies({
               sx={{
                 height: "40px",
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
+                  borderRadius: "8px",
                   "& fieldset": {
-                    borderColor: "#002338",
+                    borderColor: "#C9D3DE",
                   },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -362,7 +362,7 @@ export default function ProjectVacancies({
                   display: "flex",
                   alignItems: "center",
                   pl: "18px",
-                  color: "#002338",
+                  color: "#12304D",
                 },
               }}
               size="small"
@@ -416,9 +416,9 @@ export default function ProjectVacancies({
                   size="small"
                   sx={{
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -429,7 +429,7 @@ export default function ProjectVacancies({
                       display: "flex",
                       alignItems: "center",
                       pl: "18px",
-                      color: "#002338",
+                      color: "#12304D",
                     },
                     ...params.InputProps,
                     startAdornment: (
@@ -441,9 +441,9 @@ export default function ProjectVacancies({
                   }}
                 />
               )}
-              // Ensure the popup Paper and list use white background and #002338 text
-              PaperComponent={(props) => <Paper {...props} sx={{ bgcolor: '#FFFFFF', color: '#002338' }} />}
-              ListboxProps={{ sx: { bgcolor: '#FFFFFF', color: '#002338', '& .MuiAutocomplete-option': { color: '#002338' }, '& li.MuiAutocomplete-option': { color: '#002338' } } }}
+              // Ensure the popup Paper and list use white background and #12304D text
+              PaperComponent={(props) => <Paper {...props} sx={{ bgcolor: '#FFFFFF', color: '#12304D' }} />}
+              ListboxProps={{ sx: { bgcolor: '#FFFFFF', color: '#12304D', '& .MuiAutocomplete-option': { color: '#12304D' }, '& li.MuiAutocomplete-option': { color: '#12304D' } } }}
               isOptionEqualToValue={(option, value) => option.id === value.id}
             />
           </Grid>
@@ -484,9 +484,9 @@ export default function ProjectVacancies({
                   sx={{
                     height: "40px",
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -497,7 +497,7 @@ export default function ProjectVacancies({
                       display: "flex",
                       alignItems: "center",
                       pl: "18px",
-                      color: "#002338",
+                      color: "#12304D",
                     },
                   }}
                   size="small"
@@ -515,9 +515,9 @@ export default function ProjectVacancies({
                   sx={{
                     height: "40px",
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
+                      borderRadius: "8px",
                       "& fieldset": {
-                        borderColor: "#002338",
+                        borderColor: "#C9D3DE",
                       },
                     },
                     "& .MuiInputLabel-root.Mui-focused": {
@@ -530,7 +530,7 @@ export default function ProjectVacancies({
                       display: "flex",
                       alignItems: "center",
                       pl: "18px",
-                      color: "#002338",
+                      color: "#12304D",
                     },
                   }}
                   size="small"

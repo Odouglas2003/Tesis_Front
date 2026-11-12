@@ -69,40 +69,40 @@ const UserMenu: React.FC = () => {
           display: "flex",
           alignItems: "center",
           gap: 1,
-          px: 1,
-          py: 0.75,
+          pl: 0.75,
+          pr: 1,
+          minHeight: 44,
           borderRadius: "999px",
-          backgroundColor: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          backgroundColor: "transparent",
+          border: "1px solid rgba(255,255,255,0.18)",
           cursor: "pointer",
-          transition: "background-color .2s ease, transform .2s ease",
+          transition: "background-color .2s ease",
           "&:hover": {
             backgroundColor: "rgba(255,255,255,0.08)",
-            transform: "translateY(-1px)",
           },
         }}
       >
         <Avatar
           src={avatarUrl || undefined}
           sx={{
-            width: 34,
-            height: 34,
-            bgcolor: "rgba(255,255,255,0.12)",
+            width: 30,
+            height: 30,
+            bgcolor: "#1D5FA0",
             color: "#F7FBFF",
             fontSize: "1rem",
             fontWeight: 700,
           }}
         >
-          {avatarUrl ? null : <AccountCircleIcon sx={{ width: 24, height: 24 }} />}
+          {avatarUrl ? null : <AccountCircleIcon sx={{ width: 20, height: 20 }} />}
         </Avatar>
 
-        <Box sx={{ display: { xs: "none", lg: "block" }, minWidth: 0 }}>
+        <Box sx={{ display: { xs: "none", md: "block" }, minWidth: 0 }}>
           <Typography
             sx={{
               color: "#F7FBFF",
-              fontSize: "0.93rem",
+              fontSize: "0.875rem",
               fontWeight: 600,
-              lineHeight: 1.1,
+              lineHeight: 1.2,
               maxWidth: 140,
               whiteSpace: "nowrap",
               overflow: "hidden",
@@ -111,20 +111,11 @@ const UserMenu: React.FC = () => {
           >
             {displayName}
           </Typography>
-          <Typography
-            sx={{
-              color: "rgba(247,251,255,0.68)",
-              fontSize: "0.76rem",
-              lineHeight: 1.1,
-            }}
-          >
-            Perfil
-          </Typography>
         </Box>
 
         <KeyboardArrowDownRoundedIcon
           sx={{
-            color: colors.text,
+            color: "#C9D8E6",
             fontSize: "1.1rem",
           }}
         />
@@ -142,10 +133,10 @@ const UserMenu: React.FC = () => {
             mt: 1,
             width: 260,
             p: 1,
-            borderRadius: "20px",
-            backgroundColor: "#FCFEFF",
-            border: "1px solid rgba(18,48,77,0.08)",
-            boxShadow: "0 18px 40px rgba(18,48,77,0.14)",
+            borderRadius: "10px",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E2E8EF",
+            boxShadow: "0 12px 32px rgba(15,34,51,0.14)",
           },
         }}
       >
@@ -153,8 +144,8 @@ const UserMenu: React.FC = () => {
           sx={{
             px: 1.25,
             py: 1.5,
-            borderRadius: "16px",
-            backgroundColor: "rgba(244,248,251,0.9)",
+            borderRadius: "8px",
+            backgroundColor: "#F5F7FA",
             mb: 1,
           }}
         >
@@ -201,7 +192,7 @@ const UserMenu: React.FC = () => {
         PaperProps={{
           sx: {
             width: "min(420px, calc(100vw - 32px))",
-            borderRadius: "24px",
+            borderRadius: "10px",
             p: 1,
           },
         }}
@@ -258,7 +249,7 @@ const UserMenu: React.FC = () => {
             onClick={() => setOpenLogoutPopup(false)}
             sx={{
               flex: 1,
-              borderRadius: "14px",
+              borderRadius: "8px",
               textTransform: "none",
               fontWeight: 600,
             }}
@@ -270,7 +261,7 @@ const UserMenu: React.FC = () => {
             onClick={handleLogout}
             sx={{
               flex: 1,
-              borderRadius: "14px",
+              borderRadius: "8px",
               textTransform: "none",
               fontWeight: 700,
               color: colors.text,
@@ -303,8 +294,8 @@ function MenuAction({ icon, label, onClick }: MenuActionProps) {
         alignItems: "center",
         gap: 1.5,
         px: 1.25,
-        py: 1.25,
-        borderRadius: "14px",
+        minHeight: 44,
+        borderRadius: "8px",
         cursor: "pointer",
         transition: "background-color .2s ease",
         "&:hover": {

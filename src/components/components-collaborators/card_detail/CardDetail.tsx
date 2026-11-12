@@ -1,10 +1,7 @@
 "use client";
 
 import {
-  Grid2,
   Box,
-  Card,
-  Divider,
   Typography,
   Avatar,
   Button,
@@ -20,21 +17,13 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import WorkIcon from "@mui/icons-material/Work";
 import SchoolIcon from "@mui/icons-material/School";
 import BadgeIcon from "@mui/icons-material/Badge";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-  Tooltip as RTooltip,
-  ResponsiveContainer,
-} from "recharts";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Employee, ProjectNew } from "@/types/interface";
 import { formatDate, formatId } from "@/utils/utils";
 
 import { useAuthRole, isEmployeeUnderManager } from "@/app/hooks/useAuthRole";
-import { useAppTheme } from "@/app/ThemeProviderClient";
+import { UI, cardSx } from "@/theme/appPalette";
 import CollaboratorHistory from "./CollaboratorHistory"
 import {
   fetchProjects,
@@ -46,7 +35,6 @@ export default function CollaboratorDetail({
   colabProp: Employee;
 }) {
   const router = useRouter();
-  const { colors } = useAppTheme();
 
   const { isAdmin, isManager, currentUserName } = useAuthRole();
 
@@ -96,470 +84,277 @@ export default function CollaboratorDetail({
       ? (colabProp.jornadaId).name
       : String(colabProp.jornadaId ?? "");
 
-  const COLORS = ["#7DB3FF", "#1CE6C1", "#0066FF", "#FFB347", "#FF6961"];
+  const COLORS = ["#1D5FA0", "#14B8A6", "#C2410C", "#9DB4CA", "#7C4A03"];
+  const totalHours = donutData.reduce((sum, item) => sum + (Number(item.value) || 0), 0);
+  const fullName = `${colabProp.first_name ?? ""} ${colabProp.last_name ?? ""}`.trim();
+  const initials = `${colabProp.first_name?.[0] ?? ""}${colabProp.last_name?.[0] ?? ""}`.toUpperCase();
+  const rolesText = Array.isArray(colabProp.roles)
+    ? colabProp.roles.map((role) => [role.rol, role.seniority].filter(Boolean).join(" · ")).join(" / ")
+    : String(colabProp.roles ?? "");
+  const techs = Array.isArray(colabProp.tecnologias)
+    ? colabProp.tecnologias.filter(Boolean)
+    : colabProp.tecnologias
+      ? [String(colabProp.tecnologias)]
+      : [];
+  const contractEnd = colabProp.fin_contrato ? new Date(colabProp.fin_contrato) : null;
+  const daysLeft =
+    contractEnd && !Number.isNaN(contractEnd.getTime())
+      ? Math.ceil((contractEnd.getTime() - Date.now()) / 86400000)
+      : null;
+  const contractAlert =
+    daysLeft === null
+      ? null
+      : daysLeft < 0
+        ? { label: "Contrato vencido", bg: "#FDE7DC", color: "#8A2F0A" }
+        : daysLeft <= 30
+          ? { label: "Contrato por vencer", bg: "#FEF3C7", color: "#7C4A03" }
+          : null;
+  const JornadaIcon =
+    jornadaName === "Part Time"
+      ? AccessTimeIcon
+      : jornadaName === "Pasante"
+        ? SchoolIcon
+        : jornadaName === "Especial 1: 120hr"
+          ? WorkspacePremiumIcon
+          : jornadaName === "Especial 2: 60hr"
+            ? StarHalfIcon
+            : WorkIcon;
+  const metaSx = { display: "flex", alignItems: "center", gap: 1, fontSize: "0.875rem", color: UI.inkSoft };
+  const metaIconSx = { fontSize: 18, color: UI.muted };
+  const h2Sx = { fontSize: "1rem", fontWeight: 700, color: UI.ink };
 
   return (
-    <>
-      <Grid2
-        container
-        sx={{
-          marginLeft: "55px",
-          marginRight: "55px",
-        }}
+    <Box
+      component="main"
+      sx={{
+        maxWidth: UI.maxWidth,
+        mx: "auto",
+        px: { xs: 2, md: 3 },
+        pb: { xs: 5, md: 7 },
+        display: "flex",
+        flexDirection: "column",
+        gap: 2.5,
+      }}
+    >
+      <Button
+        onClick={handleBack}
+        startIcon={<KeyboardArrowLeftIcon />}
+        sx={{ alignSelf: "flex-start", minHeight: 44, color: UI.blue, fontWeight: 600, textTransform: "none", ml: -1 }}
       >
-        <Grid2 size={12}>
-          <Grid2
-            onClick={handleBack}
-            sx={{
-              width: "97px",
-              height: "36px ",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-            }}
-          >
-            <KeyboardArrowLeftIcon
-              sx={{ width: "30px", height: "30px", color: "#002338" }}
-            />
+        Colaboradores
+      </Button>
 
+      <Box
+        component="section"
+        sx={{ ...cardSx, p: { xs: 2.5, md: 3.5 }, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 3 }}
+      >
+        <Avatar
+          src={colabProp.image || undefined}
+          alt=""
+          sx={{ width: 88, height: 88, fontSize: 28, fontWeight: 700, bgcolor: UI.avatarBg, color: "#12304D" }}
+        >
+          {initials}
+        </Avatar>
+        <Box sx={{ flex: "1 1 420px", minWidth: 0, display: "flex", flexDirection: "column", gap: 1.25 }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.5 }}>
             <Typography
+              component="h1"
+              sx={{ fontSize: { xs: "1.4rem", md: "1.625rem" }, fontWeight: 700, letterSpacing: "-0.02em", color: UI.ink, lineHeight: 1.2 }}
+            >
+              {fullName}
+            </Typography>
+            {contractAlert && (
+              <Box
+                component="span"
+                sx={{ px: 1.1, py: 0.4, borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, backgroundColor: contractAlert.bg, color: contractAlert.color }}
+              >
+                {contractAlert.label}
+              </Box>
+            )}
+          </Box>
+          {rolesText && (
+            <Typography sx={{ fontSize: "0.9375rem", fontWeight: 600, color: UI.blue }}>{rolesText}</Typography>
+          )}
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: "8px 24px" }}>
+            <Box sx={metaSx}>
+              <EmailIcon sx={metaIconSx} />
+              {colabProp.email}
+            </Box>
+            <Box sx={metaSx}>
+              <BadgeIcon sx={metaIconSx} />
+              {formatId(colabProp.dni)}
+            </Box>
+            {jornadaName && (
+              <Box sx={metaSx}>
+                <JornadaIcon sx={metaIconSx} />
+                {jornadaName}
+              </Box>
+            )}
+            <Box sx={metaSx}>
+              <CalendarTodayIcon sx={metaIconSx} />
+              Ingreso {colabProp.start_contrato ? formatDate(colabProp.start_contrato) : "N/A"}
+            </Box>
+            <Box sx={metaSx}>
+              <CalendarTodayIcon sx={metaIconSx} />
+              Caducidad {colabProp.fin_contrato ? formatDate(colabProp.fin_contrato) : "N/A"}
+            </Box>
+          </Box>
+          <Typography sx={{ fontSize: "0.8125rem", color: UI.muted }}>
+            Última vez editado por: {colabProp.last_edited_by}{" "}
+            {colabProp.last_edited_on ? formatDate(colabProp.last_edited_on) : ""}
+          </Typography>
+        </Box>
+        <Tooltip title={canManage ? "Editar" : "No podés editar este colaborador"}>
+          <span>
+            <Button
+              variant="outlined"
+              startIcon={<EditIcon />}
+              disabled={!canManage}
+              onClick={() => router.push(`/pages/edit/employe/${colabProp.id}`)}
               sx={{
-                textAlign: "center",
-                color: "#002338",
-                fontSize: "20px",
-                fontFamily: "Poppins",
-                fontWeight: 400,
+                minHeight: 44,
+                px: 2,
+                borderRadius: "8px",
+                borderColor: UI.borderStrong,
+                color: "#12304D",
+                backgroundColor: "#FFFFFF",
+                fontWeight: 600,
+                textTransform: "none",
+                "&:hover": { borderColor: "#8FA3B6", backgroundColor: UI.surfaceMuted },
               }}
             >
-              Volver
-            </Typography>
-          </Grid2>
-        </Grid2>
+              Editar
+            </Button>
+          </span>
+        </Tooltip>
+      </Box>
 
-        <Grid2 size={12} mt={"30px"}>
-          <Card
-            elevation={6}
-            sx={{
-              width: { xs: "90%", md: "100%" },
-              borderRadius: "20px",
-              backgroundColor: "#FFFFFF",
-              padding: "40px",
-            }}
-          >
-            <Box sx={{ display: "flex", flexDirection: "column", mb: 4 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                  mb: 2,
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    src={colabProp.image ? colabProp.image : "/anonimo.jpeg"}
-                    alt={`${colabProp.first_name} ${colabProp.last_name}`}
-                    sx={{
-                      width: 200,
-                      height: 200,
-                      mr: 4,
-                      fontSize: 40,
-                      bgcolor: "#e0e0e0",
-                    }}
-                  />
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: 24, md: "40px" },
-                        fontFamily: "Poppins",
-                        fontWeight: 600,
-                        color: "#002338",
-                      }}
-                    >
-                      {colabProp.first_name} {colabProp.last_name}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: 20, md: "22px" },
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: "#0087FF",
-                        mb: 1,
-                      }}
-                    >
-                      {Array.isArray(colabProp.roles)
-                        ? colabProp.roles
-                          .map((role) => `${role.rol} - ${role.seniority}`)
-                          .join(" / ")
-                        : colabProp.roles}
-                    </Typography>
-                    <Box display="flex" alignItems="center" sx={{ gap: 4 }}>
-                      <Box alignItems="center" sx={{ mb: 1, gap: 4 }}>
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          gap={1}
-                          sx={{ mb: 1, mt: 1 }}
-                        >
-                          <EmailIcon sx={{ fontSize: 20, color: "#002338" }} />
-                          <Typography
-                            sx={{
-                              fontSize: { xs: 16, md: "18px" },
-                              fontFamily: "Poppins",
-                              fontWeight: 400,
-                              color: "#002338",
-                            }}
-                          >
-                            {colabProp.email}
-                          </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center" gap={1}>
-                          <BadgeIcon sx={{ fontSize: 20, color: "#002338" }} />
-                          <Typography
-                            sx={{
-                              fontSize: { xs: 16, md: "18px" },
-                              fontFamily: "Poppins",
-                              fontWeight: 500,
-                              color: "#002338",
-                            }}
-                          >
-                            {formatId(colabProp.dni)}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Box alignItems="center" sx={{ gap: 4 }}>
-                        <Box alignItems="center" sx={{ gap: 4 }}>
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            gap={1}
-                            sx={{ mb: 1 }}
-                          >
-                            <CalendarTodayIcon
-                              sx={{ fontSize: 18, color: "#002338" }}
-                            />
-                            <Typography
-                              sx={{
-                                fontSize: { xs: 15, md: "16px" },
-                                fontFamily: "Poppins",
-                                fontWeight: 400,
-                                color: "#002338",
-                              }}
-                            >
-                              Ingreso:{" "}
-                              {colabProp.start_contrato
-                                ? formatDate(colabProp.start_contrato)
-                                : "N/A"}
-                            </Typography>
-                          </Box>
-                          <Box display="flex" alignItems="center" gap={1}>
-                            {jornadaName === "Part Time" && (
-                              <AccessTimeIcon sx={{ color: "#002338" }} />
-                            )}
-                            {jornadaName === "Full Time" && (
-                              <WorkIcon sx={{ color: "#002338" }} />
-                            )}
-                            {jornadaName === "Pasante" && (
-                              <SchoolIcon sx={{ color: "#002338" }} />
-                            )}
-                            {jornadaName === "Especial 1: 120hr" && (
-                              <WorkspacePremiumIcon sx={{ color: "#002338" }} />
-                            )}
-                            {jornadaName === "Especial 2: 60hr" && (
-                              <StarHalfIcon sx={{ color: "#002338" }} />
-                            )}
-                            <Typography
-                              sx={{
-                                fontSize: { xs: 16, md: "18px" },
-                                fontFamily: "Poppins",
-                                fontWeight: 400,
-                                color: "#002338",
-                              }}
-                            >
-                              {jornadaName}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box alignItems="center" sx={{ gap: 4 }}>
-                        <Box alignItems="center" sx={{ gap: 3 }}>
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            gap={1}
-                            sx={{ mb: 4.5 }}
-                          >
-                            <CalendarTodayIcon
-                              sx={{ fontSize: 18, color: "#002338" }}
-                            />
-                            <Typography
-                              sx={{
-                                fontSize: { xs: 15, md: "16px" },
-                                fontFamily: "Poppins",
-                                fontWeight: 400,
-                                color: "#002338",
-                              }}
-                            >
-                              Caducidad:{" "}
-                              {colabProp.fin_contrato
-                                ? formatDate(colabProp.fin_contrato)
-                                : "N/A"}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: 16, md: "14px" },
-                        fontFamily: "Poppins",
-                        fontWeight: 400,
-                        color: "#606060",
-                      }}
-                    >
-                      Última vez editado por: {colabProp.last_edited_by}{" "}
-                      {colabProp.last_edited_on
-                        ? formatDate(colabProp.last_edited_on)
-                        : ""}
-                    </Typography>
-                  </Box>
-                </Box>
-
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Tooltip
-                    title={
-                      canManage
-                        ? "Editar"
-                        : "No podés editar este colaborador"
-                    }
-                  >
-                    <span>
-                      <Button
-                        variant="contained"
-                        startIcon={<EditIcon sx={{ color: "#002338" }} />}
-                        disabled={!canManage}
-                        onClick={() =>
-                          router.push(`/pages/edit/employe/${colabProp.id}`)
-                        }
-                        sx={{
-                          background: colors?.button || "#1CFFF9",
-                          borderRadius: "20px",
-                          padding: "12px 41px",
-                          fontFamily: "Poppins, sans-serif",
-                          fontWeight: 500,
-                          fontSize: "20px",
-                          height: "50px",
-                          color: "#002338",
-                          boxShadow: "none",
-                          textTransform: "none",
-                          "&:hover": {
-                            background: "#1CFFF9",
-                            boxShadow: "none",
-                          },
-                        }}
-                      >
-                        Editar
-                      </Button>
-                    </span>
-                  </Tooltip>
-                </Box>
-              </Box>
-
-              <Divider sx={{ bgcolor: "#002338", mb: 3 }} />
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, alignItems: "flex-start" }}>
+        <Box sx={{ flex: "2 1 520px", minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+          <Box component="section" sx={{ ...cardSx, p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Box sx={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 1.5, flexWrap: "wrap" }}>
+              <Typography component="h2" sx={h2Sx}>
+                Proyectos asignados
+              </Typography>
+              <Typography sx={{ fontSize: "0.8125rem", color: UI.muted }}>
+                {colabProp.horasAsignadas !== undefined && colabProp.horasAsignadas !== null
+                  ? `${colabProp.horasAsignadas} h/semana en total`
+                  : ""}
+              </Typography>
             </Box>
-
-            {colabProp ? (
-              <Grid2 container spacing={4}>
-                <Grid2 size={{ xs: 12, md: 6 }}>
-                  <Box sx={{ mb: 5 }}>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: 18, md: "20px" },
-                        fontWeight: 600,
-                        color: "#002338",
-                        mb: 2,
-                      }}
-                    >
-                      Proyecto:
-                    </Typography>
-                    <ul style={{ margin: 0, paddingLeft: 24 }}>
-                      {Array.isArray(colabProp.Proyectos) &&
-                        colabProp.Proyectos.length > 0 ? (
-                        colabProp.Proyectos.map((proy, idx) => (
-                          <li
-                            key={idx}
-                            style={{
-                              fontSize: "18px",
-                              fontFamily: "Poppins, sans-serif",
-                              color: "#002338",
-                              marginBottom: 8,
-                              listStyleType: "disc",
-                            }}
-                          >
-                            {[
-                              typeof proy.projectId === "object" && proy.projectId?.name
-                                ? proy.projectId.name
-                                : String(proy.projectId),
-                              proy.rol,
-                              proy.seniority,
-                            ]
-                              .filter(Boolean)
-                              .join(" - ")}
-                          </li>
-                        ))
-                      ) : (
-                        <li
-                          style={{
-                            fontSize: "18px",
-                            fontFamily: "Poppins, sans-serif",
-                            color: "#002338",
-                          }}
-                        >
-                          Sin asignaciones
-                        </li>
-                      )}
-                    </ul>
-                  </Box>
-                  <InfoRow
-                    label="Tecnologías"
-                    value={
-                      Array.isArray(colabProp.tecnologias)
-                        ? colabProp.tecnologias.join(", ")
-                        : colabProp.tecnologias ?? ""
-                    }
-                  />
-                  <InfoRow
-                    label="Tiempo asignado"
-                    value={
-                      colabProp.horasAsignadas !== undefined && colabProp.horasAsignadas !== null
-                        ? `${colabProp.horasAsignadas} h/semana`
-                        : ""
-                    }
-                  />
-                  <InfoRow
-                    label="Desempeño"
-                    value={colabProp.observacion ?? ""}
-                  />
-                </Grid2>
-
-                <Grid2 size={{ xs: 12, md: 6 }}>
+            {Array.isArray(colabProp.Proyectos) && colabProp.Proyectos.length > 0 ? (
+              <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", flexDirection: "column", gap: 1 }}>
+                {colabProp.Proyectos.map((proy, idx) => (
                   <Box
+                    component="li"
+                    key={idx}
                     sx={{
                       display: "flex",
-                      flexDirection: "column",
+                      flexWrap: "wrap",
                       alignItems: "center",
-                      height: "100%",
-                      justifyContent: "center",
+                      gap: "8px 16px",
+                      px: 2,
+                      py: 1.75,
+                      border: `1px solid ${UI.border}`,
+                      borderRadius: "8px",
                     }}
                   >
-                    <Typography
-                      sx={{
-                        fontSize: { xs: 18, md: "20px" },
-                        fontWeight: 600,
-                        color: "#002338",
-                        mb: 2,
-                        textAlign: "center",
-                      }}
-                    >
-                      Distribución en proyectos:
-                    </Typography>
-                    {donutData.length > 0 ? (
-                      <ResponsiveContainer width="90%" height={330}>
-                        <PieChart>
-                          <Pie
-                            data={donutData}
-                            dataKey="value"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={75}
-                            outerRadius={100}
-                            fill="#8884d8"
-                            label={({ name, percent }) =>
-                              `${name} ${(percent * 100).toFixed(0)}%`
-                            }
-                          >
-                            {donutData.map((entry, index) => (
-                              <Cell
-                                key={`cell-${index}`}
-                                fill={COLORS[index % COLORS.length]}
-                              />
-                            ))}
-                          </Pie>
-                          <RTooltip />
-                          <Legend
-                            layout="horizontal"
-                            verticalAlign="bottom"
-                            align="center"
-                            iconType="circle"
-                          />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    ) : (
-                      <Typography
-                        sx={{
-                          fontSize: "16px",
-                          fontFamily: "Poppins",
-                          color: "#666",
-                          textAlign: "center",
-                          mt: 4,
-                        }}
-                      >
-                        No hay datos de proyectos para mostrar
+                    <Box sx={{ flex: "1 1 260px", minWidth: 0 }}>
+                      <Typography sx={{ fontSize: "0.875rem", fontWeight: 700, color: UI.ink }}>
+                        {typeof proy.projectId === "object" && proy.projectId?.name
+                          ? proy.projectId.name
+                          : String(proy.projectId)}
                       </Typography>
-                    )}
+                      <Typography sx={{ fontSize: "0.8125rem", color: UI.muted }}>
+                        {[proy.rol, proy.seniority].filter(Boolean).join(" · ")}
+                      </Typography>
+                    </Box>
+                    <Typography sx={{ fontSize: "0.875rem", fontWeight: 700, color: UI.ink, fontVariantNumeric: "tabular-nums" }}>
+                      {proy.horasAsignadas ?? 0} h
+                    </Typography>
                   </Box>
-                </Grid2>
-              </Grid2>
+                ))}
+              </Box>
             ) : (
-              <Typography>
-                No se encontraron detalles para este colaborador.
-              </Typography>
+              <Typography sx={{ fontSize: "0.875rem", color: UI.muted }}>Sin asignaciones.</Typography>
             )}
-            <Divider sx={{ my: 5, bgcolor: "#002338" }} />
+          </Box>
 
-            <Typography
-              sx={{
-                fontSize: { xs: 20, md: "24px" },
-                fontWeight: 600,
-                fontFamily: "Poppins",
-                color: "#002338",
-                mb: 3,
-              }}
-            >
+          <Box component="section" sx={{ ...cardSx, p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Typography component="h2" sx={h2Sx}>
+              Tecnologías
+            </Typography>
+            {techs.length > 0 ? (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {techs.map((tech) => (
+                  <Box
+                    component="span"
+                    key={tech}
+                    sx={{ px: 1.5, py: 0.6, borderRadius: "6px", backgroundColor: UI.track, color: UI.inkSoft, fontSize: "0.8125rem", fontWeight: 600 }}
+                  >
+                    {tech}
+                  </Box>
+                ))}
+              </Box>
+            ) : (
+              <Typography sx={{ fontSize: "0.875rem", color: UI.muted }}>Sin tecnologías cargadas.</Typography>
+            )}
+          </Box>
+
+          <Box component="section" sx={{ ...cardSx, p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Typography component="h2" sx={h2Sx}>
               Último cambio
             </Typography>
             <CollaboratorHistory collaboratorId={colabProp.id} />
-          </Card>
-        </Grid2>
-      </Grid2>
+          </Box>
+        </Box>
 
-    </>
-  );
-}
+        <Box sx={{ flex: "1 1 320px", minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+          <Box component="section" sx={{ ...cardSx, p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Typography component="h2" sx={h2Sx}>
+              Distribución en proyectos
+            </Typography>
+            {donutData.length > 0 && totalHours > 0 ? (
+              <>
+                <Box aria-hidden sx={{ display: "flex", gap: "3px", height: 10, borderRadius: "999px", overflow: "hidden", backgroundColor: UI.track }}>
+                  {donutData.map((entry, index) => (
+                    <Box
+                      key={`${entry.name}-${index}`}
+                      sx={{ width: `${((Number(entry.value) || 0) / totalHours) * 100}%`, backgroundColor: COLORS[index % COLORS.length] }}
+                    />
+                  ))}
+                </Box>
+                <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", flexDirection: "column", gap: 1.5 }}>
+                  {donutData.map((entry, index) => (
+                    <Box component="li" key={`${entry.name}-legend-${index}`} sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                      <Box sx={{ width: 10, height: 10, borderRadius: "3px", backgroundColor: COLORS[index % COLORS.length], flexShrink: 0 }} />
+                      <Typography component="span" sx={{ flex: 1, minWidth: 0, fontSize: "0.875rem", color: UI.inkSoft }}>
+                        {entry.name}
+                      </Typography>
+                      <Typography component="span" sx={{ fontSize: "0.875rem", fontWeight: 700, color: UI.ink, fontVariantNumeric: "tabular-nums" }}>
+                        {Math.round(((Number(entry.value) || 0) / totalHours) * 100)}%
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </>
+            ) : (
+              <Typography sx={{ fontSize: "0.875rem", color: UI.muted }}>
+                No hay datos de proyectos para mostrar.
+              </Typography>
+            )}
+          </Box>
 
-interface InfoRowProps {
-  label: string;
-  value: string | number;
-}
-function InfoRow({ label, value }: InfoRowProps) {
-  return (
-    <Typography
-      sx={{
-        fontSize: { xs: 18, md: "20px" },
-        fontWeight: 400,
-        fontFamily: "Poppins",
-        color: "#002338",
-        letterSpacing: "0px",
-        marginBottom: "50px",
-      }}
-    >
-      {label}:{" "}
-      <Box component="span" sx={{ fontWeight: 400 }}>
-        {value}
+          <Box component="section" sx={{ ...cardSx, p: 3, display: "flex", flexDirection: "column", gap: 1 }}>
+            <Typography component="h2" sx={h2Sx}>
+              Desempeño
+            </Typography>
+            <Typography sx={{ fontSize: "0.875rem", color: colabProp.observacion ? UI.ink : UI.muted }}>
+              {colabProp.observacion ? colabProp.observacion : "Sin evaluación cargada."}
+            </Typography>
+          </Box>
+        </Box>
       </Box>
-    </Typography>
+    </Box>
   );
 }

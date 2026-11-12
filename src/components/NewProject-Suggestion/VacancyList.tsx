@@ -1,7 +1,8 @@
 "use client";
-import { Box, Typography, Card, Stack, Grid2 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Typography, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { VacanciePayload } from "@/types/interface";
+import { UI, cardSx } from "@/theme/appPalette";
 
 interface Props {
   vacancies: VacanciePayload[];
@@ -11,83 +12,49 @@ interface Props {
 export default function VacancyList({ vacancies, onDelete }: Props) {
   if (!vacancies.length) return null;
   return (
-    <Box>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "18px",
-          color: "#006899",
-          mb: 1,
-        }}
-      >
+    <Box component="section" sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+      <Typography component="h2" sx={{ fontSize: "1.125rem", fontWeight: 700, color: UI.ink }}>
         Vacantes activas
       </Typography>
 
-      <Grid2 container spacing={2} sx={{ mb: 2 }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(auto-fill, minmax(300px, 1fr))" },
+          gap: 2,
+        }}
+      >
         {vacancies.map((v, index) => (
-          <Grid2 size={{ xs: 12, sm: 6, md: 3 }} key={v.vacancieName + index}>
-            <Card
-              sx={{
-                p: 2,
-                width: "289px",
-                height: "162px",
-                borderRadius: "10px",
-                bgcolor: "#CDCDCD",
-                position: "relative",
-              }}
-            >
+          <Box key={v.vacancieName + index} sx={{ ...cardSx, p: 2.5, display: "flex", alignItems: "flex-start", gap: 1.5 }}>
+            <Box component="dl" sx={{ m: 0, flex: 1, minWidth: 0, display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "10px 16px" }}>
               <Info label="Rol" value={v.vacancieName} />
               <Info label="Seniority" value={v.seniority} />
-              <Info
-                label="Tecnologías "
-                value={v.skills.map((skill) => skill.name).join(", ")}
-              />
+              <Info label="Tecnologías" value={v.skills.map((skill) => skill.name).join(", ")} />
               <Info label="Horas asignadas" value={String(v.time)} />
-
-              <Stack sx={{ marginTop: "13px" }} alignItems={"flex-end"}>
-                <DeleteIcon
-                  fontSize="inherit"
-                  sx={{
-                    color: "#D61010",
-                    width: "24px",
-                    height: "24px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => onDelete(v)}
-                />
-              </Stack>
-            </Card>
-          </Grid2>
+            </Box>
+            <IconButton
+              aria-label={`Quitar vacante ${v.vacancieName}`}
+              onClick={() => onDelete(v)}
+              sx={{ width: 40, height: 40, color: UI.danger }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         ))}
-      </Grid2>
+      </Box>
     </Box>
   );
 }
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <Stack direction="row" gap={1} mb={"0.5px"}>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "16px",
-          color: "#002338",
-        }}
-      >
-        {label}:
+    <Box sx={{ minWidth: 0 }}>
+      <Typography component="dt" sx={{ fontSize: "0.75rem", fontWeight: 600, color: UI.muted }}>
+        {label}
       </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 300,
-          fontSize: "16px",
-          color: "#002338",
-        }}
-      >
+      <Typography component="dd" sx={{ m: 0, fontSize: "0.875rem", fontWeight: 600, color: UI.ink }}>
         {value}
       </Typography>
-    </Stack>
+    </Box>
   );
 }

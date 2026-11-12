@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box, Typography, Button, Grid2, Chip } from "@mui/material";
+import Link from "next/link";
+import { Box, Typography } from "@mui/material";
 import { Vacancie, Employee } from "@/types/interface";
-import { useRouter } from "next/navigation";
 import { useAppTheme } from "@/app/ThemeProviderClient";
-
+import { UI, cardSx } from "@/theme/appPalette";
+import { formatDate as formatDateUtil } from "@/utils/utils";
 
 interface Props {
   searchTerm: string;
@@ -12,16 +13,31 @@ interface Props {
   collaboratorProp: Employee[];
 }
 
-export default function CardsVacantes({
-  searchTerm,
-  vacanciesProp,
-  collaboratorProp,
-}: Props) {
-  const router = useRouter();
+const STATUS_STYLES: Record<string, { bg: string; color: string; label: string }> = {
+  abierta: { bg: "#E3F1FB", color: "#154A7D", label: "Abierta" },
+  "en proceso": { bg: "#FEF3C7", color: "#7C4A03", label: "En proceso" },
+  finalizada: { bg: "#E9EEF3", color: "#32475B", label: "Finalizada" },
+};
+
+const formatDate = (value: Date | string | null | undefined) => (value ? formatDateUtil(value) || "Sin definir" : "Sin definir");
+
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <Box sx={{ minWidth: 0 }}>
+      <Typography component="dt" sx={{ fontSize: "0.75rem", fontWeight: 600, color: UI.muted }}>
+        {label}
+      </Typography>
+      <Typography component="dd" sx={{ m: 0, fontSize: "0.875rem", fontWeight: 600, color: UI.ink }} noWrap title={value}>
+        {value}
+      </Typography>
+    </Box>
+  );
+}
+
+export default function CardsVacantes({ searchTerm, vacanciesProp }: Props) {
   const { colors } = useAppTheme();
 
-  const [filteredVacancies, setFilteredVacancies] =
-    useState<Vacancie[]>(vacanciesProp);
+  const [filteredVacancies, setFilteredVacancies] = useState<Vacancie[]>(vacanciesProp);
 
   useEffect(() => {
     const term = (searchTerm ?? "").trim().toLowerCase();
@@ -42,235 +58,141 @@ export default function CardsVacantes({
     setFilteredVacancies(result);
   }, [searchTerm, vacanciesProp]);
 
-  const getStatusChipStyle = (statusRaw?: string) => {
-    const status = (statusRaw ?? "").trim().toLowerCase();
-    switch (status) {
-      case "abierta":
-        return { bg: "rgba(114,230,217,0.16)", color: colors?.primary || "#12304D", label: "Abierta" };
-      case "en proceso":
-        return { bg: "rgba(42,108,168,0.12)", color: colors?.primary || "#12304D", label: "En proceso" };
-      case "finalizada":
-        return { bg: "rgba(18,48,77,0.10)", color: colors?.primary || "#12304D", label: "Finalizada" };
-      default:
-        return null;
-    }
-  };
   if ((searchTerm ?? "").trim() && filteredVacancies.length === 0) {
     return (
       <Box display="flex" justifyContent="center" mt={4}>
-        <Typography sx={{ fontFamily: "Poppins", color: "#5b6b7a" }}>
+        <Typography sx={{ color: UI.muted }}>
           No se encontraron resultados para &quot;{searchTerm.trim()}&quot;.
         </Typography>
       </Box>
     );
   }
+
   return (
-    <>
-      <Box display="flex" justifyContent="center" mt={2}>
-        <Grid2
-          container
-          spacing={3}
-          justifyContent="space-between"
-          columns={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }}
-        >
-          {filteredVacancies.map((vacante, idx) => {
-            const managerNameRaw = String(vacante?.manager_name ?? "").trim();
-            const managerKey = managerNameRaw.toLowerCase();
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(auto-fill, minmax(340px, 1fr))" },
+        gap: 2,
+      }}
+    >
+      {filteredVacancies.map((vacante) => {
+        const statusStyle = STATUS_STYLES[(vacante.status ?? "").trim().toLowerCase()];
+        const skills = (Array.isArray(vacante.skills) ? vacante.skills : [])
+          .map((skill) => {
+            const raw = skill as unknown as { name?: string; technologyName?: string; technologyId?: { name?: string } | string };
+            if (typeof raw.technologyId === "object" && raw.technologyId?.name) return raw.technologyId.name;
+            return raw.name ?? raw.technologyName ?? "";
+          })
+          .filter(Boolean);
 
-            const match = (collaboratorProp || []).find(
-              (c) =>
-                `${c?.first_name ?? ""} ${c?.last_name ?? ""}`
-                  .trim()
-                  .toLowerCase() === managerKey
-            );
-
-            const photo = match?.image;
-            const displayPhoto = photo || "/anonimo.jpeg";
-            const showPhoto = true;
-
-            const chipStyle = getStatusChipStyle(vacante.status);
-            const showChip = Boolean(chipStyle);
-            return (
-              <Grid2
-                key={idx}
-                sx={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
-                display="flex"
-                justifyContent="center"
-              >
-                <Grid2
-                  container
-                  direction="column"
-                  justifyContent="space-between"
-                  sx={{
-                    width: "310px",
-                    height: "336px",
-                    bgcolor: colors?.card || "#FCFEFF",
-                    borderRadius: "20px",
-                    color: colors?.primary || "#12304D",
-                    boxShadow: "0 18px 45px rgba(18,48,77,0.10)",
-                    border: "1px solid rgba(18,48,77,0.08)",
-                    position: "relative",
-                    overflow: 'hidden',
-                    // use internal padding so children (like the button) don't overflow
-                    p: 0,
-                  }}
-                >
-                  {/* CHIP de estado */}
-                  {showChip && chipStyle && (
-                    <Chip
-                      label={chipStyle.label}
-                      sx={{
-                        position: "absolute",
-                        top: "10px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        bgcolor: chipStyle.bg,
-                        color: chipStyle.color,
-                        fontFamily: "Poppins",
-                        fontWeight: 600,
-                        fontSize: "12px",
-                        height: "20px",
-                        zIndex: 1,
-                      }}
-                    />
-                  )}
-                  <Grid2
+        return (
+          <Link
+            key={vacante.id}
+            href={`/pages/detail/VacanciesDetail/${vacante.id}`}
+            style={{ textDecoration: "none", color: "inherit", display: "block" }}
+          >
+            <Box
+              component="article"
+              sx={{
+                ...cardSx,
+                backgroundColor: colors?.card || "#FFFFFF",
+                height: "100%",
+                p: 2.5,
+                display: "flex",
+                flexDirection: "column",
+                gap: 1.75,
+                transition: "border-color .2s ease, box-shadow .2s ease",
+                "&:hover": { borderColor: UI.borderStrong, boxShadow: "0 4px 14px rgba(15,34,51,0.08)" },
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 1.5 }}>
+                <Box sx={{ minWidth: 0 }}>
+                  <Typography component="h2" sx={{ fontSize: "1.0625rem", fontWeight: 700, color: UI.ink, lineHeight: 1.3 }}>
+                    {vacante.vacancieName}
+                  </Typography>
+                  <Typography sx={{ fontSize: "0.8125rem", color: UI.muted }} noWrap>
+                    {vacante.projectId?.name || "Sin proyecto asignado"}
+                  </Typography>
+                </Box>
+                {statusStyle && (
+                  <Box
+                    component="span"
                     sx={{
-                      pt: showChip ? "35px" : "18px",
-                      px: "18px",
-                      position: "relative",
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      boxSizing: 'border-box',
-                      height: '100%',
+                      px: 1.25,
+                      py: 0.4,
+                      borderRadius: "999px",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      whiteSpace: "nowrap",
+                      backgroundColor: statusStyle.bg,
+                      color: statusStyle.color,
                     }}
                   >
-                    {/* main content grows and keeps the footer button at the bottom */}
-                    <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                      <Typography
-                      textAlign="center"
-                      sx={{
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: colors?.secondary || "#2A6CA8",
-                        fontSize: "20px",
-                        width: "100%",
-                        lineHeight: "1.1",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      {vacante.vacancieName}
-                    </Typography>
+                    {statusStyle.label}
+                  </Box>
+                )}
+              </Box>
 
+              {vacante.description && (
+                <Typography
+                  sx={{
+                    fontSize: "0.875rem",
+                    color: UI.inkSoft,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {vacante.description}
+                </Typography>
+              )}
+
+              {skills.length > 0 && (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                  {skills.slice(0, 5).map((skill) => (
                     <Box
+                      component="span"
+                      key={skill}
                       sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        height: "56px",
-                        alignItems: "center",
+                        px: 1.25,
+                        py: 0.4,
+                        borderRadius: "6px",
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        backgroundColor: UI.track,
+                        color: UI.inkSoft,
                       }}
                     >
-                      {showPhoto && (
-                        <Box
-                          component="img"
-                          src={displayPhoto}
-                          alt="Profile"
-                          sx={{
-                            width: "60px",
-                            height: "60px",
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                            border: `2px solid ${colors?.accent || "#72E6D9"}`,
-                          }}
-                          loading="lazy"
-                        />
-                      )}
+                      {skill}
                     </Box>
+                  ))}
+                </Box>
+              )}
 
-                    <Typography
-                      textAlign="center"
-                      sx={{
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        fontSize: "18px",
-                        width: "255px",
-                        color: colors?.primary || "#12304D",
-                      }}
-                    >
-                      Proyecto: {vacante.projectId?.name || "No asignado"}
-                    </Typography>
-                    <Typography
-                      textAlign="center"
-                      mt={"10px"}
-                      sx={{
-                        fontSize: "18px",
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: "rgba(18,48,77,0.78)",
-                      }}
-                    >
-                      Horas requeridas: {vacante.time}
-                    </Typography>
-                    <Typography
-                      textAlign="center"
-                      mt={"10px"}
-                      sx={{
-                        fontSize: "18px",
-                        fontFamily: "Poppins",
-                        fontWeight: 500,
-                        color: "rgba(18,48,77,0.78)",
-                      }}
-                    >
-                      Seniority: {vacante.seniority}
-                    </Typography>
-
-                    </Box>
-
-                    {/* footer with button - stays pinned to bottom */}
-                    <Box sx={{ width: '100%', pb: '12px' }}>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          bgcolor: colors?.button || "#123B66",
-                          borderRadius: "16px",
-                          color: colors?.text || "#7DEBDC",
-                          width: "100%",
-                          height: "50px",
-                          textTransform: "none",
-                          "&:hover": {
-                            bgcolor: colors?.primary || "#12304D",
-                          },
-                          "&:active": {
-                            bgcolor: colors?.primary || "#12304D",
-                          },
-                        }}
-                        onClick={() => {
-                          router.push(
-                            `/pages/detail/VacanciesDetail/${vacante.id}`
-                          );
-                        }}
-                      >
-                        <Typography
-                          textAlign="center"
-                          sx={{
-                            fontSize: "18px",
-                            color: colors?.text || "#7DEBDC",
-                            fontFamily: "Poppins",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Ver más
-                        </Typography>
-                      </Button>
-                    </Box>
-                  </Grid2>
-                </Grid2>
-              </Grid2>
-            );
-          })}
-        </Grid2>
-      </Box>
-    </>
+              <Box
+                component="dl"
+                sx={{
+                  m: 0,
+                  mt: "auto",
+                  pt: 1.75,
+                  borderTop: `1px solid ${UI.border}`,
+                  display: "grid",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                  gap: "12px 16px",
+                }}
+              >
+                <Fact label="Seniority" value={vacante.seniority || "Sin definir"} />
+                <Fact label="Horas requeridas" value={`${vacante.time ?? 0} h`} />
+                <Fact label="Fecha de pedido" value={formatDate(vacante.orderDate)} />
+                <Fact label="Fecha de inicio" value={formatDate(vacante.startDate)} />
+                <Fact label="Project Manager" value={vacante.manager_name || "Sin asignar"} />
+              </Box>
+            </Box>
+          </Link>
+        );
+      })}
+    </Box>
   );
 }

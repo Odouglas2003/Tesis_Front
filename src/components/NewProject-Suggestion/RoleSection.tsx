@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { Box, Typography, Grid2, Card, Stack, Button } from "@mui/material";
+import { Box, Typography, Button, Checkbox } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { Position, Candidate } from "@/types/interface";
+import { UI, cardSx } from "@/theme/appPalette";
 
 interface Props {
   position: Position;
@@ -13,6 +12,30 @@ interface Props {
   time: string; // Horas semanales requeridas para la vacante
   seniorityLabel?: string; // Seniority tal como se eligió en el formulario
 }
+
+const WARNING_LABELS: Record<string, string> = {
+  evaluacion_de_desempeno: "evaluación de desempeño",
+  sueldo: "sueldo",
+};
+
+const initialsOf = (name?: string) =>
+  (name ?? "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+
+const chipSx = {
+  px: 1.25,
+  py: 0.4,
+  borderRadius: "6px",
+  fontSize: "0.75rem",
+  fontWeight: 600,
+  backgroundColor: UI.track,
+  color: UI.inkSoft,
+};
 
 export default function RoleSection({
   position,
@@ -41,183 +64,169 @@ export default function RoleSection({
   const hasSelection = candidates.some((c) => c.selected);
 
   return (
-    <Box sx={{ mb: 4 }}>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 700,
-          fontSize: "18px",
-          color: "#002338",
-          mb: "5px",
-        }}
-      >
-        Rol:
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "16px",
-          color: "#002338",
-          mb: "10px",
-        }}
-      >
-        {position.role_requested +
-          " - " +
-          (seniorityLabel || position.seniority_requested) +
-          " - " +
-          position.technologies_requested.join(", ") +
-          " - " +
-          time +
-          " h/semana requeridas"}
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "16px",
-          color: "#002338",
-          mb: "10px",
-        }}
-      >
-        {position.vacancy_message}
-      </Typography>
+    <Box component="section" sx={{ ...cardSx, p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "8px 16px" }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.25 }}>
+          <Typography component="h3" sx={{ fontSize: "1.0625rem", fontWeight: 700, color: UI.ink }}>
+            {position.role_requested} · {seniorityLabel || position.seniority_requested}
+          </Typography>
+          {position.technologies_requested.map((tech) => (
+            <Box component="span" key={tech} sx={chipSx}>
+              {tech}
+            </Box>
+          ))}
+        </Box>
+        <Typography sx={{ fontSize: "0.8125rem", color: UI.muted }}>
+          <Box component="strong" sx={{ color: UI.ink }}>{time} h/semana</Box> requeridas
+        </Typography>
+      </Box>
 
-      <Grid2 container spacing={2}>
-        {candidates.map((c) => (
-          <Grid2 size={{ xs: 12, sm: 6, md: 3 }} key={c.id}>
-            <Card
-              onClick={() => onSelect(position.position_id, c)}
-              sx={{
-                p: 2,
-                width: "100%",
-                height: "100%",
-                maxWidth: "300px",
-                maxHeight: "300px",
-                cursor: "pointer",
-                border: c.selected ? "2px solid #009ADA" : "1px solid #e0e0e0",
-                bgcolor: "#F8F8F8",
-                borderRadius: "10px",
-              }}
-            >
-              <Stack direction="row" justifyContent="space-between">
-                {c.selected ? (
-                  <CheckBoxIcon
-                    sx={{ color: "#009ADA", width: "24px", height: "24px" }}
-                  />
-                ) : (
-                  <CheckBoxOutlineBlankIcon
-                    color="disabled"
-                    sx={{ width: "24px", height: "24px" }}
-                  />
+      {position.vacancy_message && (
+        <Typography sx={{ fontSize: "0.875rem", color: UI.inkSoft }}>{position.vacancy_message}</Typography>
+      )}
+
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+        <Box sx={{ flex: "2 1 460px", minWidth: 0, display: "flex", flexDirection: "column", gap: 1.5 }}>
+          {candidates.map((c) => {
+            const warnings = (c.missing_data_warnings ?? []).map((w) => WARNING_LABELS[w] ?? w.replace(/_/g, " "));
+            const inputId = `candidate-${position.position_id}-${c.id}`;
+            return (
+              <Box
+                key={c.id}
+                component="label"
+                htmlFor={inputId}
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  gap: 2,
+                  p: 2,
+                  cursor: "pointer",
+                  borderRadius: "10px",
+                  border: c.selected ? `2px solid ${UI.blue}` : `1px solid ${UI.borderStrong}`,
+                  m: c.selected ? 0 : "1px",
+                  backgroundColor: c.selected ? "#F4F9FE" : "#FFFFFF",
+                  transition: "border-color .2s ease, background-color .2s ease",
+                  "&:hover": { borderColor: c.selected ? UI.blue : "#8FA3B6" },
+                }}
+              >
+                <Checkbox
+                  id={inputId}
+                  checked={Boolean(c.selected)}
+                  onChange={() => onSelect(position.position_id, c)}
+                  sx={{ p: 0.5, color: "#8FA3B6", "&.Mui-checked": { color: UI.blue } }}
+                />
+                <Box
+                  aria-hidden
+                  sx={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: "50%",
+                    backgroundColor: UI.avatarBg,
+                    color: "#12304D",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "0.875rem",
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}
+                >
+                  {initialsOf(c.name)}
+                </Box>
+                <Box sx={{ flex: "1 1 200px", minWidth: 0, display: "flex", flexDirection: "column", gap: 0.75 }}>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1 }}>
+                    <Typography component="span" sx={{ fontSize: "0.9375rem", fontWeight: 700, color: UI.ink }}>
+                      {c.name}
+                    </Typography>
+                    {(c.suggested_by_ia || c.is_user_suggestion) && (
+                      <Box
+                        component="span"
+                        sx={{
+                          px: 1,
+                          py: 0.25,
+                          borderRadius: "999px",
+                          backgroundColor: UI.blueSoft,
+                          color: UI.blueSoftText,
+                          fontSize: "0.75rem",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {c.suggested_by_ia ? "Candidato sugerido por IA" : "Candidato sugerido"}
+                      </Box>
+                    )}
+                  </Box>
+                  {c.known_technologies.length > 0 && (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                      {c.known_technologies.map((tech) => (
+                        <Box component="span" key={tech} sx={chipSx}>
+                          {tech}
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                  <Typography component="span" sx={{ fontSize: "0.8125rem", fontWeight: 600, color: UI.tealSoftText }}>
+                    {c.availability_message}
+                  </Typography>
+                  {warnings.length > 0 && (
+                    <Typography component="span" sx={{ fontSize: "0.75rem", color: UI.warnSoftText }}>
+                      Faltan datos: {warnings.join(", ")}.
+                    </Typography>
+                  )}
+                </Box>
+                {typeof c.score === "number" && (
+                  <Box
+                    sx={{
+                      flex: "0 0 auto",
+                      pl: 2,
+                      borderLeft: `1px solid ${UI.border}`,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 0.25,
+                    }}
+                  >
+                    <Typography component="span" sx={{ fontSize: "0.75rem", fontWeight: 600, color: UI.muted }}>
+                      Puntaje
+                    </Typography>
+                    <Typography
+                      component="span"
+                      sx={{ fontSize: "1.5rem", fontWeight: 700, lineHeight: 1.1, color: UI.ink, fontVariantNumeric: "tabular-nums" }}
+                    >
+                      {c.score}
+                    </Typography>
+                  </Box>
                 )}
-              </Stack>
+              </Box>
+            );
+          })}
+        </Box>
 
-              <Info label="Colaborador:" value={c.name} />
-              <Info
-                label="Tecnología:"
-                value={c.known_technologies.join(", ")}
-              />
-              <Info label={c.availability_message} value={""} />
-
-              {c.suggested_by_ia && (
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    color: "#0087FF",
-                  }}
-                  mt={"0.5px"}
-                >
-                  Candidato sugerido por IA
-                </Typography>
-              )}
-
-              {c.is_user_suggestion && (
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    color: "#0087FF",
-                  }}
-                  mt={"0.5px"}
-                >
-                  Candidato sugerido
-                </Typography>
-              )}
-            </Card>
-          </Grid2>
-        ))}
-
-        {/* tarjeta vacante */}
-        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-          <Button
-            disabled={hasSelection}
-            sx={{
-              width: "289px",
-              height: "180px",
-              p: 2,
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 1,
-              border: "1px dashed",
-              cursor: "pointer",
-              textTransform: "none",
-              borderRadius: "10px",
-            }}
-            id="create-vacancy"
-            onClick={() => onCreateVacancy(position)}
-          >
-            <AddCircleOutlineIcon
-              fontSize="large"
-              sx={{ color: hasSelection ? "#CDCDCD" : "#006899" }}
-            />
-
-            <Typography
-              sx={{
-                fontFamily: "Poppins",
-                fontWeight: 500,
-                fontSize: "20px",
-                color: hasSelection ? "#CDCDCD" : "#006899",
-              }}
-            >
-              Crear vacante
-            </Typography>
-          </Button>
-        </Grid2>
-      </Grid2>
+        <Button
+          disabled={hasSelection}
+          id="create-vacancy"
+          onClick={() => onCreateVacancy(position)}
+          sx={{
+            flex: "1 1 220px",
+            minHeight: 96,
+            alignSelf: "stretch",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 0.75,
+            border: "1.5px dashed #8FA3B6",
+            borderRadius: "8px",
+            color: UI.blue,
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            textTransform: "none",
+            "&.Mui-disabled": { color: "#8FA3B6", borderColor: UI.border },
+          }}
+        >
+          <AddCircleOutlineIcon />
+          Crear vacante
+        </Button>
+      </Box>
     </Box>
-  );
-}
-
-function Info({ label, value }: { label: string; value: string }) {
-  return (
-    <Stack direction="row" gap={1} mb={"5px"}>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "16px",
-          color: "#002338",
-        }}
-      >
-        {label}
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 300,
-          fontSize: "16px",
-          color: "#002338",
-        }}
-      >
-        {value}
-      </Typography>
-    </Stack>
   );
 }

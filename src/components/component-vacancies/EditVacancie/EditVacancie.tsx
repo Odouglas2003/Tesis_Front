@@ -166,8 +166,10 @@ export default function EditVacancie({
       <Grid2
         container
         sx={{
-          marginLeft: "55px",
-          marginRight: "55px",
+          maxWidth: 1320,
+          mx: "auto",
+          px: { xs: 2, md: 3 },
+          width: "100%",
         }}
       >
         <Grid2 size={12}>
@@ -183,14 +185,14 @@ export default function EditVacancie({
             }}
           >
             <KeyboardArrowLeftIcon
-              sx={{ width: "24px", height: "24px", color: "#002338" }}
+              sx={{ width: "24px", height: "24px", color: "#12304D" }}
             />
             <Typography
               sx={{
                 textAlign: "center",
-                color: "#002338",
+                color: "#12304D",
                 fontSize: "24px",
-                fontFamily: "Poppins",
+                fontFamily: "inherit",
                 fontWeight: 400,
               }}
             >
@@ -203,7 +205,7 @@ export default function EditVacancie({
             elevation={6}
             sx={{
               width: { xs: "90%", md: "100%" },
-              borderRadius: "20px",
+              borderRadius: "10px",
               backgroundColor: "#FFFFFF",
               padding: "40px",
             }}
@@ -219,9 +221,9 @@ export default function EditVacancie({
               <Typography
                 sx={{
                   fontSize: "24px",
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 600,
-                  color: colors.button || "#002338",
+                  color: colors.button || "#12304D",
                 }}
               >
                 Editar vacante
@@ -230,18 +232,18 @@ export default function EditVacancie({
                 variant="contained"
                 onClick={handleSave}
                 sx={{
-                  background: colors?.button || "#0087FF",
-                  borderRadius: "20px",
-                  padding: "12px 41px",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  height: "50px",
+                  background: colors?.button || "#1D5FA0",
+                  borderRadius: "8px",
+                  padding: "0 16px",
+                  fontFamily: "inherit",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  height: "44px",
                   color: "#FFFFFF",
                   boxShadow: "none",
                   textTransform: "none",
                   "&:hover": {
-                    background: colors?.button || "#0066CC",
+                    background: colors?.button || "#1D5FA0",
                     boxShadow: "none",
                   },
                 }}
@@ -260,9 +262,9 @@ export default function EditVacancie({
               <Typography
                 sx={{
                   fontSize: "16px",
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   fontWeight: 500,
-                  color: "#002338",
+                  color: "#12304D",
                 }}
               >
                 Datos de la vacante
@@ -277,9 +279,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -312,9 +314,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -354,9 +356,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -407,9 +409,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -434,9 +436,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -460,9 +462,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -474,9 +476,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -514,9 +516,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -568,9 +570,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },
@@ -582,9 +584,9 @@ export default function EditVacancie({
                       sx={{
                         height: "40px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "20px",
+                          borderRadius: "8px",
                           "& fieldset": {
-                            borderColor: "#002338",
+                            borderColor: "#C9D3DE",
                           },
                         },
                         "& .MuiInputLabel-root.Mui-focused": { color: "black" },

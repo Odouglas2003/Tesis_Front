@@ -1,103 +1,72 @@
 "use client";
-import { Box, Typography, Stack, Divider } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { formatDate } from "@/utils/utils";
-
 import { ProjectPayload } from "@/types/interface";
+import { UI, cardSx } from "@/theme/appPalette";
 
 type ProjectHeaderProps = {
   project: ProjectPayload;
 };
 
-//export default function ProjectHeader(project: ProjectPayload) {
 export default function ProjectHeader({ project }: ProjectHeaderProps) {
   return (
-    <Box sx={{ mb: 3 }}>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          fontSize: "24px",
-          color: "#0087FF",
-          mb: 1,
-        }}
-      >
-        Resultado optimizado por IA
-      </Typography>
+    <>
+      <Box component="section" sx={{ ...cardSx, p: { xs: 2.5, md: 3.5 }, display: "flex", flexDirection: "column", gap: 2.5 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+          <Typography sx={{ fontSize: "0.8125rem", fontWeight: 700, color: UI.blue }}>
+            Resultado optimizado por IA
+          </Typography>
+          <Typography
+            component="h1"
+            sx={{ fontSize: { xs: "1.4rem", md: "1.625rem" }, fontWeight: 700, letterSpacing: "-0.02em", color: UI.ink, lineHeight: 1.2 }}
+          >
+            {project.name}
+          </Typography>
+          {project.description && (
+            <Typography sx={{ fontSize: "0.9375rem", color: UI.muted, maxWidth: 760 }}>
+              {project.description}
+            </Typography>
+          )}
+        </Box>
+        <Box
+          component="dl"
+          sx={{
+            m: 0,
+            pt: 2.5,
+            borderTop: `1px solid ${UI.border}`,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "16px 24px",
+          }}
+        >
+          <Info label="Cliente" value={project.client || "Sin definir"} />
+          <Info label="Manager" value={project.managerName || project.manager_name || "Sin asignar"} />
+          <Info label="Fecha de inicio" value={formatDate(project.startDate)} />
+          <Info label="Fecha de fin" value={formatDate(project.endDate)} />
+        </Box>
+      </Box>
 
-      <Stack direction={{ xs: "column", sm: "row" }} gap={4} flexWrap="wrap">
-        <Info label="Nombre" value={project.name} />
-        <Info label="Cliente" value={project.client} />
-        <Info
-          label="Manager"
-          value={project.managerName || project.manager_name || "No Manager Assigned"}
-        />
-      </Stack>
-      <Stack direction={{ xs: "column", sm: "row" }} gap={4} flexWrap="wrap">
-        <Info label="Fecha de inicio" value={formatDate(project.startDate)} />
-        <Info label="Fecha de fin" value={formatDate(project.endDate)} />
-      </Stack>
-
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        gap={4}
-        flexWrap="wrap"
-        mt={2}
-      >
-        <Info label="Descripcion" value={project.description} />
-      </Stack>
-
-      <Divider sx={{ my: 3, width: "100%" }} />
-
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "18px",
-          color: "#006899",
-          mb: "4px",
-        }}
-      >
-        Staff Sugerido
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 400,
-          fontSize: "16px",
-          color: "#002338",
-          mb: "4px",
-        }}
-      >
-        Por favor, selecciona los candidatos que mejor consideres según cada
-        rol.
-      </Typography>
-    </Box>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+        <Typography component="h2" sx={{ fontSize: "1.125rem", fontWeight: 700, color: "text.primary" }}>
+          Staff sugerido
+        </Typography>
+        <Typography sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+          Elegí un candidato por rol, o creá una vacante si ninguno te convence.
+        </Typography>
+      </Box>
+    </>
   );
 }
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <Stack direction="row" gap={1}>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 500,
-          fontSize: "16px",
-          color: "#002338",
-        }}
-      >
-        {label}:
+    <Box sx={{ minWidth: 0 }}>
+      <Typography component="dt" sx={{ fontSize: "0.75rem", fontWeight: 600, color: UI.muted }}>
+        {label}
       </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Poppins",
-          fontWeight: 300,
-          fontSize: "16px",
-          color: "#002338",
-        }}
-      >
+      <Typography component="dd" sx={{ m: 0, fontSize: "0.875rem", fontWeight: 600, color: UI.ink }}>
         {value}
       </Typography>
-    </Stack>
+    </Box>
   );
 }

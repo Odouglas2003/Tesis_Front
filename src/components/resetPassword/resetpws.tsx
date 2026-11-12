@@ -125,7 +125,7 @@ const ResetPasswordForm = () => {
               alignSelf: "flex-start",
               px: 1.25,
               minHeight: "40px",
-              borderRadius: "14px",
+              borderRadius: "8px",
               textTransform: "none",
               color: AUTH_PALETTE.title,
               borderColor: "rgba(18,48,77,0.12)",

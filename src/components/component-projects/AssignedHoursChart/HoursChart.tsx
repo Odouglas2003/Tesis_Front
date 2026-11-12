@@ -14,7 +14,7 @@ export interface CollaboratorChartProps {
 export default function CollaboratorChart({
   collaborators = [],
 }: CollaboratorChartProps) {
-  const defaultColors = ["#8BB4F7", "#23FFDC", "#4D7FED", "#FFB74D", "#AED581","#FF6F61","#FFD54F","#BA68C8","#7986CB","#E0A0FF","#D980FA","#8C63FF","#A29BFF","#F090C5","#C9B8FF","#B572FF","#9C6CFF","#B096FF","#C4A4FF","#D1AEFF","#E4B5FF","#EED3FF","#F6E7FF","#FFF8FF"];
+  const defaultColors = ["#8BB4F7", "#72E6D9", "#4D7FED", "#FFB74D", "#AED581","#FF6F61","#FFD54F","#BA68C8","#7986CB","#E0A0FF","#D980FA","#8C63FF","#A29BFF","#F090C5","#C9B8FF","#B572FF","#9C6CFF","#B096FF","#C4A4FF","#D1AEFF","#E4B5FF","#EED3FF","#F6E7FF","#FFF8FF"];
 
   const enriched = collaborators.map((c, i) => ({
     ...c,
@@ -77,7 +77,7 @@ export default function CollaboratorChart({
                   fontSize: "12px",
                   fontWeight: 400,
                   color: "#121212",
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -90,7 +90,7 @@ export default function CollaboratorChart({
                sx={{
                   fontSize: "12px",
                   fontWeight: 300,
-                  fontFamily: "Poppins",
+                  fontFamily: "inherit",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",

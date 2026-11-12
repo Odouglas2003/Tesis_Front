@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import Navbar from "@/components/navbar/pages";
 import { useAppTheme } from "@/app/ThemeProviderClient";
+import { UI } from "@/theme/appPalette";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -35,9 +36,12 @@ export default function AppShell({
       <Navbar />
 
       <Box
+        component="main"
         sx={{
-          px: { xs: 2, sm: 4, md: "55px" },
-          pb: { xs: 4, md: 6 },
+          maxWidth: UI.maxWidth,
+          mx: "auto",
+          px: { xs: 2, md: 3 },
+          pb: { xs: 5, md: 7 },
           ...contentSx,
         }}
       >
@@ -45,15 +49,8 @@ export default function AppShell({
           <Box
             sx={{
               mb: 3,
-              px: { xs: 2, md: 3 },
-              py: { xs: 2, md: 2.5 },
-              borderRadius: "24px",
-              border: "1px solid rgba(18,48,77,0.08)",
-              backgroundColor: colors.card,
-              backdropFilter: "blur(8px)",
-              boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
               display: "flex",
-              alignItems: { xs: "flex-start", md: "center" },
+              alignItems: { xs: "flex-start", md: "flex-end" },
               justifyContent: "space-between",
               gap: 2,
               flexDirection: { xs: "column", md: "row" },
@@ -62,11 +59,12 @@ export default function AppShell({
             <Box sx={{ minWidth: 0 }}>
               {title && (
                 <Typography
+                  component="h1"
                   sx={{
-                    fontSize: { xs: "1.4rem", md: "1.75rem" },
+                    fontSize: { xs: "1.4rem", md: "1.625rem" },
                     fontWeight: 700,
-                    color: colors.primary,
-                    lineHeight: 1.1,
+                    color: "text.primary",
+                    lineHeight: 1.2,
                     letterSpacing: "-0.02em",
                   }}
                 >
@@ -76,9 +74,9 @@ export default function AppShell({
               {description && (
                 <Typography
                   sx={{
-                    mt: 0.75,
-                    fontSize: { xs: "0.95rem", md: "1rem" },
-                    color: colors.secondary,
+                    mt: 0.5,
+                    fontSize: "0.9375rem",
+                    color: "text.secondary",
                     maxWidth: 760,
                   }}
                 >

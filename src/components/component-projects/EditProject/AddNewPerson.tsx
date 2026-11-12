@@ -289,8 +289,8 @@ console.log(projectName);
     height: "40px",
     width: "382px",
     "& .MuiOutlinedInput-root": {
-      borderRadius: "20px",
-      "& fieldset": { borderColor: "#002338" },
+      borderRadius: "8px",
+      "& fieldset": { borderColor: "#C9D3DE" },
     },
     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
   };
@@ -326,8 +326,8 @@ console.log(projectName);
               ListboxProps={{
                 sx: {
                   bgcolor: "#FFFFFF",
-                  color: "#002338",
-                  "& li": { color: "#002338" },
+                  color: "#12304D",
+                  "& li": { color: "#12304D" },
                 },
               }}
               renderOption={(props, option) => {
@@ -339,7 +339,7 @@ console.log(projectName);
                     {...liProps}
                     style={{
                       ...(style as React.CSSProperties),
-                      color: "#002338",
+                      color: "#12304D",
                       background: "#FFFFFF",
                     }}
                   >
@@ -359,18 +359,18 @@ console.log(projectName);
                     height: "40px",
                     width: "382px",
                     "& .MuiOutlinedInput-root": {
-                      borderRadius: "20px",
-                      "& fieldset": { borderColor: "#002338" },
+                      borderRadius: "8px",
+                      "& fieldset": { borderColor: "#C9D3DE" },
                     },
                     "& .MuiInputLabel-root.Mui-focused": { color: "black" },
-                    "& .MuiOutlinedInput-input": { color: "#002338" },
+                    "& .MuiOutlinedInput-input": { color: "#12304D" },
                   }}
                   InputProps={{
-                    sx: { color: "#002338" },
+                    sx: { color: "#12304D" },
                     ...params.InputProps,
                     startAdornment: (
                       <>
-                        <SearchIcon sx={{ color: "#002338", mr: 2 }} />
+                        <SearchIcon sx={{ color: "#12304D", mr: 2 }} />
                         {params.InputProps.startAdornment}
                       </>
                     ),
@@ -388,12 +388,12 @@ console.log(projectName);
                 sx={{
                   height: "40px",
                   width: "382px",
-                  "& .MuiSelect-select": { color: "#002338", fontSize: "16px" },
+                  "& .MuiSelect-select": { color: "#12304D", fontSize: "16px" },
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
-                    "& fieldset": { borderColor: "#002338" },
+                    borderRadius: "8px",
+                    "& fieldset": { borderColor: "#C9D3DE" },
                   },
-                  "& .MuiInputLabel-root": { color: "#002338" },
+                  "& .MuiInputLabel-root": { color: "#12304D" },
                   "& .MuiInputLabel-root.Mui-focused": { color: "black" },
                   "& .MuiOutlinedInput-input": {
                     fontSize: "16px",
@@ -411,14 +411,14 @@ console.log(projectName);
                   required
                   fullWidth
                   input={<OutlinedInput label="Rol *" />}
-                  sx={{ "& .MuiSelect-select": { color: "#002338", fontSize: "16px" } }}
+                  sx={{ "& .MuiSelect-select": { color: "#12304D", fontSize: "16px" } }}
                   MenuProps={{
-                    PaperProps: { sx: { bgcolor: "#FFFFFF", color: "#002338" } },
+                    PaperProps: { sx: { bgcolor: "#FFFFFF", color: "#12304D" } },
                     MenuListProps: { sx: { bgcolor: "#FFFFFF" } },
                   }}
                 >
                   {availableRoles.map((r) => (
-                    <MenuItem key={r.rol} value={r.rol} sx={{ color: "#002338" }}>
+                    <MenuItem key={r.rol} value={r.rol} sx={{ color: "#12304D" }}>
                       {r.rol}
                     </MenuItem>
                   ))}
@@ -446,13 +446,13 @@ console.log(projectName);
                   height: "40px",
                   width: "382px",
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "20px",
-                    "& fieldset": { borderColor: "#002338" },
+                    borderRadius: "8px",
+                    "& fieldset": { borderColor: "#C9D3DE" },
                   },
-                  "& .MuiInputLabel-root": { color: "#002338", fontSize: "14px" },
-                  "& .MuiInputLabel-root.Mui-focused": { color: "#002338" },
+                  "& .MuiInputLabel-root": { color: "#12304D", fontSize: "14px" },
+                  "& .MuiInputLabel-root.Mui-focused": { color: "#12304D" },
                   "& .MuiOutlinedInput-input": {
-                    color: "#002338",
+                    color: "#12304D",
                     fontSize: "16px",
                     padding: "10.5px 14px",
                   },
@@ -476,12 +476,12 @@ console.log(projectName);
                 height: "40px",
                 width: "382px",
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
-                  "& fieldset": { borderColor: "#002338" },
+                  borderRadius: "8px",
+                  "& fieldset": { borderColor: "#C9D3DE" },
                 },
-                "& .MuiInputLabel-root": { color: "#002338" },
-                "& .MuiInputLabel-root.Mui-focused": { color: "#002338" },
-                "& .MuiOutlinedInput-input": { color: "#002338" },
+                "& .MuiInputLabel-root": { color: "#12304D" },
+                "& .MuiInputLabel-root.Mui-focused": { color: "#12304D" },
+                "& .MuiOutlinedInput-input": { color: "#12304D" },
               }}
             />
           </Grid>
@@ -492,10 +492,10 @@ console.log(projectName);
               sx={{
                 height: "40px",
                 width: "382px",
-                "& .MuiSelect-select": { color: "#002338" },
+                "& .MuiSelect-select": { color: "#12304D" },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "20px",
-                  "& fieldset": { borderColor: "#002338" },
+                  borderRadius: "8px",
+                  "& fieldset": { borderColor: "#C9D3DE" },
                 },
                 "& .MuiInputLabel-root.Mui-focused": { color: "black" },
               }}
@@ -524,7 +524,7 @@ console.log(projectName);
                   !allCollaborators.find((c) => c.id === colaborador.id)?.tecnologias?.length
                 }
                 MenuProps={{
-                  PaperProps: { sx: { bgcolor: "#FFFFFF", color: "#002338" } },
+                  PaperProps: { sx: { bgcolor: "#FFFFFF", color: "#12304D" } },
                   MenuListProps: { sx: { bgcolor: "#FFFFFF" } },
                 }}
                 renderValue={(selected) =>
@@ -533,7 +533,7 @@ console.log(projectName);
               >
                 {(allCollaborators.find((c) => c.id === colaborador.id)?.tecnologias || []).map(
                   (tech) => (
-                    <MenuItem key={tech} value={tech} sx={{ color: "#002338" }}>
+                    <MenuItem key={tech} value={tech} sx={{ color: "#12304D" }}>
                       {tech}
                     </MenuItem>
                   )
@@ -559,7 +559,7 @@ console.log(projectName);
               required
               type="number"
               sx={fieldStyles}
-              InputProps={{ sx: { color: "#002338" } }}
+              InputProps={{ sx: { color: "#12304D" } }}
             />
           </Grid>
         </Grid>
@@ -580,14 +580,14 @@ console.log(projectName);
             sx={{
               width: "200px",
               backgroundColor: colors?.button || "#002851",
-              color: colors?.background || "#23FFDC",
-              borderRadius: "20px",
-              height: "50px",
+              color: colors?.text || "#FFFFFF",
+              borderRadius: "8px",
+              height: "44px",
               textTransform: "none",
-              padding: "13px 41px",
-              fontWeight: "500",
-              fontSize: "20px",
-              fontFamily: "Poppins, sans-serif",
+              padding: "0 16px",
+              fontWeight: 600,
+              fontSize: "14px",
+              fontFamily: "inherit",
               boxShadow: "none",
               transition: "background-color .25s ease, opacity .25s ease",
               "&:hover": {

@@ -77,7 +77,7 @@ const whenStr = (ts?: string | Date): string =>
 const UI = {
   card: {
     p: 2.5,
-    borderRadius: "18px",
+    borderRadius: "10px",
     bgcolor: "#F8FAFC",
     boxShadow: "0 4px 10px rgba(15,23,42,.06)",
   },
@@ -175,7 +175,7 @@ export default function CollaboratorHistory({
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-        <CircularProgress sx={{ color: "#002338" }} />
+        <CircularProgress sx={{ color: "#12304D" }} />
       </Box>
     );
   }
@@ -183,7 +183,7 @@ export default function CollaboratorHistory({
   if (blocks.length === 0) {
     return (
       <Box sx={{ mt: 3 }}>
-        <Typography sx={{ fontSize: 16, color: "#606060", fontFamily: "Poppins" }}>
+        <Typography sx={{ fontSize: 16, color: "#606060", fontFamily: "inherit" }}>
           No hay historial registrado.
         </Typography>
       </Box>

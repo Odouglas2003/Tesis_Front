@@ -11,6 +11,7 @@ import ModalComponent from "@/components/message/MessageModal";
 import { registerProjectWithRelationsService } from "@/services/api";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { VacanciePayload, Position, Candidate } from "@/types/interface";
+import { UI, cardSx } from "@/theme/appPalette";
 
 export default function SuggestionIaPageClient() {
   const router = useRouter();
@@ -219,53 +220,34 @@ export default function SuggestionIaPageClient() {
   }
   const handleBack = () => router.push("/pages/projects");
 
-  return (
-    <div
-      className="min-h-screen w-full"
-      style={{ backgroundColor: "#F8F8F8", paddingBottom: "120px" }}
-    >
-      <Box sx={{ mb: 3 }}>
-        <Navbar />
-      </Box>
+  const coveredRoles =
+    positions.filter((position) => position.candidates.some((c) => c.selected)).length +
+    vacancies.length;
 
-      <Box sx={{ mr: "55px", ml: "55px" }} id="back-button">
-        <Box
-          onClick={handleBack}
-          sx={{
-            width: "97px",
-            height: "36px ",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
-        >
-          <KeyboardArrowLeftIcon
-            sx={{ width: "24px", height: "24px", color: "#002338" }}
-          />
-          <Typography
-            sx={{
-              textAlign: "center",
-              color: "#002338",
-              fontSize: "20px",
-              fontFamily: "Poppins",
-              fontWeight: 400,
-            }}
-          >
-            Volver
-          </Typography>
-        </Box>
-      </Box>
+  return (
+    <Box sx={{ minHeight: "100vh", width: "100%", pb: 6 }}>
+      <Navbar />
 
       <Box
+        component="main"
         sx={{
-          mr: "55px",
-          ml: "55px",
-          backgroundColor: "#ffffff",
-          padding: "20px",
-          borderRadius: "20px",
+          maxWidth: UI.maxWidth,
+          mx: "auto",
+          px: { xs: 2, md: 3 },
+          display: "flex",
+          flexDirection: "column",
+          gap: 2.5,
         }}
       >
+        <Button
+          id="back-button"
+          onClick={handleBack}
+          startIcon={<KeyboardArrowLeftIcon />}
+          sx={{ alignSelf: "flex-start", minHeight: 44, color: UI.blue, fontWeight: 600, textTransform: "none", ml: -1 }}
+        >
+          Volver
+        </Button>
+
         {/* datos del proyecto */}
         <ProjectHeader project={projectData} />
 
@@ -284,30 +266,30 @@ export default function SuggestionIaPageClient() {
         {/* vacantes */}
         <VacancyList vacancies={vacancies} onDelete={deleteVacancy} />
 
-        <Box textAlign="right" mt={4}>
+        <Box
+          sx={{
+            ...cardSx,
+            px: 3,
+            py: 2,
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 1.5,
+          }}
+        >
+          <Typography sx={{ fontSize: "0.875rem", color: UI.inkSoft }}>
+            <Box component="strong" sx={{ color: UI.ink }}>
+              {Math.min(coveredRoles, positions.length)} de {positions.length}
+            </Box>{" "}
+            roles cubiertos
+          </Typography>
           <Button
             variant="contained"
-            size="large"
             onClick={handleCreateProject}
-            sx={{
-              backgroundColor: "#002338",
-              borderRadius: "8px",
-              width: "200px",
-              height: "50px",
-              textTransform: "none",
-            }}
+            sx={{ minHeight: 44, px: 2.5, borderRadius: "8px", fontWeight: 600, textTransform: "none" }}
           >
-            <Typography
-              sx={{
-                borderRadius: "10px",
-                fontFamily: "Poppins",
-                fontWeight: 500,
-                fontSize: "20px",
-                color: "#23FFDC",
-              }}
-            >
-              Crear proyecto
-            </Typography>
+            Crear proyecto
           </Button>
         </Box>
       </Box>
@@ -319,6 +301,6 @@ export default function SuggestionIaPageClient() {
         onClose={closeDialog}
         onConfirm={dialog.onConfirm}
       />
-    </div>
+    </Box>
   );
 }

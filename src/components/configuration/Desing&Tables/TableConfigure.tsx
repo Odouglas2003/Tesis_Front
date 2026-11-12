@@ -167,10 +167,10 @@ export default function ConfigureTablesComponent() {
         key={table}
         sx={{
           bgcolor: "#fff",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-          borderRadius: 3,
+          boxShadow: "none",
+          border: "1px solid #E2E8EF",
+          borderRadius: "12px",
           mb: 3,
-          border: "1px solid #f0f0f0",
         }}
       >
         <CardContent sx={{ p: 3 }}>
@@ -184,9 +184,9 @@ export default function ConfigureTablesComponent() {
             onChange={(e) => setTitle(e.target.value)}
             sx={{
               mb: 3,
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "10px",
+                borderRadius: "8px",
                 bgcolor: isEditing ? "#fff" : "#f8f9fa",
                 fontSize: "16px"
               },
@@ -204,7 +204,7 @@ export default function ConfigureTablesComponent() {
               mb: 2,
               color: "#000",
               fontSize: "16px",
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
             }}
           >
             Columnas
@@ -244,7 +244,7 @@ export default function ConfigureTablesComponent() {
                     onChange={handleInputChange(table)(idx)}
                     sx={{
                       "& .MuiOutlinedInput-root": {
-                        borderRadius: "20px",
+                        borderRadius: "8px",
                         fontSize: "16px"
                       }
                     }}
@@ -257,7 +257,7 @@ export default function ConfigureTablesComponent() {
                   sx={{
                     bgcolor: "#D9D9D9",
                     color: "#333",
-                    borderRadius: "20px",
+                    borderRadius: "10px",
                     fontSize: "16px",
                     height: "40px",
                     px: "20px",
@@ -277,10 +277,10 @@ export default function ConfigureTablesComponent() {
                   variant="outlined"
                   onClick={() => resetToInitial(table)}
                   sx={{
-                    borderColor: "#0087FF",
-                    color: "#0087FF",
-                    borderRadius: "20px",
-                    fontFamily: "Poppins",
+                    borderColor: "#1D5FA0",
+                    color: "#1D5FA0",
+                    borderRadius: "10px",
+                    fontFamily: "inherit",
                     height: "50px",
                     width: "200px",
                     fontSize: "20px",
@@ -292,13 +292,13 @@ export default function ConfigureTablesComponent() {
                   variant="contained"
                   onClick={() => handleSaveColumns(table)}
                   sx={{
-                    color: "#23FFDC",
-                    backgroundColor: "#002338",
-                    borderRadius: "20px",
-                    fontFamily: "Poppins",
-                    height: "50px",
+                    color: "#FFFFFF",
+                    backgroundColor: "#1D5FA0",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    height: "44px",
                     width: "200px",
-                    fontSize: "20px",
+                    fontSize: "14px",
                   }}
                 >
                   Guardar
@@ -315,13 +315,13 @@ export default function ConfigureTablesComponent() {
                       : setIsEditingVacan(true)
                 }
                 sx={{
-                  color: "#23FFDC",
-                  backgroundColor: "#002338",
-                  borderRadius: "20px",
-                  fontFamily: "Poppins",
-                  height: "50px",
+                  color: "#FFFFFF",
+                  backgroundColor: "#1D5FA0",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  height: "44px",
                   width: "200px",
-                  fontSize: "20px",
+                  fontSize: "14px",
                 }}
               >
                 Editar
@@ -336,8 +336,8 @@ export default function ConfigureTablesComponent() {
   return (
 
     <Card sx={{
-      boxShadow: 3,
-      borderRadius: "20px",
+      boxShadow: "none",
+      borderRadius: "10px",
       mt: "-20px",
       mb: 4,
       mr: "30px",
@@ -349,14 +349,14 @@ export default function ConfigureTablesComponent() {
             fontWeight: 600,
             color: "#333",
             mb: 1,
-            fontFamily: "Poppins",
+            fontFamily: "inherit",
           }}>
             Configura el aspecto de las tablas
           </Typography>
           <Typography variant="body2" sx={{
             color: "#666",
             fontSize: "0.875rem",
-            fontFamily: "Poppins",
+            fontFamily: "inherit",
           }}>
             Escribe el nombre de cada columna
           </Typography>

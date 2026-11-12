@@ -70,8 +70,8 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
             <Card
                 sx={{
                     p: "20px",
-                    boxShadow: 3,
-                    borderRadius: "20px",
+                    boxShadow: "none",
+                    borderRadius: "10px",
                     mb: 4,
                     width: "100%",
                     height: "302px",
@@ -85,7 +85,7 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                         sx={{
                             fontWeight: 600,
                             color: "#2c3e50",
-                            fontFamily: "Poppins",
+                            fontFamily: "inherit",
                             fontSize: "18px",
                         }}
                     >
@@ -93,7 +93,7 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                     </Typography>
                     <Typography
                         variant="body1"
-                        sx={{ fontSize: "16px", fontFamily: "Poppins", color: "#002338" }}
+                        sx={{ fontSize: "16px", fontFamily: "inherit", color: "#12304D" }}
                     >
                         Modificá y creá parámetros para personalizar el comportamiento de la
                         aplicación.
@@ -115,9 +115,9 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                                 component="h2"
                                 sx={{
                                     fontWeight: 600,
-                                    fontFamily: "Poppins",
+                                    fontFamily: "inherit",
                                     fontSize: "18px",
-                                    color: "#002338",
+                                    color: "#12304D",
                                 }}
                             >
                                 Jornada de Trabajo
@@ -125,9 +125,9 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                             <Typography
                                 variant="body2"
                                 sx={{
-                                    fontFamily: "Poppins",
+                                    fontFamily: "inherit",
                                     fontSize: "16px",
-                                    color: "#002338",
+                                    color: "#12304D",
                                 }}
                             >
                                 Registrar una Jornada de Trabajo
@@ -149,13 +149,13 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                                             borderRadius: "10px",
                                         },
                                         "& .MuiInputBase-input": {
-                                            fontFamily: "Poppins",
+                                            fontFamily: "inherit",
                                             fontSize: "14px",
                                             padding: "8px 12px",
                                         },
                                     }}
                                     InputProps={{
-                                        sx: { color: "#002338" }
+                                        sx: { color: "#12304D" }
                                     }}
                                 />
                             </Grid>
@@ -174,23 +174,23 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                                             borderRadius: "10px",
                                         },
                                         "& .MuiInputBase-input": {
-                                            fontFamily: "Poppins",
+                                            fontFamily: "inherit",
                                             fontSize: "14px",
                                             padding: "8px 12px",
                                         },
                                     }}
                                     InputProps={{
-                                        sx: { color: "#002338" }
+                                        sx: { color: "#12304D" }
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={12} md={2}>
                                 <FormControl
                                     sx={{
-                                        fontFamily: "Poppins",
-                                        '& .MuiSelect-select': { color: '#002338' },
+                                        fontFamily: "inherit",
+                                        '& .MuiSelect-select': { color: '#12304D' },
                                         "& .MuiOutlinedInput-root": {
-                                            fontFamily: "Poppins",
+                                            fontFamily: "inherit",
                                             fontSize: "14px",
                                             height: "40px",
                                             borderRadius: "10px",
@@ -209,12 +209,12 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                                         size="small"
                                         input={<OutlinedInput label="Activo" />}
                                         MenuProps={{
-                                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#002338' } },
+                                            PaperProps: { sx: { bgcolor: '#FFFFFF', color: '#12304D' } },
                                             MenuListProps: { sx: { bgcolor: '#FFFFFF' } }
                                         }}
                                     >
-                                        <MenuItem value="true" sx={{ color: "#002338" }}>Si</MenuItem>
-                                        <MenuItem value="false" sx={{ color: "#002338" }}>No</MenuItem>
+                                        <MenuItem value="true" sx={{ color: "#12304D" }}>Si</MenuItem>
+                                        <MenuItem value="false" sx={{ color: "#12304D" }}>No</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -232,13 +232,13 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                                             borderRadius: "10px",
                                         },
                                         "& .MuiInputBase-input": {
-                                            fontFamily: "Poppins",
+                                            fontFamily: "inherit",
                                             fontSize: "14px",
                                             padding: "8px 12px",
                                         },
                                     }}
                                     InputProps={{
-                                        sx: { color: "#002338" }
+                                        sx: { color: "#12304D" }
                                     }}
                                 />
                             </Grid>
@@ -250,13 +250,13 @@ export default function AddJourney({ onCreated }: AddJourneyProps) {
                                 variant="contained"
                                 onClick={handleSave}
                                 sx={{
-                                    backgroundColor: "#002338",
-                                    color: "#23FFDC",
+                                    backgroundColor: "#1D5FA0",
+                                    color: "#FFFFFF",
                                     fontSize: "1rem",
                                     fontWeight: 600,
                                     height: "40px",
                                     width: "200px",
-                                    borderRadius: "20px",
+                                    borderRadius: "8px",
                                 }}
                             >
                                 Añadir

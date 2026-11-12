@@ -218,13 +218,13 @@ export function ProjectTable({
       <Paper
         sx={{
           overflow: "hidden",
-          borderRadius: "24px",
+          borderRadius: "10px",
           backgroundColor: colors.card,
           border: "1px solid rgba(18,48,77,0.08)",
           boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
         }}
       >
-        <TableContainer sx={{ maxHeight: 700, borderRadius: "24px", backgroundColor: colors.card }}>
+        <TableContainer sx={{ maxHeight: 700, borderRadius: "10px", backgroundColor: colors.card }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -254,7 +254,7 @@ export function ProjectTable({
                           backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
                           fontWeight: "600",
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontSize: "15px",
                           color: colors.primary,
                         }}
@@ -270,7 +270,7 @@ export function ProjectTable({
                           backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
                           fontWeight: "600",
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontSize: "15px",
                           color: colors.primary,
                         }}

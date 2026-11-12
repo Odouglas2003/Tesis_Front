@@ -359,7 +359,7 @@ const EmployeeTable: React.FC<
       <Paper
         sx={{
           overflow: "hidden",
-          borderRadius: "24px",
+          borderRadius: "10px",
           backgroundColor: colors.card,
           border: "1px solid rgba(18,48,77,0.08)",
           boxShadow: "0 18px 45px rgba(18,48,77,0.08)",
@@ -374,7 +374,7 @@ const EmployeeTable: React.FC<
           onMouseLeave={handleMouseLeave}
           sx={{
             maxHeight: 700,
-            borderRadius: "24px",
+            borderRadius: "10px",
             backgroundColor: colors.card,
           }}
         >
@@ -407,7 +407,7 @@ const EmployeeTable: React.FC<
                           backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
                           fontWeight: "600",
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontSize: "15px",
                           color: colors.primary,
                         }}
@@ -422,7 +422,7 @@ const EmployeeTable: React.FC<
                           backgroundColor: "rgba(42,108,168,0.10)",
                           textAlign: "center",
                           fontWeight: "600",
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontSize: "15px",
                           color: colors.primary,
                         }}
@@ -460,7 +460,7 @@ const EmployeeTable: React.FC<
                         >
                           <Typography
                             sx={{
-                              fontFamily: "Roboto",
+                              fontFamily: "inherit",
                               fontWeight: 400,
                               color: colors.primary,
                               textAlign: "center",
@@ -509,7 +509,7 @@ const EmployeeTable: React.FC<
                       <TableCell align="center">
                         <Typography
                           sx={{
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             fontWeight: 400,
                             color: colors.primary,
                             textAlign: "center",
@@ -551,7 +551,7 @@ const EmployeeTable: React.FC<
                             >
                               <Typography
                                 sx={{
-                                  fontFamily: "Roboto",
+                                  fontFamily: "inherit",
                                   fontWeight: 400,
                                   color: colors.primary,
                                   textAlign: "center",
@@ -584,7 +584,7 @@ const EmployeeTable: React.FC<
                                 <Typography
                                   key={i}
                                   sx={{
-                                    fontFamily: "Roboto",
+                                    fontFamily: "inherit",
                                     fontWeight: 400,
                                     color: colors.primary,
                                     textAlign: "center",
@@ -618,7 +618,7 @@ const EmployeeTable: React.FC<
                             >
                               <Typography
                                 sx={{
-                                  fontFamily: "Roboto",
+                                  fontFamily: "inherit",
                                   fontWeight: 400,
                                   color: colors.primary,
                                   textAlign: "center",
@@ -661,7 +661,7 @@ const EmployeeTable: React.FC<
                                   <Typography
                                     key={key}
                                     sx={{
-                                      fontFamily: "Roboto",
+                                      fontFamily: "inherit",
                                       fontWeight: 400,
                                       color: colors.primary,
                                       textAlign: "center",
@@ -693,7 +693,7 @@ const EmployeeTable: React.FC<
                             >
                               <Typography
                                 sx={{
-                                  fontFamily: "Roboto",
+                                  fontFamily: "inherit",
                                   fontWeight: 400,
                                   color: colors.primary,
                                   textAlign: "center",
@@ -735,7 +735,7 @@ const EmployeeTable: React.FC<
                       <TableCell align="center">
                         <Typography
                           sx={{
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             fontWeight: 400,
                             color: colors.primary,
                             textAlign: "center",
@@ -749,7 +749,7 @@ const EmployeeTable: React.FC<
                       <TableCell align="center">
                         <Typography
                           sx={{
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             fontWeight: 400,
                             color: colors.primary,
                             textAlign: "center",
@@ -765,7 +765,7 @@ const EmployeeTable: React.FC<
                       <TableCell align="center">
                         <Typography
                           sx={{
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             fontWeight: 400,
                             color: colors.primary,
                             textAlign: "center",
@@ -781,7 +781,7 @@ const EmployeeTable: React.FC<
                       <TableCell align="center">
                         <Typography
                           sx={{
-                            fontFamily: "Roboto",
+                            fontFamily: "inherit",
                             fontWeight: 400,
                             color: colors.primary,
                             textAlign: "center",

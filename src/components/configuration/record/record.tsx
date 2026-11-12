@@ -154,8 +154,6 @@ export default function Record() {
       alignItems="flex-start"
       width="100%"
       sx={{
-        marginRight: "55px",
-        bgcolor: "#f5f5f5",
       }}
     >
       <Grid2
@@ -166,8 +164,8 @@ export default function Record() {
       >
         <Card
           sx={{
-            borderRadius: "20px",
-            boxShadow: 3,
+            borderRadius: "10px",
+            boxShadow: "none",
             p: { xs: 1, sm: 2, md: 3 },
             width: "100%",
             maxWidth: "100%",
@@ -184,7 +182,7 @@ export default function Record() {
                 <Typography
                   variant="h6"
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontWeight: 600,
                     fontSize: "18px",
                   }}
@@ -193,7 +191,7 @@ export default function Record() {
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontSize: "16px",
                     fontWeight: 400,
                   }}
@@ -204,31 +202,31 @@ export default function Record() {
               <Box display="flex" alignItems="center" gap={1}>
                 <Typography
                   sx={{
-                    fontFamily: "Poppins",
+                    fontFamily: "inherit",
                     fontSize: "20px",
                     fontWeight: 500,
-                    color: "#002338",
+                    color: "#12304D",
                   }}
                 >
                   Ordenar
                 </Typography>
                 <KeyboardArrowDownIcon
-                  sx={{ fontSize: "30px", color: "#002338" }}
+                  sx={{ fontSize: "30px", color: "#12304D" }}
                 />
                 <Button
                   variant="contained"
                   startIcon={<FilterListIcon />}
                   onClick={handleOpenFilters}
                   sx={{
-                    bgcolor: "#23FFDC",
-                    color: "#002338",
-                    fontWeight: 500,
-                    fontFamily: "Poppins",
-                    borderRadius: "20px",
+                    bgcolor: "#1D5FA0",
+                    color: "#FFFFFF",
+                    fontWeight: 600,
+                    fontFamily: "inherit",
+                    borderRadius: "8px",
                     textTransform: "none",
                     width: "200px",
-                    height: "50px",
-                    fontSize: "20px",
+                    height: "44px",
+                    fontSize: "14px",
                   }}
                 >
                   Filtros
@@ -238,7 +236,7 @@ export default function Record() {
             <TableContainer
               component={Paper}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 overflow: "hidden",
                 width: "100%",
                 boxShadow: "none",
@@ -252,7 +250,7 @@ export default function Record() {
                         key={text}
                         sx={{
                           bgcolor: "#CCCCCC",
-                          fontFamily: "Poppins",
+                          fontFamily: "inherit",
                           fontWeight: 500,
                           fontSize: "16.16px",
                           p: 1.5,
@@ -271,7 +269,7 @@ export default function Record() {
                       <TableCell
                         sx={{
                           fontSize: "16px",
-                          fontFamily: "Roboto",
+                          fontFamily: "inherit",
                           height: "105px",
                         }}
                       >
@@ -279,7 +277,7 @@ export default function Record() {
                       </TableCell>
 
                       <TableCell
-                        sx={{ fontSize: "16px", fontFamily: "Roboto" }}
+                        sx={{ fontSize: "16px", fontFamily: "inherit" }}
                       >
                         {new Date(row.sentAt).toLocaleString("es-AR")}
                       </TableCell>
@@ -287,7 +285,7 @@ export default function Record() {
                       <TableCell
                         sx={{
                           fontSize: "16px",
-                          fontFamily: "Roboto",
+                          fontFamily: "inherit",
                           verticalAlign: "center",
                           position: "relative",
                           p: 1.5,
@@ -324,7 +322,7 @@ export default function Record() {
                                   <Typography
                                     fontWeight={600}
                                     fontSize="14px"
-                                    fontFamily="Poppins"
+                                    fontFamily="inherit"
                                   >
                                     Personas:
                                   </Typography>
@@ -352,7 +350,7 @@ export default function Record() {
                                 <Typography
                                   fontWeight={600}
                                   fontSize="14px"
-                                  fontFamily="Poppins"
+                                  fontFamily="inherit"
                                   sx={{ mb: 0.2, mt: 1 }}
                                 >
                                   Fechas de lectura:
@@ -432,7 +430,7 @@ export default function Record() {
         <Box>
           <Typography
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 600,
               fontSize: "18px",
               mb: 1.5,
@@ -450,9 +448,9 @@ export default function Record() {
                     checked={selectedPMs.indexOf(pm) !== -1}
                     onChange={() => handlePMChange(pm)}
                     sx={{
-                      color: "#009DFF",
+                      color: "#1D5FA0",
                       "&.Mui-checked": {
-                        color: "#009DFF",
+                        color: "#1D5FA0",
                       },
                     }}
                   />
@@ -460,7 +458,7 @@ export default function Record() {
                 label={
                   <Typography
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                     }}
                   >
@@ -475,7 +473,7 @@ export default function Record() {
 
           <Typography
             sx={{
-              fontFamily: "Poppins",
+              fontFamily: "inherit",
               fontWeight: 600,
               fontSize: "18px",
               mb: 1.5,
@@ -493,9 +491,9 @@ export default function Record() {
                     checked={messageStatus.indexOf(status) !== -1}
                     onChange={() => handleStatusChange(status)}
                     sx={{
-                      color: "#009DFF",
+                      color: "#1D5FA0",
                       "&.Mui-checked": {
-                        color: "#009DFF",
+                        color: "#1D5FA0",
                       },
                     }}
                   />
@@ -503,7 +501,7 @@ export default function Record() {
                 label={
                   <Typography
                     sx={{
-                      fontFamily: "Poppins",
+                      fontFamily: "inherit",
                       fontSize: "16px",
                     }}
                   >
@@ -520,14 +518,14 @@ export default function Record() {
               onClick={handleApplyFilters}
               sx={{
                 bgcolor: "#00FFD1",
-                color: "#002338",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-                borderRadius: "25px",
+                color: "#12304D",
+                fontWeight: 600,
+                fontFamily: "inherit",
+                borderRadius: "8px",
                 textTransform: "none",
                 width: "200px",
                 height: "45px",
-                fontSize: "18px",
+                fontSize: "14px",
                 "&:hover": {
                   bgcolor: "#00E6BD",
                 },

@@ -1,14 +1,12 @@
-import { Grid, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { People, Work, Language, Psychology } from "@mui/icons-material";
 import StatsCard from "./StatsCards";
 import LineChartSection from "./LineChartSection";
 import DonutChartCard from "./DonutChartCard";
 import BarChartCard from "./BarChartCard";
 import { DashboardData } from "@/types/interface";
-import { useAppTheme } from "@/app/ThemeProviderClient";
 
 export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
-  const { colors } = useAppTheme();
   const {
     metricasClave,
     contratacionesMensuales,
@@ -55,11 +53,13 @@ export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
       name,
       value,
       color:
-        name === "En curso"
-          ? colors.accent
+        name === "Activo" || name === "En curso"
+          ? "#1D5FA0"
           : name === "Finalizado"
-            ? colors.secondary
-            : "rgba(18,48,77,0.42)",
+            ? "#14B8A6"
+            : name === "En pausa"
+              ? "#C2410C"
+              : "#9DB4CA",
     })
   );
 
@@ -69,14 +69,14 @@ export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
       value,
       color:
         name === "Sobreasignado"
-          ? "#C06161"
+          ? "#C2410C"
           : name === "Sin asignación"
-            ? "rgba(18,48,77,0.34)"
+            ? "#C3CDD8"
             : name === "Asignado"
-              ? colors.accent
+              ? "#14B8A6"
               : name === "Subasignado"
-                ? colors.secondary
-                : "rgba(18,48,77,0.34)",
+                ? "#1D5FA0"
+                : "#C3CDD8",
     })
   );
 
@@ -93,95 +93,58 @@ export default function Dash({ metricsProp }: { metricsProp: DashboardData }) {
   }));
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        maxWidth: "100%",
-        overflow: "hidden",
-        boxSizing: "border-box",
-      }}
-    >
-      <Grid
-        container
-        spacing={{ xs: 1.5, sm: 2, md: 3 }}
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 2, md: 3 } }}>
+      <Box
         sx={{
-          mb: { xs: 2, sm: 3 },
-          width: "100%",
-          mx: 0,
+          display: "grid",
+          gridTemplateColumns: { xs: "repeat(2, minmax(0, 1fr))", lg: "repeat(4, minmax(0, 1fr))" },
+          gap: 2,
         }}
       >
-        {statsData.map((stat, idx) => (
-          <Grid
-            item
-            key={idx}
-            xs={6}
-            sm={6}
-            md={6}
-            lg={3}
-            sx={{
-              display: "flex",
-              "& > *": { width: "100%" },
-            }}
-          >
-            <StatsCard {...stat} />
-          </Grid>
+        {statsData.map((stat) => (
+          <StatsCard key={stat.label} {...stat} />
         ))}
-      </Grid>
+      </Box>
 
-      <Grid
-        container
-        spacing={{ xs: 1.5, sm: 2, md: 3 }}
+      <Box
         sx={{
-          mb: { xs: 3, sm: 4 },
-          width: "100%",
-          mx: 0,
+          display: "grid",
+          gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))", lg: "2fr 1fr 1fr" },
+          gap: 2,
         }}
       >
-        <Grid item xs={12} lg={6}>
-          <LineChartSection
-            title={contratacionesMensuales.titulo}
-            data={lineData}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={3}>
-          <DonutChartCard
-            title="Estado de proyectos"
-            data={projectStatus}
-            total={estadoDeProyectos.total}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={3}>
-          <DonutChartCard
-            title="Estado de colaboradores"
-            data={collaboratorStatus}
-            total={estadoDeAsignacion.total}
-          />
-        </Grid>
-      </Grid>
+        <Box sx={{ gridColumn: { md: "1 / -1", lg: "auto" }, minWidth: 0 }}>
+          <LineChartSection title="Contrataciones por mes" data={lineData} />
+        </Box>
+        <DonutChartCard
+          title="Estado de proyectos"
+          data={projectStatus}
+          total={estadoDeProyectos.total}
+        />
+        <DonutChartCard
+          title="Estado de colaboradores"
+          data={collaboratorStatus}
+          total={estadoDeAsignacion.total}
+        />
+      </Box>
 
-      <Grid
-        container
-        spacing={{ xs: 1.5, sm: 2, md: 3 }}
+      <Box
         sx={{
-          width: "100%",
-          mx: 0,
+          display: "grid",
+          gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "repeat(2, minmax(0, 1fr))" },
+          gap: 2,
+          alignItems: "start",
         }}
       >
-        <Grid item xs={12} lg={6}>
-          <BarChartCard
-            title="Tecnologías"
-            data={techData}
-            xAxisLabel="Colaboradores"
-          />
-        </Grid>
-        <Grid item xs={12} lg={6}>
-          <BarChartCard
-            title="Proyectos"
-            data={peoplePerProjectData}
-            xAxisLabel="Colaboradores"
-          />
-        </Grid>
-      </Grid>
+        <BarChartCard title="Tecnologías" data={techData} xAxisLabel="Colaboradores por tecnología" />
+        <BarChartCard
+          title="Proyectos"
+          data={peoplePerProjectData}
+          xAxisLabel="Colaboradores por proyecto"
+          color="#14B8A6"
+          labelWidth={220}
+        />
+      </Box>
     </Box>
   );
 }

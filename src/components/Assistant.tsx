@@ -2,7 +2,7 @@
 
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import {
-  Alert, Box, Button, Dialog,
+  Box, Button, Dialog,
   Fab, IconButton, Paper, TextField, Tooltip, Typography,
 } from "@mui/material";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@mui/icons-material";
 import useSpeechSynthesis from "@/app/hooks/useSpeechSynthesis";
 import api from "@/services/http";
+import { AUTH_LOGO_SRC } from "@/theme/appPalette";
 
 interface Message { autor: "user" | "assistant"; texto: string; }
 interface JarvisAction {
@@ -71,23 +72,57 @@ const visibleActionFields = (payload: Record<string, unknown>) =>
     actionLabels[key] && value !== "" && value !== null && value !== undefined
   );
 
-const orbNodes = [
-  [50, 12], [28, 20], [71, 21], [15, 38], [40, 35], [61, 39], [84, 40],
-  [25, 55], [50, 53], [74, 57], [13, 68], [37, 72], [61, 70], [86, 68],
-  [28, 86], [51, 88], [72, 84], [48, 24], [35, 48], [65, 51],
-];
-const orbLinks = [[0,1],[0,2],[1,3],[1,4],[2,4],[2,6],[3,4],[3,7],[4,5],[4,7],[4,8],[5,6],[5,8],[5,9],[6,9],[7,8],[7,10],[7,11],[8,9],[8,11],[8,12],[9,12],[9,13],[10,11],[11,12],[11,14],[11,15],[12,13],[12,15],[12,16],[13,16],[14,15],[15,16],[4,17],[17,2],[17,5],[4,18],[18,7],[18,8],[5,19],[19,8],[19,9]];
+const JARVIS = {
+  bg: "#0B1E30",
+  panel: "#102A42",
+  core: "#0E2740",
+  teal: "#72E6D9",
+  tealSoft: "#9FE9E0",
+  blue: "#2E8BE0",
+  text: "#E6F4F7",
+  muted: "#9FB9C9",
+  line: "rgba(114,230,217,0.25)",
+  font: "'Plus Jakarta Sans', system-ui, sans-serif",
+};
 
+const jarvisKeyframes = {
+  "@keyframes tmSpin": { to: { transform: "rotate(360deg)" } },
+  "@keyframes tmSpinRev": { to: { transform: "rotate(-360deg)" } },
+  "@keyframes tmPulse": { "0%": { transform: "scale(1)", opacity: 0.7 }, "100%": { transform: "scale(1.7)", opacity: 0 } },
+  "@keyframes tmBreathe": { "0%,100%": { transform: "scale(1)" }, "50%": { transform: "scale(1.07)" } },
+  "@keyframes tmWave": { "0%,100%": { transform: "scaleY(.25)" }, "50%": { transform: "scaleY(1)" } },
+  "@media (prefers-reduced-motion: reduce)": { "& *": { animation: "none !important" } },
+};
+
+// Esfera de JARVIS: logo de TeamMatch en el centro con anillos en movimiento.
 function JarvisOrb({ active, listening, speaking, compact = false, onClick }: { active: boolean; listening: boolean; speaking: boolean; compact?: boolean; onClick?: () => void }) {
-  const size = compact ? 62 : 280;
-  const color = listening ? "#72f6ff" : speaking ? "#72e6d9" : active ? "#46bfff" : "#2a89b8";
-  return <Box onClick={onClick} role={onClick ? "button" : undefined} aria-label={onClick ? "Activar conversación con JARVIS" : undefined} sx={{ position: "relative", width: size, height: size, cursor: onClick ? "pointer" : "default", flexShrink: 0, filter: `drop-shadow(0 0 ${compact ? 8 : 24}px ${color})`, transition: "filter .4s", "&:hover": onClick ? { transform: "scale(1.025)" } : undefined }}>
-    <Box sx={{ position: "absolute", inset: compact ? 2 : 8, borderRadius: "50%", border: `1px solid ${color}`, opacity: .55, animation: "orbSpin 12s linear infinite", "&::before": { content: '""', position: "absolute", inset: compact ? 4 : 18, borderRadius: "50%", border: `1px dashed ${color}`, animation: "orbSpin 7s linear infinite reverse" }, "@keyframes orbSpin": { to: { transform: "rotate(360deg)" } } }} />
-    <Box sx={{ position: "absolute", inset: compact ? 8 : 32, borderRadius: "50%", background: "radial-gradient(circle at 42% 38%, rgba(190,252,255,.7) 0%, rgba(40,181,225,.32) 18%, rgba(2,32,60,.2) 55%, rgba(1,10,25,.05) 72%)", boxShadow: `inset 0 0 ${compact ? 14 : 45}px ${color}, 0 0 ${compact ? 12 : 35}px rgba(65,205,255,.35)`, animation: active ? "orbBreathe .9s ease-in-out infinite alternate" : "orbBreathe 3s ease-in-out infinite alternate", "@keyframes orbBreathe": { from: { transform: "scale(.96)", opacity: .78 }, to: { transform: "scale(1.03)", opacity: 1 } } }} />
-    <Box component="svg" viewBox="0 0 100 100" sx={{ position: "absolute", inset: compact ? 9 : 35, width: compact ? 44 : 210, height: compact ? 44 : 210, overflow: "visible", animation: "networkFloat 8s ease-in-out infinite", "@keyframes networkFloat": { "0%,100%": { transform: "rotate(-2deg) scale(.98)" }, "50%": { transform: "rotate(3deg) scale(1.02)" } } }}>
-      {orbLinks.map(([from, to], index) => <line key={index} x1={orbNodes[from][0]} y1={orbNodes[from][1]} x2={orbNodes[to][0]} y2={orbNodes[to][1]} stroke={color} strokeWidth={compact ? .55 : .35} opacity={compact ? .65 : .48} />)}
-      {orbNodes.map(([x, y], index) => <circle key={index} cx={x} cy={y} r={compact ? 1.5 : 1.05 + (index % 3) * .25} fill="#d9fdff" opacity={.75 + (index % 3) * .1}><animate attributeName="opacity" values=".35;1;.35" dur={`${1.4 + (index % 5) * .35}s`} repeatCount="indefinite" /></circle>)}
+  const size = compact ? 68 : 320;
+  const accent = listening ? JARVIS.teal : speaking ? JARVIS.tealSoft : JARVIS.teal;
+  const speed = listening || speaking ? 0.55 : active ? 0.8 : 1;
+  const ring = { position: "absolute", borderRadius: "50%", boxSizing: "border-box" } as const;
+  const coreSize = compact ? 54 : 168;
+  return <Box
+    component={onClick ? "button" : "span"}
+    type={onClick ? "button" : undefined}
+    onClick={onClick}
+    aria-label={onClick ? "Activar conversación con JARVIS" : undefined}
+    sx={{ ...jarvisKeyframes, position: "relative", width: size, height: size, flexShrink: 0, border: 0, p: 0, borderRadius: "50%", cursor: onClick ? "pointer" : "inherit", display: "flex", alignItems: "center", justifyContent: "center", background: compact ? "transparent" : "radial-gradient(circle, rgba(46,139,224,0.22) 0%, rgba(11,30,48,0) 68%)" }}
+  >
+    {!compact && <Box component="span" sx={{ ...ring, inset: 6, border: "1px dashed rgba(114,230,217,0.45)", animation: `tmSpin ${40 * speed}s linear infinite` }}>
+      <Box component="span" sx={{ position: "absolute", top: -5, left: "50%", width: 9, height: 9, ml: "-5px", borderRadius: "50%", bgcolor: accent, boxShadow: `0 0 12px ${accent}` }} />
+    </Box>}
+    <Box component="span" sx={{ ...ring, inset: compact ? 0 : 30, border: "2px solid transparent", borderTopColor: accent, borderBottomColor: compact ? "rgba(46,139,224,0.55)" : "rgba(114,230,217,0.35)", animation: `tmSpin ${(compact ? 5 : 6) * speed}s linear infinite` }} />
+    {!compact && <Box component="span" sx={{ ...ring, inset: 50, border: "2px solid transparent", borderLeftColor: JARVIS.blue, borderRightColor: "rgba(46,139,224,0.4)", animation: `tmSpinRev ${9 * speed}s linear infinite` }} />}
+    <Box component="span" sx={{ ...ring, inset: compact ? 6 : 72, border: `1px solid ${compact ? JARVIS.blue : accent}`, animation: `tmPulse ${active ? 1.4 : 2.4}s ease-out infinite` }} />
+    <Box component="span" sx={{ position: "relative", width: coreSize, height: coreSize, borderRadius: "50%", bgcolor: JARVIS.core, border: "1px solid rgba(114,230,217,0.6)", boxShadow: compact ? "0 6px 20px rgba(11,30,48,0.35)" : "0 0 40px rgba(46,139,224,0.45), inset 0 0 24px rgba(114,230,217,0.18)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Box component="img" src={AUTH_LOGO_SRC} alt={compact ? "" : "TeamMatch"} sx={{ width: compact ? 38 : 116, height: compact ? 38 : 116, objectFit: "contain", animation: `tmBreathe ${active ? 1.6 : 3.2}s ease-in-out infinite` }} />
     </Box>
+  </Box>;
+}
+
+function VoiceWave({ active }: { active: boolean }) {
+  return <Box aria-hidden sx={{ ...jarvisKeyframes, display: "flex", alignItems: "center", gap: "5px", height: 32 }}>
+    {[0, 0.15, 0.3, 0.45, 0.6, 0.45, 0.3, 0.15, 0].map((delay, index) => <Box key={index} component="span" sx={{ width: 4, height: 28, borderRadius: "2px", bgcolor: JARVIS.teal, opacity: active ? 1 : 0.35, transformOrigin: "center", transform: "scaleY(.25)", animation: active ? `tmWave 1.1s ease-in-out ${delay}s infinite` : "none" }} />)}
   </Box>;
 }
 
@@ -366,44 +401,54 @@ export default function Assistant() {
 
   return <>
     <Tooltip title="Activar JARVIS" placement="left">
-      <Fab onClick={activateJarvis} aria-label="Abrir JARVIS" sx={{ position: "fixed", bottom: 24, right: 24, zIndex: 1300, width: 74, height: 74, bgcolor: "rgba(2,20,38,.94)", border: "1px solid rgba(92,225,255,.5)", boxShadow: "0 0 28px rgba(50,190,240,.45)", "&:hover": { bgcolor: "#061d32" } }}>
+      <Fab onClick={activateJarvis} aria-label="Abrir JARVIS" sx={{ position: "fixed", bottom: 24, right: 24, zIndex: 1300, width: 68, height: 68, bgcolor: "transparent", boxShadow: "none", "&:hover": { bgcolor: "transparent" }, "&:active": { boxShadow: "none" } }}>
         <JarvisOrb compact active={false} listening={false} speaking={false} />
       </Fab>
     </Tooltip>
 
-    <Dialog open={open} onClose={closeJarvis} fullScreen PaperProps={{ sx: { bgcolor: "#020b14", color: "white", backgroundImage: "radial-gradient(circle at 50% 42%, rgba(11,76,111,.38), transparent 34%), linear-gradient(135deg, #020812 0%, #041727 55%, #01070d 100%)", overflow: "hidden" } }}>
-      <Box sx={{ position: "absolute", inset: 0, opacity: .16, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(83,210,244,.13) 1px, transparent 1px), linear-gradient(90deg, rgba(83,210,244,.13) 1px, transparent 1px)", backgroundSize: "42px 42px", maskImage: "radial-gradient(circle, black 5%, transparent 72%)" }} />
-
-      <Box sx={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", px: { xs: 2, md: 4 }, py: 2, borderBottom: "1px solid rgba(90,220,255,.14)" }}>
-        <Box sx={{ flexGrow: 1 }}><Typography sx={{ letterSpacing: ".42em", fontWeight: 600, color: "#baf7ff" }}>J.A.R.V.I.S.</Typography><Typography variant="caption" sx={{ color: "rgba(180,240,255,.55)", letterSpacing: ".14em" }}>SISTEMA DE ASISTENCIA INTELIGENTE</Typography></Box>
-        <Tooltip title={voiceEnabled ? "Silenciar voz" : "Activar voz"}><IconButton onClick={() => { cancel(); setVoiceEnabled((value) => !value); }} sx={{ color: "#8eefff" }}>{voiceEnabled ? <VolumeUp /> : <VolumeOff />}</IconButton></Tooltip>
-        <Tooltip title="Historial"><IconButton onClick={() => setShowActionHistory((value) => !value)} sx={{ color: "#8eefff" }}><History /></IconButton></Tooltip>
-        <Tooltip title="Nueva conversación"><IconButton onClick={clearConversation} sx={{ color: "#8eefff" }}><DeleteOutline /></IconButton></Tooltip>
-        <IconButton onClick={closeJarvis} sx={{ color: "#8eefff" }}><Close /></IconButton>
+    <Dialog open={open} onClose={closeJarvis} fullScreen PaperProps={{ sx: { borderRadius: 0, border: 0, bgcolor: JARVIS.bg, color: JARVIS.text, fontFamily: JARVIS.font, backgroundImage: "linear-gradient(180deg, #081726 0%, #0B1E30 45%, #0D2A44 100%)", overflow: "hidden", "& .MuiTypography-root, & .MuiInputBase-root, & .MuiButton-root": { fontFamily: "inherit" } } }}>
+      <Box sx={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", gap: 0.5, px: { xs: 2, md: 3 }, py: 1.5, borderBottom: "1px solid rgba(114,230,217,0.18)" }}>
+        <Box sx={{ flexGrow: 1 }}><Typography sx={{ letterSpacing: ".24em", fontWeight: 700, fontSize: "1rem", color: JARVIS.text }}>JARVIS</Typography><Typography sx={{ color: JARVIS.muted, fontSize: ".75rem" }}>Asistente de TeamMatch</Typography></Box>
+        <Tooltip title={voiceEnabled ? "Silenciar voz" : "Activar voz"}><IconButton aria-label={voiceEnabled ? "Silenciar voz" : "Activar voz"} onClick={() => { cancel(); setVoiceEnabled((value) => !value); }} sx={{ color: JARVIS.tealSoft, width: 44, height: 44 }}>{voiceEnabled ? <VolumeUp /> : <VolumeOff />}</IconButton></Tooltip>
+        <Tooltip title="Historial"><IconButton aria-label="Historial de acciones" onClick={() => setShowActionHistory((value) => !value)} sx={{ color: JARVIS.tealSoft, width: 44, height: 44 }}><History /></IconButton></Tooltip>
+        <Tooltip title="Nueva conversación"><IconButton aria-label="Nueva conversación" onClick={clearConversation} sx={{ color: JARVIS.tealSoft, width: 44, height: 44 }}><DeleteOutline /></IconButton></Tooltip>
+        <IconButton aria-label="Cerrar JARVIS" onClick={closeJarvis} sx={{ color: JARVIS.tealSoft, width: 44, height: 44 }}><Close /></IconButton>
       </Box>
 
-      <Box sx={{ position: "relative", zIndex: 1, flex: 1, minHeight: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", px: 2, pb: 11 }}>
+      <Box sx={{ position: "relative", zIndex: 1, flex: 1, minHeight: 0, overflowY: "auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", px: 2, pt: 2, pb: 12 }}>
         <JarvisOrb active={active || conversationMode} listening={isListening} speaking={speaking} onClick={toggleConversation} />
-        <Typography sx={{ mt: 2, color: isListening ? "#bdfcff" : "#70dced", letterSpacing: ".28em", fontSize: ".75rem", textTransform: "uppercase" }}>{status}</Typography>
-        <Typography variant="caption" sx={{ mt: 1, color: "rgba(188,239,248,.48)" }}>{engineStarting ? "Despertando el motor de IA. Puede tardar hasta un minuto; podés escribir igual y te respondo apenas esté listo." : conversationMode ? "Tocá la esfera para finalizar" : "Tocá la esfera para comenzar a hablar"}</Typography>
+        <Box sx={{ mt: 1.5 }}><VoiceWave active={isListening || speaking} /></Box>
+        <Typography sx={{ mt: 1.25, color: JARVIS.teal, letterSpacing: ".28em", fontWeight: 700, fontSize: ".8125rem", textTransform: "uppercase" }}>{status}</Typography>
+        <Typography sx={{ mt: 0.5, color: JARVIS.muted, fontSize: ".8125rem", textAlign: "center" }}>{engineStarting ? "Despertando el motor de IA. Puede tardar hasta un minuto; podés escribir igual y te respondo apenas esté listo." : conversationMode ? "Tocá el logo para finalizar" : "Tocá el logo para comenzar a hablar"}</Typography>
 
-        <Box ref={chatRef} sx={{ mt: 3, width: "min(760px, 92vw)", maxHeight: 135, overflowY: "auto", textAlign: "center" }}>
-          {lastMessages.map((message, index) => <Typography key={index} sx={{ mb: 1, color: message.autor === "assistant" ? "#d8faff" : "rgba(178,222,235,.62)", fontSize: message.autor === "assistant" ? "1rem" : ".82rem", lineHeight: 1.55, whiteSpace: "pre-line", textAlign: "left" }}>{message.autor === "assistant" ? toPlainText(message.texto) : message.texto}</Typography>)}
+        <Box ref={chatRef} sx={{ mt: 2.5, width: "min(760px, 92vw)", maxHeight: 135, overflowY: "auto", textAlign: "center" }}>
+          {lastMessages.map((message, index) => <Typography key={index} sx={{ mb: 1, color: message.autor === "assistant" ? JARVIS.text : JARVIS.muted, fontSize: message.autor === "assistant" ? "1.0625rem" : ".875rem", lineHeight: 1.55, whiteSpace: "pre-line", textAlign: "left" }}>{message.autor === "assistant" ? toPlainText(message.texto) : message.texto}</Typography>)}
         </Box>
 
-        {pendingAction && <Alert severity="info" sx={{ mt: 2, width: "min(620px, 92vw)", bgcolor: "rgba(5,32,49,.88)", color: "#dcfaff", border: "1px solid rgba(83,220,255,.35)", "& .MuiAlert-icon": { color: "#70e6ff" } }}>
-          <Typography fontWeight={700}>{pendingAction.title}</Typography>
-          {visibleActionFields(pendingAction.payload).map(([key, value]) => <Typography variant="body2" key={key}>{actionLabels[key]}: {Array.isArray(value) ? value.join(", ") : typeof value === "object" ? Object.entries(value as Record<string, unknown>).map(([field, content]) => `${actionLabels[field] || field}: ${String(content)}`).join(" · ") : String(value)}</Typography>)}
-          <Box sx={{ display: "flex", gap: 1, mt: 1.5 }}><Button size="small" variant="contained" onClick={() => void executeAction()} disabled={executingAction}>{executingAction ? "Procesando..." : "Confirmar"}</Button><Button size="small" sx={{ color: "#bcefff" }} onClick={() => setPendingAction(null)} disabled={executingAction}>Cancelar</Button></Box>
-        </Alert>}
+        {pendingAction && <Box component="section" aria-label="Acción pendiente" sx={{ mt: 2, width: "min(560px, 92vw)", p: 2.5, borderRadius: "12px", bgcolor: JARVIS.panel, border: "1px solid rgba(114,230,217,0.35)", display: "flex", flexDirection: "column", gap: 1.75 }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1.5 }}>
+            <Typography component="h2" sx={{ fontWeight: 700, fontSize: "1rem" }}>{pendingAction.title}</Typography>
+            <Box component="span" sx={{ px: 1.25, py: 0.4, borderRadius: "999px", bgcolor: "rgba(114,230,217,0.16)", color: JARVIS.tealSoft, fontSize: ".75rem", fontWeight: 700, whiteSpace: "nowrap" }}>Esperando confirmación</Box>
+          </Box>
+          <Box component="dl" sx={{ m: 0, display: "flex", flexDirection: "column", gap: 1 }}>
+            {visibleActionFields(pendingAction.payload).map(([key, value]) => <Box key={key} sx={{ display: "flex", justifyContent: "space-between", gap: 2, fontSize: ".875rem" }}>
+              <Box component="dt" sx={{ color: JARVIS.muted }}>{actionLabels[key]}</Box>
+              <Box component="dd" sx={{ m: 0, fontWeight: 600, textAlign: "right" }}>{Array.isArray(value) ? value.join(", ") : typeof value === "object" ? Object.entries(value as Record<string, unknown>).map(([field, content]) => `${actionLabels[field] || field}: ${String(content)}`).join(" · ") : String(value)}</Box>
+            </Box>)}
+          </Box>
+          <Box sx={{ display: "flex", gap: 1.25 }}>
+            <Button onClick={() => void executeAction()} disabled={executingAction} sx={{ flex: 1, minHeight: 44, borderRadius: "8px", bgcolor: JARVIS.teal, color: JARVIS.bg, fontWeight: 700, textTransform: "none", "&:hover": { bgcolor: JARVIS.tealSoft }, "&.Mui-disabled": { bgcolor: "rgba(114,230,217,0.4)", color: JARVIS.bg } }}>{executingAction ? "Procesando..." : "Confirmar"}</Button>
+            <Button onClick={() => setPendingAction(null)} disabled={executingAction} sx={{ flex: 1, minHeight: 44, borderRadius: "8px", border: "1px solid rgba(159,233,224,0.5)", color: JARVIS.text, fontWeight: 600, textTransform: "none" }}>Cancelar</Button>
+          </Box>
+        </Box>}
       </Box>
 
-      {showActionHistory && <Paper sx={{ position: "absolute", zIndex: 5, top: 86, right: 24, width: "min(380px, calc(100vw - 48px))", maxHeight: "60vh", overflow: "auto", p: 2, bgcolor: "rgba(3,22,36,.96)", color: "#dcfaff", border: "1px solid rgba(83,220,255,.32)", backdropFilter: "blur(18px)" }}><Typography fontWeight={700} sx={{ mb: 1 }}>Historial de acciones</Typography>{actionHistory.length === 0 && <Typography variant="body2" sx={{ opacity: .6 }}>Todavía no hay acciones.</Typography>}{actionHistory.map((item) => <Box key={item._id} sx={{ display: "flex", justifyContent: "space-between", gap: 1, py: 1, borderBottom: "1px solid rgba(120,220,240,.1)" }}><Typography variant="body2">{item.title}</Typography><Typography variant="caption" color={item.status === "success" ? "#72e6d9" : "#ff8c9b"}>{item.status === "success" ? "OK" : "Error"}</Typography></Box>)}</Paper>}
+      {showActionHistory && <Paper sx={{ position: "absolute", zIndex: 5, top: 80, right: 24, width: "min(380px, calc(100vw - 48px))", maxHeight: "60vh", overflow: "auto", p: 2, borderRadius: "12px", bgcolor: JARVIS.panel, color: JARVIS.text, border: `1px solid ${JARVIS.line}`, boxShadow: "0 12px 32px rgba(0,0,0,0.35)" }}><Typography fontWeight={700} sx={{ mb: 1 }}>Historial de acciones</Typography>{actionHistory.length === 0 && <Typography variant="body2" sx={{ color: JARVIS.muted }}>Todavía no hay acciones.</Typography>}{actionHistory.map((item) => <Box key={item._id} sx={{ display: "flex", justifyContent: "space-between", gap: 1, py: 1, borderBottom: "1px solid rgba(114,230,217,0.12)" }}><Typography variant="body2">{item.title}</Typography><Typography variant="caption" sx={{ fontWeight: 700, color: item.status === "success" ? JARVIS.teal : "#FFB4A3" }}>{item.status === "success" ? "OK" : "Error"}</Typography></Box>)}</Paper>}
 
-      <Box component="form" onSubmit={handleSubmit} sx={{ position: "absolute", zIndex: 4, bottom: 20, left: "50%", transform: "translateX(-50%)", width: "min(720px, calc(100vw - 32px))", display: "flex", alignItems: "center", gap: 1, p: 1, borderRadius: 8, bgcolor: "rgba(4,25,41,.82)", border: "1px solid rgba(80,218,250,.28)", backdropFilter: "blur(18px)", boxShadow: "0 0 35px rgba(0,170,220,.12)" }}>
-        <IconButton onClick={toggleConversation} disabled={!speechSupported} sx={{ color: conversationMode ? "#ff7189" : "#76eaff" }}>{conversationMode ? <MicOff /> : <Mic />}</IconButton>
-        <TextField fullWidth variant="standard" placeholder="Escribí o hablá con JARVIS..." value={userInput} onChange={(event) => setUserInput(event.target.value)} disabled={isLoading} autoComplete="off" InputProps={{ disableUnderline: true, sx: { color: "#dffbff", px: 1 } }} />
-        <IconButton type="submit" disabled={!userInput.trim() || isLoading} sx={{ color: "#76eaff" }}><Send /></IconButton>
+      <Box component="form" onSubmit={handleSubmit} sx={{ position: "absolute", zIndex: 4, bottom: 20, left: "50%", transform: "translateX(-50%)", width: "min(720px, calc(100vw - 32px))", display: "flex", alignItems: "center", gap: 0.5, p: 0.75, borderRadius: "12px", bgcolor: JARVIS.panel, border: `1px solid ${JARVIS.line}` }}>
+        <IconButton aria-label={conversationMode ? "Pausar micrófono" : "Activar micrófono"} onClick={toggleConversation} disabled={!speechSupported} sx={{ width: 44, height: 44, color: conversationMode ? "#FFB4A3" : JARVIS.tealSoft, "&.Mui-disabled": { color: "rgba(159,185,201,0.4)" } }}>{conversationMode ? <MicOff /> : <Mic />}</IconButton>
+        <TextField fullWidth variant="standard" placeholder="Escribí o hablá con JARVIS..." value={userInput} onChange={(event) => setUserInput(event.target.value)} disabled={isLoading} autoComplete="off" inputProps={{ "aria-label": "Mensaje para JARVIS" }} InputProps={{ disableUnderline: true, sx: { color: JARVIS.text, px: 1, fontSize: ".9375rem", "& input::placeholder": { color: JARVIS.muted, opacity: 1 } } }} />
+        <IconButton type="submit" aria-label="Enviar" disabled={!userInput.trim() || isLoading} sx={{ width: 44, height: 44, color: JARVIS.tealSoft, "&.Mui-disabled": { color: "rgba(159,185,201,0.4)" } }}><Send /></IconButton>
       </Box>
     </Dialog>
   </>;

@@ -108,7 +108,7 @@ export default function PersonnelPage() {
       {loadingPeople || loadingFields ? (
         <CircularProgress size={24} />
       ) : (
-        <TableContainer sx={{ maxHeight: 700, borderRadius: "20px" }}>
+        <TableContainer sx={{ maxHeight: 700, borderRadius: "10px" }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -117,12 +117,12 @@ export default function PersonnelPage() {
                     key={c.key}
                     align="center"
                     style={{
-                      backgroundColor: "#BDE0FF",
+                      backgroundColor: "#F5F7FA",
                       textAlign: "center",
-                      fontWeight: "500",
-                      fontFamily: "Poppins",
-                      fontSize: "16.16px",
-                      color: "#000000",
+                      fontWeight: 700,
+                      fontFamily: "inherit",
+                      fontSize: "12px",
+                      color: "#566779",
                     }}
                   >
                     {c.label}
